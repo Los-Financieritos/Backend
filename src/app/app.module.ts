@@ -11,6 +11,7 @@ import { RegisterFormComponent } from './proforma/register-form/register-form.co
 import { EditFormComponent } from './proforma/edit-form/edit-form.component';
 import { ListFormComponent } from './proforma/list-form/list-form.component';
 import { CronogramComponent } from './proforma/cronogram/cronogram.component';
+import { RegisterUserComponent } from './auth/register-user/register-user.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { CronogramComponent } from './proforma/cronogram/cronogram.component';
     RegisterFormComponent,
     EditFormComponent,
     ListFormComponent,
-    CronogramComponent
+    CronogramComponent,
+    RegisterUserComponent
   ],
   imports: [
     BrowserModule,

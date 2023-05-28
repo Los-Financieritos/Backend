@@ -1,0 +1,445 @@
+h1 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 450;
+    font-size: 26px;
+}
+
+h3 {
+    font-family: 'Be Vietman', sans-serif;
+    font-size: 20px;
+    font-weight: 450;
+}
+
+p {
+    font-family: 'Be Vietman', sans-serif;
+    font-weight: 450;
+    font-size: 18px;
+}
+
+.banner {
+    width: 100%;
+    border-bottom: 1px solid #252525;
+}
+
+.banner-titles {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.banner-titles h1 {
+    margin-left: 1.5em;
+}
+
+.banner-titles h3 {
+    margin-right: 3em;
+}
+
+.header-container {
+    display: flex;
+    background-color: #E0EE74;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 230px;
+}
+
+.header-container img {
+    width: 300px;
+}
+
+
+.clearfix {
+    height: 50px;
+}
+
+.section-container {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.row {
+    display: flex;
+    width: 96%;
+    margin: 0 auto;
+}
+
+.col-md-6,
+.col-sm-6 {
+    width: 50%;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.container-what {
+    display: flex;
+    margin: 0 auto;
+    margin-top: 20px;
+    border: 2px solid #888888ce;
+    padding: 20px 40px;
+    width: 70%;
+    justify-content: center;
+    height: 25%;
+}
+
+.container-what p {
+    font-family: 'Be Vietman', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: justify;
+}
+
+.cont-what-title {
+    background-color: white;
+    font-family: 'Be Vietman', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    justify-content: center;
+    position: absolute;
+    padding: 5px;
+    margin-top: -40px;
+}
+
+.content {
+    margin-top: 5px;
+}
+
+.content-title {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.container-title {
+    display: flex;
+    width: 10em;
+    border-radius: 30px;
+    background-color: #FCFCF1;
+    justify-content: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    padding: 10px 5px;
+    box-shadow: 5px 5px 5px rgb(134, 134, 134);
+}
+
+.icons-content {
+    display: block;
+    width: 100%;
+    align-items: center;
+}
+
+.icons {
+    padding: 10px 5px;
+    display: flex;
+    align-items: center;
+    margin: 15px 20px;
+
+}
+
+.icons span {
+    font-family: 'Be Vietman', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: justify;
+    padding-left: 40px;
+}
+
+.icons i {
+    font-size: 50px;
+    justify-content: center;
+}
+
+.buttons-content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    place-content: center;
+    margin: 50px 30px;
+}
+
+.btn-content {
+    background-color: #E0EE74;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    padding: 20px 25px;
+    border-radius: 30px;
+    border: none;
+    margin: 15px 20px;
+    width: 240px;
+}
+
+@media screen and (max-width: 1420px) {
+
+    .row {
+        width: 100%;
+    }
+
+    .col-md-6,
+    .col-sm-6 {
+        width: 50%;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .cont-what-title {
+        font-size: 21px;
+    }
+
+    .container-what p {
+        font-size: 19px;
+        text-align: justify;
+    }
+
+    .container-what {
+        width: 60%;
+        height: auto;
+    }
+
+    .container-title {
+        font-size: 21px;
+    }
+
+    .icons-content {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .icons span {
+        font-size: 19px;
+        padding-left: 30px;
+    }
+
+    .icons i {
+        font-size: 47px;
+    }
+
+    .btn-content {
+        font-size: 19px;
+        width: 90%;
+        padding: 15px 20px;
+    }
+}
+
+@media screen and (max-width: 920px) {
+    .banner-titles h1 {
+        margin-left: 0.8em;
+        font-size: 22px;
+    }
+
+    .banner-titles h3 {
+        font-size: 18px;
+        margin-right: 1em;
+    }
+
+    .header-container {
+        height: 220px;
+    }
+
+    .header-container img {
+        width: 280px;
+    }
+
+
+    .section-container {
+        width: 98%;
+    }
+
+    .col-md-6,
+    .col-sm-6 {
+        width: 80%;
+    }
+
+    .cont-what-title {
+        font-size: 18px;
+    }
+
+    .container-what p {
+        font-size: 17px;
+        text-align: justify;
+    }
+
+    .container-what {
+        width: 40%;
+        height: auto;
+    }
+
+    .container-title {
+        font-size: 20px;
+        width: 8em;
+    }
+
+    .icons-content {
+        width: 90%;
+        margin: 0;
+    }
+
+    .icons span {
+        font-size: 17px;
+        padding-left: 20px;
+    }
+
+    .icons i {
+        font-size: 40px;
+    }
+
+    .buttons-content {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .btn-content {
+
+        font-size: 17px;
+        width: 70%;
+        padding: 15px 25px;
+    }
+
+
+}
+
+@media screen and (max-width: 715px) {
+    .section-container {
+        display: block;
+    }
+
+    .row {
+        display: block;
+    }
+
+    .col-md-6,
+    .col-sm-6 {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .content {
+        margin-bottom: 70px;
+    }
+
+    .cont-what-title {
+        font-size: 20px;
+    }
+
+    .container-what p {
+        font-size: 17px;
+    }
+
+    .container-what {
+        width: 70%;
+        height: auto;
+        margin: 0 auto;
+    }
+
+    .container-title {
+        font-size: 20px;
+        width: 10em;
+        margin-bottom: 30px;
+    }
+
+    .icons-content {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .icons span {
+        font-size: 17px;
+        padding-left: 30px;
+    }
+
+    .icons i {
+        font-size: 50px;
+    }
+
+    .buttons-content {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .btn-content {
+
+        font-size: 17px;
+        width: 70%;
+        padding: 15px 25px;
+    }
+
+}
+
+@media screen and (max-width: 500px) {
+    .banner-titles h1 {
+        margin-left: 0.6em;
+        font-size: 20px;
+    }
+
+    .banner-titles h3 {
+        font-size: 16px;
+        margin-right: 1em;
+    }
+
+    .header-container {
+        height: 200px;
+    }
+
+    .header-container img {
+        width: 250px;
+    }
+
+    .container-what {
+        width: 50%;
+        height: auto;
+        margin: 0 auto;
+
+    }
+    .container-what p {
+        font-size: 18px;
+        text-align: justify;
+    }
+
+    .btn-content {
+
+        font-size: 17px;
+        width: 90%;
+        padding: 15px 25px;
+    }
+
+    .cont-what-title {
+        font-size: 18px;
+    }
+
+    .container-what {
+        width: 70%;
+        height: auto;
+        margin: 0 auto;
+    }
+
+    .container-title {
+        font-size: 17px;
+        margin-bottom: 10px;
+    }
+
+    .content-title {
+        margin-bottom: 15px;
+    }
+
+    .icons-content {
+        width: 70%;
+        margin: 0 auto;
+    }
+
+    .icons {
+        flex-direction: column;
+        margin: 17px 10px;
+    }
+
+    .icons span {
+        font-size: 17px;
+        padding-left: 0px;
+    }
+
+    .icons i {
+        font-size: 55px;
+        margin: 25px 5px;
+    }
+}
