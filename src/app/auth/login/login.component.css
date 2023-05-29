@@ -1,0 +1,146 @@
+h1 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 450;
+    font-size: 26px;
+}
+
+h3 {
+    font-family: 'Be Vietman Pro', sans-serif;
+    font-size: 20px;
+    font-weight: 450;
+}
+
+p {
+    font-family: 'Be Vietman Pro', sans-serif;
+    font-weight: 450;
+    font-size: 18px;
+}
+button{
+    font-family: 'Be Vietman Pro', sans-serif;;
+}
+span {
+    font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+.banner {
+    width: 100%;
+    border-bottom: 1px solid #252525;
+}
+
+.banner-titles {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.banner-titles h1 {
+    margin-left: 1.5em;
+}
+
+
+.clearfix {
+    height: 50px;
+}
+
+.container {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.row {
+    display: flex;
+    width: 96%;
+    margin: 0 auto;
+}
+
+.col-md-6 {
+    width: 50%;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+
+.logo img{
+    width: 30%;
+    margin-bottom: -20px;
+}
+.logo span{
+    font-size: 30px;
+    width: 100%;
+	margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+form label{
+
+	font-family: 'Be Vietnam Pro', sans-serif;
+    width: 100%;
+	font-weight: bold; 
+	font-size: 20px;
+	margin-bottom: 40px;
+	text-align: left;
+}
+
+input{
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 20px;
+	width: 90%;
+	margin-top: 20px;
+}
+
+.btns-alternative {
+	display: block;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+	margin-top: 20px;
+   
+}
+.btns-alternative span{
+	font-weight: bold;
+	margin-right: 30px;
+}
+
+button {
+    font-family: 'Be Vietnam Pro', sans-serif;
+	background: #D8843B;
+	color: #fff;
+    text-decoration: none;
+	border: none;
+	cursor: pointer;
+	transition: .3s ease all;
+	border-radius: 5px;
+	position: relative;
+	overflow: hidden;
+    height: 60px;
+    width: 160px;
+	margin-top: 20px;
+}
+ 
+button span {
+
+	position: relative;
+	z-index: 2;
+	transition: .3s ease all;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+button::after {
+	content: "";
+	width: 100%;
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	left: calc(-100% - 80px);
+	border-bottom: 80px solid #e7b048;
+	border-right: 80px solid transparent;
+	transition: .4s ease-in-out all;
+}
+
+ button:hover::after {
+	left: 0;
+}
