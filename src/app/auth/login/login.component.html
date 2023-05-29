@@ -8,61 +8,77 @@
 <div class="container">
   <div class="row">
     <div class="col-md-6">
-      <img src="../../../assets/img/login.png" alt="representacion-login">
+      <div class="img-content">
+        <img src="../../../assets/login.png" alt="representacion-login">
+      </div>
     </div>
 
 
     <div class="col-md-6">
 
       <div class="logo">
-        <img src="../../../assets/img/logo-fondo.png" alt="logo-con-fondo">
-        <span> Inicio de sesión</span>
+        <img src="../../../assets/logo-fondo.png" alt="logo-con-fondo">
+        <div> <span> Inicio de sesión</span> </div>
       </div>
 
-      <form [formGroup]="formInfo" (ngSubmit)="sendForm()">
-        <div>
-          <label class="form-label">Usuario</label>
-        </div>
-        <div class="mb-3">
-          <input formControlName="user" type="text" class="form-control">
-        </div>
-        <div *ngIf="
-                 formInfo.get('user')?.hasError('required') &&
-                 formInfo.get('user')?.touched
-                 ">
-          <span class="mda-form-msg"> Este campo es obligatorio </span>
-        </div>
-        <div *ngIf="formInfo.get('user')?.hasError('user')">
-          <span class="mda-form-msg">
-            Este campo no tiene formato de correo
-          </span>
-        </div>
+      <div class="form-container">
+        <form [formGroup]="formInfo" (ngSubmit)="sendForm()">
 
+          <div class="row-1">
+            <div class="input-1">
+              <label>Usuario</label>
+      
+              <input type="text" formControlName="user" autocomplete="off" />
+              <i class="delete" [ngClass]="viewPsw ? 'fa-solid fa-eye chico': 'fa-solid fa-eye-slash grande'"
+                (click)="changeViewPassword()"></i>
+            
+            </div>
 
-        <div>
-          <label class="form-label">Contraseña</label>
-        </div>
-        <div class="mb-3">
-          <input formControlName="password" type="password" class="form-control">
-        </div>
-        <div *ngIf="
-                 formInfo.get('password')?.hasError('required') &&
-                 formInfo.get('password')?.touched
-                 ">
-          <span class="mda-form-msg"> Este campo es obligatorio </span>
-        </div>
+            <div *ngIf="
+            formInfo.get('user')?.hasError('required') &&
+            formInfo.get('user')?.touched
+            ">
+              <span class="mda-form-msg"> Este campo es obligatorio </span>
+            </div>
 
-        <br />
-        <button type="submit" class="btn-primary"><span>Ingresar</span></button>
-        <div class="btns-alternative">
-          <span>¿Tienes cuenta? </span>
-          <button routerLink="">
-            <span>Crear cuenta</span> </button>
-        </div>
+            <div class="input-2">
+              <label>Contraseña</label>
 
-      </form>
+              <input [type]="viewPsw ? 'text': 'password'" formControlName="password" autocomplete="off" />
+              <i class="icon-see" [ngClass]="viewPsw ? 'fa-solid fa-eye chico': 'fa-solid fa-eye-slash grande'"
+                (click)="changeViewPassword()"></i>
+              </div>
+     
+
+            <div *ngIf="
+            formInfo.get('password')?.hasError('required') &&
+            formInfo.get('password')?.touched
+            ">
+              <span class="mda-form-msg"> Este campo es obligatorio </span>
+            </div>
+
+            <div class="forget-content">
+            <a class="forget-password" href="">
+              <span>¿Olvidó su contraseña?</span>
+              <i class="icon-see delete" [ngClass]="viewPsw ? 'fa-solid fa-eye chico': 'fa-solid fa-eye-slash grande'"
+                (click)="changeViewPassword()"></i>
+            </a>
+          </div>
+          <div class="btn-send">
+            <button type="submit">
+              <span>Ingresar</span>
+            </button>
+          </div>
+          <div class="btns-adicionals">
+            <div class="btns-alternative">
+              <span class="text">¿No tienes cuenta? </span>
+              <a> <span>Regístrate</span> </a>
+            </div>
+          </div>
+          </div>
+        </form>
+      </div>
     </div>
-
 
   </div>
 </div>

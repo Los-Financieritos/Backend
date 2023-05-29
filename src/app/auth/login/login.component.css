@@ -15,9 +15,12 @@ p {
     font-weight: 450;
     font-size: 18px;
 }
-button{
-    font-family: 'Be Vietman Pro', sans-serif;;
+
+button {
+    font-family: 'Be Vietman Pro', sans-serif;
+    ;
 }
+
 span {
     font-family: 'Be Vietnam Pro', sans-serif;
 }
@@ -43,7 +46,7 @@ span {
 }
 
 .container {
-    width: 90%;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
     display: flex;
@@ -52,95 +55,431 @@ span {
 
 .row {
     display: flex;
-    width: 96%;
+    width: 100%;
     margin: 0 auto;
 }
 
 .col-md-6 {
-    width: 50%;
-    margin-left: 50px;
-    margin-right: 50px;
+    width: 100%;
+    margin-left: 20px;
+    margin-right: 20px;
+
 }
 
-
-.logo img{
-    width: 30%;
-    margin-bottom: -20px;
+.img-content {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    height: 85vh;
+    margin-left: -50px;
 }
-.logo span{
+
+.img-content img {
+    height: 70vh;
+    width: 95%;
+}
+
+.logo {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+
+}
+
+.logo img {
+    display: flex;
+    margin: 60px auto;
+    width: 10em;
+    margin-bottom: 25px;
+}
+
+.logo span {
+    display: flex;
+    justify-content: flex-start;
     font-size: 30px;
     width: 100%;
-	margin-top: 50px;
-    margin-bottom: 30px;
-}
-
-form label{
-
-	font-family: 'Be Vietnam Pro', sans-serif;
-    width: 100%;
-	font-weight: bold; 
-	font-size: 20px;
-	margin-bottom: 40px;
-	text-align: left;
-}
-
-input{
-    font-family: 'Be Vietnam Pro', sans-serif;
-    font-size: 20px;
-	width: 90%;
-	margin-top: 20px;
-}
-
-.btns-alternative {
-	display: block;
-    justify-content: space-between;
-    align-items: center;
-    width: 90%;
-	margin-top: 20px;
-   
-}
-.btns-alternative span{
-	font-weight: bold;
-	margin-right: 30px;
+    font-weight: 600;
+    padding: 30px 0;
 }
 
 button {
     font-family: 'Be Vietnam Pro', sans-serif;
-	background: #D8843B;
-	color: #fff;
+    background: #000000;
+    color: #fff;
     text-decoration: none;
-	border: none;
-	cursor: pointer;
-	transition: .3s ease all;
-	border-radius: 5px;
-	position: relative;
-	overflow: hidden;
-    height: 60px;
-    width: 160px;
-	margin-top: 20px;
+    border: none;
+    cursor: pointer;
+    transition: .3s ease all;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+    height: 45px;
+    width: 180px;
+    margin-top: 20px;
 }
- 
+
 button span {
 
-	position: relative;
-	z-index: 2;
-	transition: .3s ease all;
+    position: relative;
+    z-index: 2;
+    transition: .3s ease all;
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 button::after {
-	content: "";
-	width: 100%;
-	position: absolute;
-	z-index: 1;
-	top: 0;
-	left: calc(-100% - 80px);
-	border-bottom: 80px solid #e7b048;
-	border-right: 80px solid transparent;
-	transition: .4s ease-in-out all;
+    content: "";
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: calc(-100% - 80px);
+    border-bottom: 80px solid #96b173;
+    border-right: 80px solid transparent;
+    transition: .4s ease-in-out all;
 }
 
- button:hover::after {
-	left: 0;
+button:hover::after {
+    left: 0;
+}
+
+form {
+    display: flex;
+    width: 100%;
+    margin: 0px auto;
+}
+
+.form-container {
+    width: 80%;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+.row-1 {
+    width: 100%;
+}
+
+.input-1,
+.input-2 {
+    display: flex;
+    flex-direction: row;
+    background-color: #fff;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.delete {
+    color: #fff;
+    cursor: default;
+    font-size: 22px;
+    margin: 0 15px;
+}
+
+label {
+    color: #000000;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    display: block;
+    width: 7em;
+    padding-bottom: 5px;
+    margin-right: 2em;
+
+}
+
+
+input {
+    padding: 17px 20px;
+    margin: 15px 10px;
+    border: none;
+    outline: 0;
+    color: #000000;
+    font-size: 20px;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    width: 70%;
+    background-color: #7e8c1185;
+    border-radius: 15px;
+}
+
+.icon-see {
+    cursor: pointer;
+    margin: 0 15px; 
+}
+.chico{
+    font-size: 27px;
+}
+.grande{
+    font-size: 24.75px;
+}
+.mda-form-msg {
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    color: red;
+    margin-left: 170px;
+}
+
+.forget-content {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.forget-password {
+    text-decoration: none;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-weight: bold;
+    display: flex;
+    justify-content: flex-end;
+    margin: 20px 12px 20px 0;
+}
+
+.btn-send {
+    display: flex;
+    justify-content: center;
+    margin: 30px auto;
+}
+
+.btns-adicionals {
+    display: flex;
+    justify-content: center;
+}
+
+.btns-alternative {
+    display: block;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+
+}
+
+.btns-alternative .text {
+    font-size: 18px;
+}
+
+.btns-alternative a span {
+    font-weight: bold;
+    margin-left: 2em;
+    font-size: 20px;
+}
+
+@media screen and (max-width: 1450px) {
+
+    .form-container,
+    .logo {
+        width: 88%;
+    }
+
+    label {
+        width: 6.5em;
+        margin-right: 1em;
+    }
+
+    input {
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+
+    .form-container,
+    .logo {
+        width: 93%;
+    }
+
+    label {
+        width: 4.5em;
+        font-size: 18px;
+        margin-right: 1.5em;
+    }
+
+    input {
+        width: 52%;
+    }
+}
+
+@media screen and (max-width: 1080px) {
+    .logo img {
+        padding-right: 10px;
+    }
+
+    form {
+        margin: 0
+    }
+
+    .row-1 {
+        margin: 0;
+    }
+
+    label {
+        width: 6em;
+        font-size: 20px;
+        margin-right: 0;
+        text-align: left;
+    }
+
+    input {
+        width: 70%;
+        margin-left: 0;
+    }
+
+    .input-1,
+    .input-2 {
+        display: block;
+
+    }
+
+    .forget-password {
+        margin: 20px 40px 20px 0;
+    }
+
+    .btn-send,
+    .btns-adicionals {
+        margin-left: -30px;
+    }
+}
+
+@media screen and (max-width: 890px) {
+
+    .logo span {
+        font-size: 26px;
+    }
+
+    input {
+        width: 66%;
+    }
+
+    .forget-password {
+        margin: 20px 25px 20px 0;
+    }
+}
+
+@media screen and (max-width: 785px) {
+
+    .row {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .img-content {
+        margin: 0 auto;
+        width: 80%;
+    }
+
+    .form-container,
+    .logo {
+        width: 80%;
+    }
+
+    .logo span {
+        font-size: 28px;
+    }
+
+    input {
+        width: 75%;
+
+    }
+
+    .input-1,
+    .input-2 {
+        margin-bottom: 24px;
+    }
+
+    .forget-password {
+        margin: 12px 25px 10px 0;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    input {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 464px) {
+    input {
+        width: 65%;
+    }
+
+    .btns-alternative {
+        flex-direction: column;
+    }
+
+    .text {
+        display: block;
+        margin-bottom: 26px;
+    }
+
+    .btns-alternative a {
+        margin-left: -10px;
+    }
+}
+
+@media screen and (max-width: 410px) {
+    input {
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    input {
+        width: 55%;
+
+    }
+
+    .forget-content {
+        margin: 0
+    }
+
+    .forget-password {
+        margin: 20px 0;
+    }
+}
+
+@media screen and (max-width: 320px) {
+
+    .img-content {
+        width: 80%;
+    }
+
+    .logo img {
+        width: 75%;
+
+    }
+
+    .logo span {
+        font-size: 24px;
+    }
+
+    input {
+        width: 60%;
+
+    }
+
+    .input-1,
+    .input-2 {
+        justify-content: center;
+    }
+
+    .input-2 i {
+        display: flex;
+        margin: 20px auto;
+        width: 35%;
+    }
+
+    .forget-content {
+        display: flex;
+        justify-content: center;
+
+    }
+
+    .forget-password {
+
+        justify-content: center;
+        margin: 20px 12px 20px 42px;
+    }
 }

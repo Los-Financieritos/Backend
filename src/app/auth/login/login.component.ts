@@ -9,6 +9,7 @@ import { Subject } from 'rxjs';
 })
 export class LoginComponent {
   formInfo!: FormGroup;
+  viewPsw: boolean = false;
 
   constructor(private fb: FormBuilder) {
     this.createForm();
@@ -34,7 +35,7 @@ export class LoginComponent {
 
   sendForm() {
 
-   if (this.validarForm()) {
+    if (this.validarForm()) {
 
       let object = {
         "data": {
@@ -51,6 +52,8 @@ export class LoginComponent {
 
   }
 
-
+  changeViewPassword() {
+    this.viewPsw = this.viewPsw ? false : true;
+  }
 
 }
