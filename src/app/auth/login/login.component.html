@@ -1,1 +1,84 @@
-<p>login works!</p>
+<div class="banner">
+  <div class="banner-titles">
+    <h1>Credit House</h1>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="img-content">
+        <img src="../../../assets/login.png" alt="representacion-login">
+      </div>
+    </div>
+
+
+    <div class="col-md-6">
+
+      <div class="logo">
+        <img src="../../../assets/logo-fondo.png" alt="logo-con-fondo">
+        <div> <span> Inicio de sesión</span> </div>
+      </div>
+
+      <div class="form-container">
+        <form [formGroup]="formInfo" (ngSubmit)="sendForm()">
+
+          <div class="row-1">
+            <div class="input-1">
+              <label>Usuario</label>
+      
+              <input type="text" formControlName="user" autocomplete="off" />
+              <i class="delete" [ngClass]="viewPsw ? 'fa-solid fa-eye chico': 'fa-solid fa-eye-slash grande'"
+                (click)="changeViewPassword()"></i>
+            
+            </div>
+
+            <div *ngIf="
+            formInfo.get('user')?.hasError('required') &&
+            formInfo.get('user')?.touched
+            ">
+              <span class="mda-form-msg"> Este campo es obligatorio </span>
+            </div>
+
+            <div class="input-2">
+              <label>Contraseña</label>
+
+              <input [type]="viewPsw ? 'text': 'password'" formControlName="password" autocomplete="off" />
+              <i class="icon-see" [ngClass]="viewPsw ? 'fa-solid fa-eye chico': 'fa-solid fa-eye-slash grande'"
+                (click)="changeViewPassword()"></i>
+              </div>
+     
+
+            <div *ngIf="
+            formInfo.get('password')?.hasError('required') &&
+            formInfo.get('password')?.touched
+            ">
+              <span class="mda-form-msg"> Este campo es obligatorio </span>
+            </div>
+
+            <div class="forget-content">
+            <a class="forget-password" href="">
+              <span>¿Olvidó su contraseña?</span>
+              <i class="icon-see delete" [ngClass]="viewPsw ? 'fa-solid fa-eye chico': 'fa-solid fa-eye-slash grande'"
+                (click)="changeViewPassword()"></i>
+            </a>
+          </div>
+          <div class="btn-send">
+            <button type="submit">
+              <span>Ingresar</span>
+            </button>
+          </div>
+          <div class="btns-adicionals">
+            <div class="btns-alternative">
+              <span class="text">¿No tienes cuenta? </span>
+              <a> <span>Regístrate</span> </a>
+            </div>
+          </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -12,6 +12,7 @@ import { EditFormComponent } from './proforma/edit-form/edit-form.component';
 import { ListFormComponent } from './proforma/list-form/list-form.component';
 import { CronogramComponent } from './proforma/cronogram/cronogram.component';
 import { RegisterUserComponent } from './auth/register-user/register-user.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,9 @@ import { RegisterUserComponent } from './auth/register-user/register-user.compon
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
