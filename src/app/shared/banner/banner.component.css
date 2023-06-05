@@ -1,0 +1,68 @@
+h1 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 450;
+    font-size: 26px;
+}
+
+h3 {
+    font-family: 'Be Vietman Pro', sans-serif;
+    font-size: 20px;
+    font-weight: 450;
+}
+
+p {
+    font-family: 'Be Vietman Pro', sans-serif;
+    font-weight: 450;
+    font-size: 18px;
+}
+
+.banner {
+    width: 100%;
+    border-bottom: 1px solid #252525;
+}
+
+.banner-titles {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.banner-titles h1 {
+    margin-left: 1.5em;
+}
+
+.banner-titles h3 {
+    margin-right: 3em;
+}
+
+
+@media screen and (max-width: 920px) {
+    .banner-titles h1 {
+        margin-left: 0.8em;
+        font-size: 22px;
+    }
+
+    .banner-titles h3 {
+        font-size: 18px;
+        margin-right: 1em;
+    }
+
+
+
+}
+
+
+
+@media screen and (max-width: 500px) {
+    .banner-titles h1 {
+        margin-left: 0.6em;
+        font-size: 20px;
+    }
+
+    .banner-titles h3 {
+        font-size: 16px;
+        margin-right: 1em;
+    }
+
+   
+}

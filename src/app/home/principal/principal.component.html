@@ -1,9 +1,4 @@
-<div class="banner">
-    <div class="banner-titles">
-        <h1>Credit House</h1>
-        <h3>Hola, [Name]</h3>
-    </div>
-</div>
+
 <div class="header-container">
     <img src="../../../assets/logo_mivivienda.png" alt="logo-mivivienda">
 </div>
@@ -28,16 +23,16 @@
             </div>
 
             <div class="buttons-content">
-                <button class="btn-content">
+                <button class="btn-content" [routerLink]="['/client/register-client']">
                     <span>Nuevo Cliente</span>
                 </button>
-                <button class="btn-content">
+                <button class="btn-content" [routerLink]="['/client/edit-client']">
                     <span>Ver/Editar Cliente</span>
                 </button>
-                <button class="btn-content">
+                <button class="btn-content" [routerLink]="['/proform/register-proform']">
                     <span>Nuevo Proforma</span>
                 </button>
-                <button class="btn-content">
+                <button class="btn-content" [routerLink]="['/proform/edit-proform']">
                     <span>Ver/Editar Proforma</span>
                 </button>
             </div>

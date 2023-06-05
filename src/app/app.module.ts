@@ -13,6 +13,7 @@ import { ListFormComponent } from './proforma/list-form/list-form.component';
 import { CronogramComponent } from './proforma/cronogram/cronogram.component';
 import { RegisterUserComponent } from './auth/register-user/register-user.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BannerComponent } from './shared/banner/banner.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     EditFormComponent,
     ListFormComponent,
     CronogramComponent,
-    RegisterUserComponent
+    RegisterUserComponent,
+    BannerComponent
   ],
   imports: [
     BrowserModule,

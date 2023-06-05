@@ -15,26 +15,6 @@ p {
     font-weight: 450;
     font-size: 18px;
 }
-
-.banner {
-    width: 100%;
-    border-bottom: 1px solid #252525;
-}
-
-.banner-titles {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.banner-titles h1 {
-    margin-left: 1.5em;
-}
-
-.banner-titles h3 {
-    margin-right: 3em;
-}
-
 .header-container {
     display: flex;
     background-color: #E0EE74;

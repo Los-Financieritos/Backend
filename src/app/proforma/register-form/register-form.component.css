@@ -25,11 +25,9 @@ body{
 .container header{
     position: relative;
     font-size: 30px;
-    font-weight: 600;
     color: #333;
     font-weight: 900;
     text-align: center;
-    font-weight: bolder;
 }
 
 .container form{
@@ -93,7 +91,6 @@ form.secActive .form.first{
 }
 .container form .title{
     display: block;
-    margin-bottom: 8px;
     font-size: 16px;
     font-weight: 500;
     margin: 6px 0;
@@ -179,25 +176,6 @@ form .buttons{
 }
 form .buttons button , .backBtn{
     margin-right: 14px;
-}
-
-.banner {
-    width: 100%;
-    border-bottom: 1px solid #252525;
-}
-
-.banner-titles {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.banner-titles h1 {
-    margin-left: 1.5em;
-}
-
-.banner-titles h3 {
-    margin-right: 3em;
 }
 
 @media (max-width: 750px) {

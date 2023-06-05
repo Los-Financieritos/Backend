@@ -1,0 +1,252 @@
+body{
+    font-family: 'Be Vietnam Pro', sans-serif;
+    color: #000;
+}
+h1,h2,h3{
+    font-family: 'Concert One', cursive;
+}
+
+.icon-title{
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size:25px;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    padding: 20px;
+}
+.title{
+    width: 100%;
+    border-bottom: 0.8px solid #000000;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+form{
+    width: 30%;
+    margin-top: -17px;
+}
+
+.logo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+}
+.col-lg-8 img{
+    width: 45%;
+}
+
+.logo img{
+    width: 50%;
+    margin-bottom: -20px;
+}
+.logo span{
+    font-size: 23px;
+    width: 100%;
+    margin-bottom: 30px;
+    text-align: right;
+}
+
+.example-container input{
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 18px;
+}
+.mat-form-field{
+    width: 100%;
+    margin-bottom: -10px;
+}
+.img  {
+    width: 120%;
+    align-items: center;
+    padding-right: 20%;
+    display: flex;
+}
+
+.card{
+    display: flex;
+    padding-right: 30%;
+}
+.col-lg-12{
+    font-family: 'Be Vietnam Pro', sans-serif;
+    width: 100%;
+}
+.mda-form-msg{
+    font-size: 12px;
+}
+.col-lg-8{
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 90%;
+    margin-top: 50px;
+}
+
+.options{
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 30px;
+margin-bottom: 60px;
+}
+
+button {
+    font-family: 'Be Vietnam Pro', sans-serif;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+
+	background:#eeff81;
+	color: black;
+    text-decoration: none;
+	border: none;
+	cursor: pointer;
+	transition: .3s ease all;
+	border-radius: 5px;
+	position: relative;
+	overflow: hidden;
+    height: 60px;
+    width: 160px;
+}
+ button span {
+
+	position: relative;
+	z-index: 2;
+	transition: .3s ease all;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+button::after {
+	content: "";
+	width: 100%;
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	left: calc(-100% - 80px);
+	border-bottom: 80px solid #ffffa0;
+	border-right: 80px solid transparent;
+	transition: .4s ease-in-out all;
+}
+
+ button:hover::after {
+	left: 0;
+}
+@media only screen and (max-width:1348px){
+    .icon-title{
+        font-size:23px;
+        padding: 20px;
+    }
+    .title{
+        padding-top: 13px;
+    }
+    form{
+        width: 40%;
+        margin-top: -17px;
+    }
+    
+    .col-lg-8 img{
+        width: 50%;
+    }
+    
+    .logo img{
+        width: 28%;
+        margin-bottom: -20px;
+    }
+    .logo span{
+        font-size: 23px;
+        width: 100%;
+    }
+    .img{
+        width: 100%;
+
+    }
+    .example-container input{
+        font-size: 18px;
+    }
+    .mat-form-field{
+        margin-bottom: -20px;
+    }
+    .mda-form-msg{
+        font-size: 12px;
+    }
+    .col-lg-8{
+        width: 90%;
+        margin-top: 50px;
+    }
+    .col-lg-12{
+        width: 100%;
+    }
+    .options{
+        width: 100%;
+    }
+
+     button span {
+        font-size: 18px;
+    }
+     
+
+}
+@media only screen and (max-width:950px){
+     
+    .col-lg-12{
+        width: 100%;
+        font-size: 15px;
+    }
+    .col-lg-8 img{
+        width: 60%;
+    }
+    .logo img{
+        width: 30%;
+    }
+    .logo span{
+        margin-bottom: 20px;
+    }
+    .options{
+        width: 100%; 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    button{
+        margin-top: 20px;
+        width: 150px;
+    }
+     button span {
+        font-size: 18px;
+    }
+}
+@media only screen and (max-width:600px){
+  
+    form{
+        width: 80%;
+    }
+    .col-lg-8 img{
+        width: 100%;
+    }
+    .logo img{
+        width: 30%;
+    }
+    .col-lg-8{
+        width: 90%;
+        margin-top: 50px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column-reverse;
+    }
+    .col-lg-12{
+        width: 100%;
+    }
+    .options{
+        width: 100%; 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    button{
+        margin-top: 20px;
+    }
+     button span {
+        font-size: 18px;
+    }
+}
