@@ -6,6 +6,7 @@ import { RegisterClientComponent } from './client/register-client/register-clien
 import { EditClientComponent } from './client/edit-client/edit-client.component';
 import { RegisterFormComponent } from './proforma/register-form/register-form.component';
 import { EditFormComponent } from './proforma/edit-form/edit-form.component';
+import { RegisterUserComponent } from './auth/register-user/register-user.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -26,7 +27,8 @@ const routes: Routes = [
     { path:'edit-proform', component: EditFormComponent },
   ]
   },
-  { path: 'auth', component: LoginComponent }
+  { path: 'auth', component: LoginComponent},
+  { path: 'register-user', component: RegisterUserComponent  }
 ];
 
 @NgModule({

@@ -1,28 +1,30 @@
-
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Be Vietnam Pro', sans-serif;
 }
+
 body{
-    min-height: 100vh;
     display: flex;
+    height: 91.5vh;
+    width: 100%;
+    margin: auto;
     align-items: center;
     justify-content: center;
     background: whitesmoke;
 }
 .container{
     position: relative;
-    max-width: 1500px;
-    width: 100%;
+    width: 90%;
     border-radius: 6px;
     padding: 30px;
-    margin: 0 15px;
+    margin: auto 15px;
     background-color: #fff;
     box-shadow: 0 5px 10px rgba(0,0,0,0.1);
 }
-.container header{
+
+.container header {
     position: relative;
     font-size: 30px;
     color: #333;
@@ -30,7 +32,7 @@ body{
     font-weight: bolder;
 }
 
-.container form{
+.container form {
     position: relative;
     margin-top: 16px;
     min-height: 490px;
@@ -38,54 +40,61 @@ body{
     background-color: white;
     overflow: hidden;
 }
-.container form .form{
+
+.container form .form {
     position: absolute;
     width: 100%;
     background-color: white;
     transition: 0.3s ease;
 }
 
-.form-first{
+.form-first {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     column-gap: 20px;
 }
 
-.container form .form-first.element{
+.container form .form-first.element {
     opacity: 0;
     pointer-events: none;
     transform: translateX(100%);
 }
 
-form.secActive .form.first{
+form.secActive .form.first {
     opacity: 0;
     pointer-events: none;
     transform: translateX(-100%);
 }
-.container form .title{
+
+.container form .title {
     display: block;
     font-size: 16px;
     font-weight: 500;
-    margin: 6px 0;
+    margin: 10px 0 20px 0;
     color: #333;
 }
-.container form .fields{
+
+.container form .fields {
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
 }
-form .fields .input-field{
+
+form .fields .input-field {
     width: calc(100% / 2 - 15px);
     flex-direction: row;
 }
-.input-field label{
+
+.input-field label {
     text-align: center;
     font-size: 12px;
     font-weight: 500;
     color: #2e2e2e;
     margin-right: 15px;
 }
-.input-field input, select{
+
+.input-field input,
+select {
     outline: none;
     font-size: 14px;
     font-weight: 400;
@@ -98,24 +107,28 @@ form .fields .input-field{
     margin: 8px 0;
     background-color: #F2F2F2;
 }
+
 .input-field input :focus,
-.input-field select:focus{
-    box-shadow: 0 3px 6px rgba(0,0,0,0.13);
+.input-field select:focus {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.13);
 }
+
 .input-field select,
-.input-field input[type="date"]{
+.input-field input[type="date"] {
     color: #707070;
 }
-.input-field input[type="date"]:valid{
+
+.input-field input[type="date"]:valid {
     color: #333;
 }
-.container form button, .backBtn{
+
+.container form button,
+.backBtn {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 45px;
-    max-width: 200px;
-    width: 100%;
+    width: 200px;
     border: none;
     outline: none;
     color: #fff;
@@ -125,61 +138,98 @@ form .fields .input-field{
     transition: all 0.3s linear;
     cursor: pointer;
 }
-.container form .btnText{
+
+.container form .btnText {
     font-size: 14px;
     font-weight: 400;
 }
-form button:hover{
+
+form button:hover {
     background-color: #d7f205;
 }
+
 form button i,
-form .backBtn i{
+form .backBtn i {
     margin: 0 6px;
 }
-form .backBtn i{
+
+form .backBtn i {
     transform: rotate(180deg);
 }
-form .buttons{
+
+form .buttons {
     display: flex;
     align-items: center;
 }
-form .buttons button , .backBtn{
+
+form .buttons button,
+.backBtn {
     margin-right: 14px;
 }
 
-.banner {
-    width: 100%;
-    border-bottom: 1px solid #252525;
-}
 
-.banner-titles {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.banner-titles h1 {
-    margin-left: 1.5em;
-}
-
-.banner-titles h3 {
-    margin-right: 3em;
-}
-
-@media (max-width: 750px) {
-    .container form{
+@media (max-width: 900px) {
+    .container form {
         overflow-y: scroll;
     }
-    .container form::-webkit-scrollbar{
-       display: none;
+
+    .container form::-webkit-scrollbar {
+        display: none;
     }
-    form .fields .input-field{
+
+    form .fields .input-field {
         width: calc(100% / 2 - 15px);
+    }
+
+    .input-field {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .input-field label {
+        text-align: start;
+        font-size: 14px;
+        margin-right: 0;
+    }
+
+    .element {
+        width: 100%;
+        margin: 0 35px;
+    }
+
+    .boton-guardar {
+        margin: 0 35px;
     }
 }
 
-@media (max-width: 550px) {
-    form .fields .input-field{
+@media (max-width: 600px) {
+    form .fields .input-field {
         width: 100%;
+    }
+
+    .input-field {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .element {
+        width: 100%;
+        margin: 0 40px;
+    }
+
+    .form-first {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        column-gap: 20px;
+    }
+
+    .input-field label {
+        text-align: start;
+        font-size: 13px;
+        margin-right: 0;
+    }
+
+    .boton-guardar {
+        margin: 0 auto;
     }
 }

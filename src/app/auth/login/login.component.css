@@ -18,28 +18,12 @@ p {
 
 button {
     font-family: 'Be Vietman Pro', sans-serif;
-    ;
+
 }
 
 span {
     font-family: 'Be Vietnam Pro', sans-serif;
 }
-
-.banner {
-    width: 100%;
-    border-bottom: 1px solid #252525;
-}
-
-.banner-titles {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.banner-titles h1 {
-    margin-left: 1.5em;
-}
-
 
 .clearfix {
     height: 50px;
@@ -254,7 +238,7 @@ input {
     justify-content: space-between;
     align-items: center;
     margin-top: 20px;
-
+    text-decoration: none;
 }
 
 .btns-alternative .text {
