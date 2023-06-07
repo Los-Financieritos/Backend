@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule} from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PrincipalComponent } from './home/principal/principal.component';
 import { LoginComponent } from './auth/login/login.component';
@@ -7,13 +7,14 @@ import { EditClientComponent } from './client/edit-client/edit-client.component'
 import { RegisterFormComponent } from './proforma/register-form/register-form.component';
 import { EditFormComponent } from './proforma/edit-form/edit-form.component';
 import { RegisterUserComponent } from './auth/register-user/register-user.component';
+import { AuthGuard, domainGuard } from './auth/auth-guard.service'
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   {
     path: 'home',
     component: PrincipalComponent,
-    //canActivate: [AuthGuard],
+    canActivate: [domainGuard],
   },
   { path: 'client',
     children: [
@@ -27,13 +28,14 @@ const routes: Routes = [
     { path:'edit-proform', component: EditFormComponent },
   ]
   },
-  { path: 'auth', component: LoginComponent},
+  { path: 'login', component: LoginComponent},
   { path: 'register-user', component: RegisterUserComponent  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+
 })
 export class AppRoutingModule {
 

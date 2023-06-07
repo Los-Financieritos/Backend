@@ -9,32 +9,40 @@
 
 
     <div class="col-md-6">
-
-      <div class="logo">
+        <div class="logo">
         <img src="../../../assets/logo-fondo.png" alt="logo-con-fondo">
         <div> <span> Inicio de sesión</span> </div>
       </div>
 
+      <div class="alert alert-danger" *ngIf="error">
+        <p>{{ error }}</p>
+      </div>
+
       <div class="form-container">
-        <form [formGroup]="formInfo" (ngSubmit)="sendForm()">
+        <form [formGroup]="formInfo" (ngSubmit)="loginForm()">
 
           <div class="row-1">
             <div class="input-1">
-              <label>Usuario</label>
+              <label>Email</label>
       
-              <input type="text" formControlName="user" autocomplete="off" />
+              <input type="email" formControlName="email" autocomplete="off" />
               <i class="delete" [ngClass]="viewPsw ? 'fa-solid fa-eye chico': 'fa-solid fa-eye-slash grande'"
-                (click)="changeViewPassword()"></i>
+                ></i>
             
             </div>
 
             <div *ngIf="
-            formInfo.get('user')?.hasError('required') &&
-            formInfo.get('user')?.touched
+            formInfo.get('email')?.hasError('required') &&
+            formInfo.get('email')?.touched
             ">
               <span class="mda-form-msg"> Este campo es obligatorio </span>
             </div>
-
+            <div *ngIf="
+            formInfo.get('email')?.hasError('email') &&
+            formInfo.get('email')?.touched
+            ">
+              <span class="mda-form-msg"> No tiene formato de correo </span>
+            </div>
             <div class="input-2">
               <label>Contraseña</label>
 
@@ -59,7 +67,7 @@
             </a>
           </div>
           <div class="btn-send">
-            <button type="submit">
+            <button type="submit" [ngClass]="formInfo.invalid ? 'disabled' :''" [disabled]="formInfo.invalid">
               <span>Ingresar</span>
             </button>
           </div>

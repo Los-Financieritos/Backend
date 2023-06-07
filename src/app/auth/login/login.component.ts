@@ -1,56 +1,119 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
+import { Credentials, Login, User } from '../user.model';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   formInfo!: FormGroup;
   viewPsw: boolean = false;
+  error!: string;
+  isLoading = false;
 
-  constructor(private fb: FormBuilder) {
+  arrayUsers: User[] = [];
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.createForm();
   }
 
   createForm() {
     this.formInfo = this.fb.group({
-      user: ['', [Validators.required, Validators.minLength(5)]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
     })
   }
 
+  ngOnInit() {
+    this.authService.getUsers().subscribe(
+      (res) => {
+  
+        for (let i of res) {
+          this.arrayUsers.push(i);
+        }
+  
+        this.authService.dataUsers$.next(this.arrayUsers);
+        this.authService.arrayUsers = this.arrayUsers;
+      });
+  }
 
   validarForm() {
 
-    if (this.formInfo.get('user')?.valid && this.formInfo.get('password')?.valid) {
+    if (this.formInfo.get('email')?.valid && this.formInfo.get('password')?.valid) {
       return true;
     }
     return false;
 
   }
 
-
-  sendForm() {
+  loginForm() {
 
     if (this.validarForm()) {
 
-      let object = {
-        "data": {
-          "user": this.formInfo.get('user')?.value,
-          "password": this.formInfo.get('password')?.value,
-        }
+      const credentials: Credentials = {
+
+        "email": this.formInfo.get('email')?.value,
+        "password": this.formInfo.get('password')?.value,
+
       }
-      console.log(object);
+      console.log('send : ' + credentials.email + " " +credentials.password);
+      console.log(this.authService.arrayUsers);
 
-
-    } else {
-
+      this.authService.ingresar(credentials).subscribe({
+        next: (res) => {
+          console.log(res);
+        },
+        error: (error) => {
+          console.log(error);
+          this.error = error;
+          this.isLoading = false;
+        }
+      });
     }
-
   }
+  /*this.authService.getUsers().subscribe(
+    (res) => {
+
+      for (let i of res) {
+        this.arrayUsers.push(i);
+      }
+
+      this.authService.dataUsers$.next(this.arrayUsers);
+      this.authService.arrayUsers = this.arrayUsers;
+    });
+  console.log(this.authService.arrayUsers);
+
+ 
+      this.authService.login(credentials).subscribe({
+        next: (res) => {
+          localStorage.setItem('platzi_token', res.token);
+          this.isLoading = false;
+          this.router.navigateByUrl("/home");
+          this.formInfo.reset();
+        },
+        error: (error) => {
+          console.log(error);
+          this.error = error;
+          this.isLoading = false;
+        }
+  
+      });
+
+  this.authService.ingresar(credentials).subscribe({
+    next: (res) => {
+      console.log(res);
+    },
+    error: (error) => {
+      console.log(error);
+      this.error = error;
+      this.isLoading = false;
+    }
+  });
+  */
+
 
   changeViewPassword() {
     this.viewPsw = this.viewPsw ? false : true;

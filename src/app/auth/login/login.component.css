@@ -129,7 +129,14 @@ button::after {
 button:hover::after {
     left: 0;
 }
-
+.disabled{
+    background: #252525;
+    transition: none;
+}
+.disabled:hover::after{
+    left: calc(-100% - 80px);
+    transition: none;
+}
 form {
     display: flex;
     width: 100%;

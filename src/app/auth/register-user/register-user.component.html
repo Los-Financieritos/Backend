@@ -33,25 +33,25 @@
             </div>
             <div *ngIf="formInfo.get('name')?.hasError('maxlength')">
               <span class="mda-form-msg">
-                Este campo debe tener como máximo 20 caracteres
+                Este campo debe tener como máximo 25 caracteres
               </span>
             </div>
             <!------------------------------Apellidos--------------------------------------->
             <div class="input-1">
               <label>Apellidos</label>
-              <input formControlName="lastName" type="text" class="form-control" />
+              <input formControlName="lastname" type="text" class="form-control" />
 
             </div>
 
             <div *ngIf="
-                       formInfo.get('lastName')?.hasError('required') &&
-                       formInfo.get('lastName')?.touched
+                       formInfo.get('lastname')?.hasError('required') &&
+                       formInfo.get('lastname')?.touched
                        ">
               <span class="mda-form-msg"> Este campo es obligatorio </span>
             </div>
-            <div *ngIf="formInfo.get('lastName')?.hasError('maxlength')">
+            <div *ngIf="formInfo.get('lastname')?.hasError('maxlength')">
               <span class="mda-form-msg">
-                Este campo debe tener como máximo 20 caracteres
+                Este campo debe tener como máximo 250 caracteres
               </span>
             </div>
             <!------------------------------Usuario--------------------------------------->
@@ -127,11 +127,15 @@
             formInfo.get('password2')?.touched ">
               <span class="mda-form-msg"> Este campo es obligatorio </span>
             </div>
-
+            <div *ngIf=" 
+            (formInfo.get('password1')?.value != formInfo.get('password2')?.value) &&
+            formInfo.get('password2')?.touched ">
+              <span class="mda-form-msg"> Las contraseñas no coinciden </span>
+            </div>
 
 
             <div class="btn-send">
-              <button type="submit">
+              <button type="submit" [ngClass]="formInfo.invalid ? 'disabled' : ''" [disabled]="formInfo.invalid">
                 <span>Registrar</span>
               </button>
             </div>

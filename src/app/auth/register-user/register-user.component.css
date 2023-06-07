@@ -16,10 +16,6 @@ p {
     font-size: 18px;
 }
 
-button {
-    font-family: 'Be Vietman Pro', sans-serif;
-
-}
 
 span {
     font-family: 'Be Vietnam Pro', sans-serif;
@@ -90,7 +86,7 @@ span {
 }
 
 button {
-    font-family: 'Be Vietnam Pro', sans-serif;
+    font-family: 'Be Vietman Pro', sans-serif;
     background: #000000;
     color: #fff;
     text-decoration: none;
@@ -129,7 +125,14 @@ button::after {
 button:hover::after {
     left: 0;
 }
-
+.disabled{
+    background: #252525;
+    transition: none;
+}
+.disabled:hover::after{
+    left: calc(-100% - 80px);
+    transition: none;
+}
 form {
     display: flex;
     width: 100%;
