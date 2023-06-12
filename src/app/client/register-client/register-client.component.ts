@@ -62,32 +62,32 @@ export class RegisterClientComponent {
 
     };
 
-    this.clientService.getClientById(client.dni).subscribe(res =>{
-      this.cli = res;
-    });
+    this.clientService.getClientById(client.dni).subscribe({ next: (data) => {
+      this.cli = data;
+    }});
 
     console.log(this.cli.dni + 'dd' + client.dni);
-    if(this.cli.dni === client.dni){
-      this.snackBar.open('Ya existe un empleado con el mismo DNI', '', {
-        duration: 2000,
-      });
-      return;
-    }
-    this.clientService.addClient(client).subscribe({
-      next: (data) => {
-        this.snackBar.open('El cliente fue registrado con éxito!', '', {
-          duration: 2000,
-        });
-        
-      },
-      error: (err) => {
-        
-        this.snackBar.open('No se puede registrar al cliente!', '', {
-          duration: 2000,
-        });
-        
-      },
+if (this.cli.dni === client.dni) {
+  this.snackBar.open('Ya existe un empleado con el mismo DNI', '', {
+    duration: 2000,
+  });
+  return;
+}
+this.clientService.addClient(client).subscribe({
+  next: (data) => {
+    this.snackBar.open('El cliente fue registrado con éxito!', '', {
+      duration: 2000,
     });
+
+  },
+  error: (err) => {
+
+    this.snackBar.open('No se puede registrar al cliente!', '', {
+      duration: 2000,
+    });
+
+  },
+});
   }
 
 

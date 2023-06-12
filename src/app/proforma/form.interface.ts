@@ -19,3 +19,9 @@ export interface Form {
     sdegMensual: number
   }
   
+
+  export interface RowCronogram {
+    id: number
+
+    
+  }
