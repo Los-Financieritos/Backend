@@ -1,25 +1,19 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
     font-family: 'Be Vietnam Pro', sans-serif;
 }
 
-body{
+.back{
     display: flex;
-    height: 91.5vh;
-    width: 100%;
-    margin: auto;
-    align-items: center;
-    justify-content: center;
+    padding: 5% 20px;
     background: whitesmoke;
+    justify-content: center;
 }
 .container{
     position: relative;
     width: 90%;
     border-radius: 6px;
     padding: 30px;
-    margin: auto 15px;
+    margin: 0 15px;
     background-color: #fff;
     box-shadow: 0 5px 10px rgba(0,0,0,0.1);
 }
@@ -166,7 +160,10 @@ form .buttons button,
 .backBtn {
     margin-right: 14px;
 }
-
+.message-error{
+    color: red;
+    font-size: 13px;
+}
 
 @media (max-width: 900px) {
     .container form {

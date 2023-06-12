@@ -12,41 +12,51 @@ import { catchError, tap } from 'rxjs/operators';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   logged = new BehaviorSubject<boolean>(false);
-  vacio!:CredentialsUser;
+  vacio!: CredentialsUser;
   user = new BehaviorSubject<CredentialsUser>(this.vacio);
-  usuario!: Subject<User>;
+  usuario$!: Subject<User>;
 
   isLoggedIn: boolean = false;
-  dataUsers$!:Subject<User[]>;
-  arrayUsers:User[]=[];
-
+  dataUsers$!: Subject<User[]>;
+  arrayUsers: User[] = [];
+  keepLogin: boolean = false;
+  
   constructor(private http: HttpClient, private router: Router) {
-    this.usuario = new Subject<User>();
+    this.usuario$ = new Subject<User>();
     this.dataUsers$ = new Subject<User[]>();
   }
 
   public isLogged(): boolean {
     return this.isLoggedIn;
   }
+
   signup(user: User): Observable<User> {
-    return this.http.post<User>(environment.baseUrl + '/api/users', user);
+    return this.http.post<User>(environment.baseUrl + '/api/users', user).pipe(
+      catchError((error) => {
+        let errorMessage = '';
+        if (error.error && error.error.message) {
+          errorMessage = error.error.message;
+        }
+        return throwError(errorMessage);
+      }));
   }
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(environment.baseUrl + '/api/users');
   }
-  ingresar(cred:Credentials) : Observable<User>{
+  ingresar(cred: Credentials): Observable<User> {
 
-        for (let user of this.arrayUsers){
-          if (user.email == cred.email && user.password == cred.password){
-            this.logged.next(true);
-            this.isLoggedIn = true;
-            this.usuario.next(user);
-            console.log(user);
-            this.router.navigate(['/home']);
-          }
-        }
-       
-    return this.usuario;
+    for (let user of this.arrayUsers) {
+      if (user.email == cred.email && user.password == cred.password) {
+        this.logged.next(true);
+        this.isLoggedIn = true;
+        this.usuario$.next(user);
+        console.log(user);
+        this.keepLogin = true;
+        this.router.navigate(['/home/', user.id]);
+      }
+    }
+
+    return this.usuario$;
   }
 
   login(credentials: Credentials): Observable<CredentialsUser> {

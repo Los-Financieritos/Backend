@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../user.model';
 import { AuthService } from '../auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register-user',
@@ -11,8 +12,9 @@ import { AuthService } from '../auth.service';
 })
 export class RegisterUserComponent {
   formInfo!: FormGroup;
-
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  dato: string = '';
+  constructor(private fb: FormBuilder, private authService: AuthService,
+    private router: Router, private snackbar: MatSnackBar) {
     this.createForm();
   }
 
@@ -51,28 +53,33 @@ export class RegisterUserComponent {
 
     if (this.validarForm()) {
 
-    let user:User = {
-      "id":0,
-      "name": this.formInfo.get('name')?.value,
-      "lastname": this.formInfo.get('lastname')?.value,
-      "username": this.formInfo.get('username')?.value,
-      "company": this.formInfo.get('company')?.value,
-      "email": this.formInfo.get('email')?.value,
-      "password": this.formInfo.get('password1')?.value,
+      let user: User = {
+        "id": 0,
+        "name": this.formInfo.get('name')?.value,
+        "lastname": this.formInfo.get('lastname')?.value,
+        "username": this.formInfo.get('username')?.value,
+        "company": this.formInfo.get('company')?.value,
+        "email": this.formInfo.get('email')?.value,
+        "password": this.formInfo.get('password1')?.value,
 
-    }
-    console.log(user);
-    this.authService.signup(user).subscribe({
-      next: (response) => {
-        console.log(response);
-        //this.router.navigateByUrl("/login");     
-      },
-      error: (error) => {
-        console.log(error);
       }
 
-    });
-  }
+      this.authService.signup(user).subscribe({
+        next: (response) => {
+
+          this.snackbar.open('El usuario fue registrado con éxito!', '', {
+            duration: 2000,
+          });
+          this.router.navigateByUrl("/login");
+        },
+        error: (error) => {
+          this.snackbar.open('Ya existe un usuario con el correo o nombre de usuario ingresado', '', {
+            duration: 2000,
+          });
+        }
+
+      });
+    }
 
   }
 }

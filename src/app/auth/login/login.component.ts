@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { Credentials, Login, User } from '../user.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,9 @@ export class LoginComponent implements OnInit {
   isLoading = false;
 
   arrayUsers: User[] = [];
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(private fb: FormBuilder, 
+    private authService: AuthService,
+     private router: Router, private snackbar:MatSnackBar) {
     this.createForm();
   }
 
@@ -62,14 +65,18 @@ export class LoginComponent implements OnInit {
       console.log('send : ' + credentials.email + " " +credentials.password);
       console.log(this.authService.arrayUsers);
 
+
+
       this.authService.ingresar(credentials).subscribe({
         next: (res) => {
           console.log(res);
         },
         error: (error) => {
-          console.log(error);
-          this.error = error;
+          this.snackbar.open('Las credenciales son incorrectas', '', {
+            duration: 2000,
+          });
           this.isLoading = false;
+
         }
       });
     }

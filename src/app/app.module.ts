@@ -18,7 +18,8 @@ import { LoginComponent } from './auth/login/login.component';
 import { ErrorInterceptorService } from './auth/error-interceptor.service';
 import { TokenInterceptorService } from './auth/token-interceptor.interceptor';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
-
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,9 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSnackBarModule,
+    BrowserAnimationsModule
   ],
   providers: [
     {
