@@ -10,11 +10,11 @@ import { RegisterUserComponent } from './auth/register-user/register-user.compon
 import { AuthGuard, domainGuard } from './auth/auth-guard.service'
 
 const routes: Routes = [
-  { path: '', redirectTo: '/home/:id', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
-    path: 'home/:id',
+    path: 'home',
     component: PrincipalComponent,
-    //canActivate: [domainGuard],
+    canActivate: [domainGuard],
   },
   {
     path: 'client',
