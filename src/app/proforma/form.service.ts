@@ -10,10 +10,11 @@ import { Form } from './form.interface';
 })
 export class FormService {
 
-  entidades$!:Subject<Entidad[]>;
+    entidades$!:Subject<Entidad[]>;
 
   constructor(private http: HttpClient) {
     this.entidades$ = new Subject<Entidad[]>();
+
    }
 
   getEntidades(): Observable<Entidad[]> {

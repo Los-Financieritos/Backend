@@ -5,24 +5,27 @@
     font-family: 'Be Vietnam Pro', sans-serif;
 }
 
-.back{
+.back {
     display: flex;
     padding: 5% 20px;
     background: whitesmoke;
     justify-content: center;
 }
-.container{
+
+.container {
     width: 100%;
     border-radius: 6px;
     padding: 30px;
     margin: auto 20px;
     background-color: #fff;
-    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
-form{
+
+form {
     margin: 0 auto;
     display: flex;
 }
+
 .element {
     margin: 0 auto;
     display: flex;
@@ -30,15 +33,18 @@ form{
     justify-content: center;
     width: 90%;
 }
-.content{
+
+.content {
     margin: 0 auto;
     width: 80%;
 }
+
 .container header {
     font-size: 30px;
     color: #333;
     font-weight: 900;
     text-align: center;
+    margin: 10px auto 30px auto;
 }
 
 .container form {
@@ -80,7 +86,7 @@ form{
 }
 
 
- .title {
+.title {
     display: block;
     font-size: 16px;
     font-weight: 500;
@@ -135,12 +141,18 @@ button {
     cursor: pointer;
     margin-top: 25px;
 }
-button:disabled{
+
+button:disabled {
     background-color: #fcf8f8;
-    cursor:default;
+    cursor: default;
 }
 
-.message-error{
+caption {
+    font-size: 23px;
+    margin: 15px 0 30px 0;
+}
+
+.message-error {
     color: red;
     font-size: 13px;
 }
@@ -151,36 +163,53 @@ button:disabled{
     align-items: center;
     justify-content: center;
 }
-.contenedor-2 label{
+
+.contenedor-2 label {
     font-size: 14px;
-    margin:10px 0;
+    margin: 10px 0;
 }
+
 .advice {
     color: red;
     font-size: 13px;
     margin: 10px 0;
 }
-@media screen and (max-width: 1500px){
+
+.button-back {
+    width: 50px;
+    height: 50px;
+    background-color: #d5f08b;
+    color: black;
+    margin: 0;
+    position: absolute;
+}
+
+@media screen and (max-width: 1500px) {
     .element {
         width: 95%;
         margin: 0 auto;
     }
-    .content{
+
+    .content {
         margin: 0 auto;
         width: 85%;
     }
-    .input-field{
+
+    .input-field {
         display: flex;
         flex-direction: column;
         width: 100%;
     }
+
     .input-field label {
         text-align: start;
     }
-    .input-field input{
+
+    .input-field input {
         width: 100%;
     }
-    .contenedor-3 .input-field{
+
+    .contenedor-3 .input-field {
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -199,26 +228,31 @@ button:disabled{
         flex-direction: column;
         justify-content: center;
     }
-    .content{
-        
+
+    .content {
+
         margin: 0 auto;
         width: 85%;
     }
-    .contenedor-3{
+
+    .contenedor-3 {
         display: flex;
         flex-direction: row;
-     
+
     }
-    .input-field{
+
+    .input-field {
         display: flex;
         flex-direction: column;
         justify-content: start;
         width: 100%;
     }
-    .input-field label{
+
+    .input-field label {
         text-align: start;
     }
-    .contenedor-3 .input-field{
+
+    .contenedor-3 .input-field {
         display: flex;
         flex-direction: row;
         align-items: center;
