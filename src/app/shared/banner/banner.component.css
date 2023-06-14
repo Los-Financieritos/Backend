@@ -19,6 +19,8 @@ p {
 .banner {
     width: 100%;
     border-bottom: 1px solid #252525;
+    align-items: center;
+    padding: 10px 0;
 }
 
 .banner-titles {
@@ -54,6 +56,7 @@ p {
 
 
 @media screen and (max-width: 500px) {
+ 
     .banner-titles h1 {
         margin-left: 0.6em;
         font-size: 20px;

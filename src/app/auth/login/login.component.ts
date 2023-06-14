@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
-import { Credentials, Login, User } from '../user.model';
+import { Credentials, User } from '../user.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -11,15 +11,18 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+
   formInfo!: FormGroup;
   viewPsw: boolean = false;
   error!: string;
   isLoading = false;
 
   arrayUsers: User[] = [];
-  constructor(private fb: FormBuilder, 
+
+
+  constructor(private fb: FormBuilder,
     private authService: AuthService,
-     private router: Router, private snackbar:MatSnackBar) {
+    private router: Router, private snackbar: MatSnackBar) {
     this.createForm();
   }
 
@@ -33,11 +36,11 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.authService.getUsers().subscribe(
       (res) => {
-  
+
         for (let i of res) {
           this.arrayUsers.push(i);
         }
-  
+
         this.authService.dataUsers$.next(this.arrayUsers);
         this.authService.arrayUsers = this.arrayUsers;
       });
@@ -62,9 +65,16 @@ export class LoginComponent implements OnInit {
         "password": this.formInfo.get('password')?.value,
 
       }
-      console.log('send : ' + credentials.email + " " +credentials.password);
-      console.log(this.authService.arrayUsers);
+      
+      const exist = this.authService.arrayUsers.find(user => 
+        (user.email === credentials.email && user.password === credentials.password));
 
+      if(!exist){
+        this.snackbar.open('Las credenciales son incorrectas.', '', {
+          duration: 2000,
+        });
+        return;
+      }
 
 
       this.authService.ingresar(credentials).subscribe({
@@ -72,7 +82,7 @@ export class LoginComponent implements OnInit {
           console.log(res);
         },
         error: (error) => {
-          this.snackbar.open('Las credenciales son incorrectas', '', {
+          this.snackbar.open('No puede ingresar!', '', {
             duration: 2000,
           });
           this.isLoading = false;
@@ -81,46 +91,6 @@ export class LoginComponent implements OnInit {
       });
     }
   }
-  /*this.authService.getUsers().subscribe(
-    (res) => {
-
-      for (let i of res) {
-        this.arrayUsers.push(i);
-      }
-
-      this.authService.dataUsers$.next(this.arrayUsers);
-      this.authService.arrayUsers = this.arrayUsers;
-    });
-  console.log(this.authService.arrayUsers);
-
- 
-      this.authService.login(credentials).subscribe({
-        next: (res) => {
-          localStorage.setItem('platzi_token', res.token);
-          this.isLoading = false;
-          this.router.navigateByUrl("/home");
-          this.formInfo.reset();
-        },
-        error: (error) => {
-          console.log(error);
-          this.error = error;
-          this.isLoading = false;
-        }
-  
-      });
-
-  this.authService.ingresar(credentials).subscribe({
-    next: (res) => {
-      console.log(res);
-    },
-    error: (error) => {
-      console.log(error);
-      this.error = error;
-      this.isLoading = false;
-    }
-  });
-  */
-
 
   changeViewPassword() {
     this.viewPsw = this.viewPsw ? false : true;

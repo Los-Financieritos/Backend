@@ -1,18 +1,9 @@
-
+<app-banner [login]="false"></app-banner>
 <div class="back">
     <div class="container">
-        <header>Modificar la información de un cliente </header>
-        <form [formGroup]="myForm" autocomplete="on" (ngSubmit)="saveClient()">
+        <header>Registro de Cliente</header>
+        <form [formGroup]="myForm" autocomplete="on">
             <div class="form-first">
-
-                <div class="input-field">
-                    <label>Ingrese el DNI del cliente: </label>
-                    <input type="text" formControlName="dni">
-                </div>
-                <div *ngIf="myForm.get('dni')?.invalid &&
-                myForm.get('dni')?.touched" class="message-error">
-                    Este campo debe tener como máximo 8 caracteres y deben ser digitos </div>
-
                 <div class="element">
                     <span class="title">Información personal</span>
 
@@ -41,12 +32,26 @@
                     <div *ngIf="myForm.get('lastname')?.hasError('maxLenght')  &&
                 myForm.get('lastname')?.touched" class="message-error">
                         Este campo debe tener como máximo 25 caracteres </div>
-                        
+
+
+                    <div class="input-field">
+                        <label>DNI</label>
+                        <input type="text" formControlName="dni">
+                    </div>
+                    <div *ngIf="myForm.get('dni')?.invalid &&
+                    myForm.get('dni')?.touched" class="message-error">
+                        Este campo debe tener como máximo 8 caracteres y deben ser digitos </div>
+
 
                     <div class="input-field">
                         <label>Fecha de Nacimiento</label>
                         <input type="date" formControlName="birth">
                     </div>
+                    <div *ngIf="
+                    myForm.get('birth')?.invalid &&
+                    myForm.get('birth')?.touched" class="message-error">
+                        Este campo es obligatorio</div>
+
 
                     <div class="input-field">
                         <label>Nacionalidad</label>
@@ -70,6 +75,10 @@
                             <option>Otros</option>
                         </select>
                     </div>
+                    <div *ngIf="myForm.get('gender')?.invalid &&
+                    myForm.get('gender')?.touched" class="message-error">
+                        Seleccione una opción </div>
+
 
                     <div class="input-field">
                         <label>Teléfono Personal</label>
@@ -90,6 +99,10 @@
                             <option>Divorciado</option>
                         </select>
                     </div>
+                    <div *ngIf="myForm.get('state_civil')?.invalid &&
+                    myForm.get('state_civil')?.touched" class="message-error">
+                        Seleccione una opción </div>
+
 
                     <div class="input-field">
                         <label>Domicilio</label>
@@ -138,7 +151,6 @@
                         <label>DNI</label>
                         <input type="text" formControlName="dni_partner">
                     </div>
-
                     <div *ngIf="myForm.get('dni_partner')?.invalid &&
                 myForm.get('dni_partner')?.touched" class="message-error">
                         Este campo debe tener como máximo 8 caracteres y deben ser digitos </div>
@@ -157,6 +169,10 @@
                         <label>Fecha de Nacimiento</label>
                         <input type="date" formControlName="birthPartner">
                     </div>
+                    <div *ngIf="
+                    myForm.get('birthPartner')?.invalid &&
+                    myForm.get('birthPartner')?.touched" class="message-error">
+                        Este campo es obligatorio</div>
 
                     <span class="title">Información laboral</span>
 
@@ -189,13 +205,23 @@
                         <label>Estimado de ingresos mensuales netos</label>
                         <input type="number" formControlName="income">
                     </div>
+                    <div *ngIf="
+                    myForm.get('income')?.hasError('required') &&
+                    myForm.get('income')?.touched" class="message-error">
+                        Este campo es obligatorio</div>
+                    <div *ngIf="
+                        myForm.get('income')?.hasError('min') &&
+                        myForm.get('income')?.touched" class="message-error">
+                        El valor debe ser mayor a 0</div>
+                </div>
+            </div>
+            <div class="boton-guardar">
+                <button [disabled]="myForm.invalid" 
+                type="button" (click)="saveClient()"
+                mat-raised-button>
+                    Agregar
+                </button>
 
-                </div>
-                <div class="boton-guardar">
-                    <button class="nextBtn" type="submit" [disabled]="myForm.invalid">
-                        Modificar
-                    </button>
-                </div>
             </div>
         </form>
     </div>

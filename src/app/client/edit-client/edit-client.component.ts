@@ -12,7 +12,7 @@ import { Client } from '../client.interface';
 })
 export class EditClientComponent {
   myForm !: FormGroup;
-  cli!: Client;
+
   constructor(private fb: FormBuilder,
     private clientService: ClientService,
     private snackBar: MatSnackBar,
@@ -25,9 +25,9 @@ export class EditClientComponent {
       dni: ['', [Validators.required, Validators.pattern('^[0-9]{8}$')]],
       birth: ['', [Validators.required]],
       nationality: ['', [Validators.required, Validators.maxLength(25)]],
-      gender: ['Seleccionar', [Validators.required]],
+      gender: ['Seleccionar', [this.comboValidator]],
       phone: ['', [Validators.required, Validators.pattern('^[0-9]{9}$')]],
-      state_civil: ['Seleccionar', [Validators.required]],
+      state_civil: ['Seleccionar', [this.comboValidator]],
       direction: ['', [Validators.required, Validators.maxLength(60)]],
       namePartner: ['', [Validators.required, Validators.maxLength(25)]],
       lastnamePartner: ['', [Validators.required, Validators.maxLength(25)]],
@@ -36,7 +36,15 @@ export class EditClientComponent {
       birthPartner: ['', [Validators.required]],
       profession: ['', [Validators.required, Validators.maxLength(40)]],
       company: ['', [Validators.required, Validators.maxLength(40)]],
-      income: ['', [Validators.required]]
+      income: ['', [Validators.required, Validators.min(0)]]
     })
+  }
+  comboValidator(control: { value: string; }) {
+
+    return control.value !== 'Seleccionar' ? null : { invalidDate:true};
+  }
+
+  saveClient() {
+
   }
 }

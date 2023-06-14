@@ -129,14 +129,17 @@ button::after {
 button:hover::after {
     left: 0;
 }
-.disabled{
+
+.disabled {
     background: #252525;
     transition: none;
 }
-.disabled:hover::after{
+
+.disabled:hover::after {
     left: calc(-100% - 80px);
     transition: none;
 }
+
 form {
     display: flex;
     width: 100%;
@@ -200,19 +203,23 @@ input {
 
 .icon-see {
     cursor: pointer;
-    margin: 0 15px; 
+    margin: 0 15px;
 }
-.chico{
+
+.chico {
     font-size: 27px;
 }
-.grande{
+
+.grande {
     font-size: 24.75px;
 }
+
 .mda-form-msg {
     font-family: 'Inter', sans-serif;
-    font-size: 17px;
+    font-size: 13px;
     color: red;
-    margin-left: 170px;
+    margin-bottom: 15px;
+    margin-left: 30%;
 }
 
 .forget-content {
@@ -291,6 +298,9 @@ input {
     input {
         width: 52%;
     }
+    .mda-form-msg{
+        margin-left: 25%;
+    }
 }
 
 @media screen and (max-width: 1080px) {
@@ -332,6 +342,9 @@ input {
     .btns-adicionals {
         margin-left: -30px;
     }
+    .mda-form-msg{
+        margin-left: 0;
+    }
 }
 
 @media screen and (max-width: 890px) {
@@ -364,6 +377,7 @@ input {
     .form-container,
     .logo {
         width: 80%;
+        margin-top: 0;
     }
 
     .logo span {
@@ -371,13 +385,18 @@ input {
     }
 
     input {
-        width: 75%;
-
+        width: 70%;
+        margin-bottom: 0;
     }
 
     .input-1,
     .input-2 {
-        margin-bottom: 24px;
+        margin-bottom: 15px;
+        margin-top: 25px;
+    }
+
+    .mda-form-msg {
+        margin-bottom: 20px;
     }
 
     .forget-password {
@@ -387,13 +406,14 @@ input {
 
 @media screen and (max-width: 560px) {
     input {
-        width: 70%;
+        width: 65%;
     }
+
 }
 
 @media screen and (max-width: 464px) {
     input {
-        width: 65%;
+        width: 60%;
     }
 
     .btns-alternative {
@@ -412,13 +432,13 @@ input {
 
 @media screen and (max-width: 410px) {
     input {
-        width: 60%;
+        width: 55%;
     }
 }
 
 @media screen and (max-width: 360px) {
     input {
-        width: 55%;
+        width: 50%;
 
     }
 

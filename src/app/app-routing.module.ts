@@ -7,7 +7,8 @@ import { EditClientComponent } from './client/edit-client/edit-client.component'
 import { RegisterFormComponent } from './proforma/register-form/register-form.component';
 import { EditFormComponent } from './proforma/edit-form/edit-form.component';
 import { RegisterUserComponent } from './auth/register-user/register-user.component';
-import { AuthGuard, domainGuard } from './auth/auth-guard.service'
+import { domainGuard } from './auth/auth-guard.service'
+import { CronogramComponent } from './proforma/cronogram/cronogram.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -28,6 +29,7 @@ const routes: Routes = [
     children: [
       { path: 'register-proform', component: RegisterFormComponent },
       { path: 'edit-proform', component: EditFormComponent },
+      { path: 'cronograma', component: CronogramComponent}
     ]
   },
   { path: 'login', component: LoginComponent },

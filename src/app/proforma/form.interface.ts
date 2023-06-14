@@ -20,8 +20,16 @@ export interface Form {
   }
   
 
-  export interface RowCronogram {
-    id: number
+  export interface RowCrono {
+    position: number
+    period: number
+    saldoini: number
+    amortization: number
+    intereses: number
+    seguro_degr: number
+    seguro_inm : number
+    saldofini:number
+    cuota_mensual: number
 
     
   }

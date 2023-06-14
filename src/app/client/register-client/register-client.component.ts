@@ -12,7 +12,7 @@ import { Client } from '../client.interface';
 })
 export class RegisterClientComponent {
   myForm !: FormGroup;
-  cli!: Client;
+
   constructor(private fb: FormBuilder,
     private clientService: ClientService,
     private snackBar: MatSnackBar,
@@ -25,9 +25,9 @@ export class RegisterClientComponent {
       dni: ['', [Validators.required, Validators.pattern('^[0-9]{8}$')]],
       birth: ['', [Validators.required]],
       nationality: ['', [Validators.required, Validators.maxLength(25)]],
-      gender: ['Seleccionar', [Validators.required]],
+      gender: ['Seleccionar', [this.comboValidator]],
       phone: ['', [Validators.required, Validators.pattern('^[0-9]{9}$')]],
-      state_civil: ['Seleccionar', [Validators.required]],
+      state_civil: ['Seleccionar', [this.comboValidator]],
       direction: ['', [Validators.required, Validators.maxLength(60)]],
       namePartner: ['', [Validators.required, Validators.maxLength(25)]],
       lastnamePartner: ['', [Validators.required, Validators.maxLength(25)]],
@@ -36,11 +36,16 @@ export class RegisterClientComponent {
       birthPartner: ['', [Validators.required]],
       profession: ['', [Validators.required, Validators.maxLength(40)]],
       company: ['', [Validators.required, Validators.maxLength(40)]],
-      income: ['', [Validators.required]]
+      income: ['', [Validators.required, Validators.min(0)]]
     })
+  }
+  comboValidator(control: { value: string; }) {
+
+    return control.value !== 'Seleccionar' ? null : { invalidDate:true};
   }
 
   saveClient() {
+
     const client: Client = {
       name: this.myForm.get('name')!.value,
       lastname: this.myForm.get('lastname')!.value,
@@ -61,33 +66,22 @@ export class RegisterClientComponent {
       income: this.myForm.get('income')!.value,
 
     };
+ 
+    this.clientService.addClient(client).subscribe({
+      next: (data) => {
+        this.snackBar.open('El cliente fue registrado con éxito!', '', {
+          duration: 2000,
+        });
 
-    this.clientService.getClientById(client.dni).subscribe({ next: (data) => {
-      this.cli = data;
-    }});
+      },
+      error: (err) => {
 
-    console.log(this.cli.dni + 'dd' + client.dni);
-if (this.cli.dni === client.dni) {
-  this.snackBar.open('Ya existe un empleado con el mismo DNI', '', {
-    duration: 2000,
-  });
-  return;
-}
-this.clientService.addClient(client).subscribe({
-  next: (data) => {
-    this.snackBar.open('El cliente fue registrado con éxito!', '', {
-      duration: 2000,
+        this.snackBar.open('Ya existe un empleado con el mismo DNI', '', {
+          duration: 2000,
+        });
+
+      },
     });
-
-  },
-  error: (err) => {
-
-    this.snackBar.open('No se puede registrar al cliente!', '', {
-      duration: 2000,
-    });
-
-  },
-});
   }
 
 

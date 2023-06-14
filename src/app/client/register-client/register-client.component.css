@@ -115,51 +115,20 @@ select {
 .input-field input[type="date"]:valid {
     color: #333;
 }
-
-.container form button,
-.backBtn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+button {
+    border-radius: 15px;
     height: 45px;
     width: 200px;
-    border: none;
-    outline: none;
-    color: #fff;
-    border-radius: 5px;
-    margin: 25px 0;
-    background-color: #93A603;
-    transition: all 0.3s linear;
+    border: 1px solid #dfdfdf;
+    margin-left: 15px;
+    background-color: #bdce42;
     cursor: pointer;
 }
-
-.container form .btnText {
-    font-size: 14px;
-    font-weight: 400;
+button:disabled{
+    background-color: #fcf8f8;
+    cursor:default;
 }
 
-form button:hover {
-    background-color: #d7f205;
-}
-
-form button i,
-form .backBtn i {
-    margin: 0 6px;
-}
-
-form .backBtn i {
-    transform: rotate(180deg);
-}
-
-form .buttons {
-    display: flex;
-    align-items: center;
-}
-
-form .buttons button,
-.backBtn {
-    margin-right: 14px;
-}
 .message-error{
     color: red;
     font-size: 13px;

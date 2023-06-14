@@ -5,14 +5,11 @@
     font-family: 'Be Vietnam Pro', sans-serif;
 }
 
-body{
+.back{
     display: flex;
-    height: 91.5vh;
-    width: 100%;
-    margin: auto;
-    align-items: center;
-    justify-content: center;
+    padding: 5% 20px;
     background: whitesmoke;
+    justify-content: center;
 }
 .container{
     width: 100%;
@@ -128,28 +125,24 @@ select {
     color: #333;
 }
 
-.nextBtn {
-    display: row;
-    align-items: center;
-    justify-content: center;
+button {
+    border-radius: 15px;
     height: 45px;
     width: 200px;
-    border: none;
-    outline: none;
-    color: #fff;
-    border-radius: 5px;
-    margin: 25px 0;
-    margin-right: 20px;
-    background-color: #bed324;
-    transition: all 0.3s linear;
+    border: 1px solid #dfdfdf;
+    margin-left: 15px;
+    background-color: #bdce42;
     cursor: pointer;
-    font-size: 14px;
-    font-weight: 400;
+    margin-top: 25px;
+}
+button:disabled{
+    background-color: #fcf8f8;
+    cursor:default;
 }
 
-
-form button:hover {
-    background-color: #d7f205;
+.message-error{
+    color: red;
+    font-size: 13px;
 }
 
 .botones-container {
@@ -161,6 +154,11 @@ form button:hover {
 .contenedor-2 label{
     font-size: 14px;
     margin:10px 0;
+}
+.advice {
+    color: red;
+    font-size: 13px;
+    margin: 10px 0;
 }
 @media screen and (max-width: 1500px){
     .element {

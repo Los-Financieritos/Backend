@@ -8,7 +8,6 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ClientService {
-
   constructor(private http: HttpClient) {
 
   }

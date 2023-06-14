@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,9 +15,6 @@ import { RegisterUserComponent } from './auth/register-user/register-user.compon
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BannerComponent } from './shared/banner/banner.component';
 import { LoginComponent } from './auth/login/login.component';
-import { ErrorInterceptorService } from './auth/error-interceptor.service';
-import { TokenInterceptorService } from './auth/token-interceptor.interceptor';
-import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -45,21 +42,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule
   ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ErrorInterceptorService,
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptorService,
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptorService,
-      multi: true
-    }
   ],
   bootstrap: [AppComponent]
 })

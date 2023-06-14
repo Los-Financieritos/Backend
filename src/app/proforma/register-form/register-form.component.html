@@ -1,137 +1,170 @@
-<body>
-    <div class="container">
-        <header>Registro de Proforma</header>
-        <form>
-            <div class="form-first">
-                <div class="element">
-                    <div class="content">
-                        <div class="contenedor-3">
-                            <div class="input-field">
-                                <label>DNI del Cliente</label>
-                                <input type="text" formControlName="dniclient" >
+<app-banner [login]="false"></app-banner>
+<ng-container *ngIf="dataEntidades$| async as enti">
+    <div class="back">
+        <div class="container">
+            <header>Registro de Proforma</header>
+            <form [formGroup]="myForm" autocomplete="on" (change)="crearDatosForm()">
+                <div class="form-first">
+                    
+                    <div class="element">
+                        <div class="content">
+                            <div class="contenedor-3">
+                                <div class="input-field">
+                                    <label>DNI del Cliente</label>
+                                    <input type="text" formControlName="dniclient">
+                                </div>
+                                <span *ngIf="myForm.get('dniclient')?.invalid 
+                                && myForm.get('dniclient')?.touched" 
+                                class="advice"> 
+                                    Ingrese los datos de DNI cliente</span>
                             </div>
 
-                        </div>
+                            <span class="title">Información sobre el Inmueble</span>
 
-                        <span class="title">Información sobre el Inmueble</span>
-
-                        <div class="input-field">
-                            <label>Precio del inmueble</label>
-                            <input type="number" step="0.01" formControlName="price">
-                        </div>
-
-                        <div class="input-field">
-                            <label>Cuota inicial</label>
-                            <input  type="number" formControlName="initial">
-                        </div>
-
-                        <div class="input-field">
-                            <label>¿Es una vivienda sostenible?</label>
-                            <input type="text" required>
-                        </div>
-
-                        <div class="input-field">
-                            <label>¿Ha recibido apoyo <br /> habitacional anteriormente?</label>
-                            <input type="text" required>
-                        </div>
-
-                        <span class="title">Información de financiamiento</span>
-
-                        <div class="input-field">
-                            <label>Tasa Efectiva Anual</label>
-                            <input type="text" required>
-                        </div>
-
-                        <div class="input-field">
-                            <label>Seguro Desgravamen Anual</label>
-                            <input type="text" required>
-                        </div>
-
-                        <div class="input-field">
-                            <label>Seguro de Inmueble Anual</label>
-                            <input type="text" required>
-                        </div>
-
-                        <div class="input-field">
-                            <label>Plazo (en meses)</label>
-                            <input type="text" required>
-                        </div>
-
-                        <div class="input-field">
-                            <label>Periodo de Gracia (en meses)</label>
-                            <input type="text" required>
-                        </div>
-
-
-                    </div>
-                </div>
-                <div class="element">
-                    <div class="content">
-                        <div class="contenedor-3">
                             <div class="input-field">
-                                <label>Moneda</label>
-                                <select required>
+                                <label>Precio del inmueble</label>
+                                <input type="number" step="0.01" formControlName="price"
+                                    [readonly]="!DatosIniIngresados()">
+                            </div>
+
+                            <div class="input-field">
+                                <label>Cuota inicial</label>
+                                <input type="number" formControlName="cuota_initial" [readonly]="!DatosIniIngresados()">
+                            </div>
+
+                  
+                            <div class="input-field">
+                                <label>¿Ha recibido apoyo <br /> habitacional anteriormente?</label>
+                                <select formControlName="apoyo">
                                     <option disabled selected>Seleccionar</option>
-                                    <option>S/. PEN</option>
-                                    <option>$ US</option>
+                                    <option> Si </option>
+                                    <option> No </option>
 
                                 </select>
                             </div>
-                        </div>
-
-                        <div class="contenedor-3">
+                            <span *ngIf="myForm.get('apoyo')?.invalid && myForm.get('apoyo')?.touched" class="advice"> Selecciona una respuesta</span>
+                           
                             <div class="input-field">
-                                <label>Entidad Financiera</label>
-                                <select required>
+                                <label>¿Es una vivienda sostenible?</label>
+                                <select formControlName="sostenible" >
                                     <option disabled selected>Seleccionar</option>
-                                    <option>BCP</option>
-                                    <option>Interbank</option>
+                                    <option> Si </option>
+                                    <option> No </option>
 
                                 </select>
+
                             </div>
+                            <span *ngIf="myForm.get('sostenible')?.invalid && myForm.get('sostenible')?.touched" class="advice"> Selecciona una respuesta</span>
+
+                            <span class="title">Información de financiamiento</span>
+
+                            <div class="input-field">
+                                <label>Tasa Efectiva Anual</label>
+                                <input type="number" step="0.01" formControlName="tea"
+                                    [readonly]="!DatosIniIngresados()">
+                            </div>
+
+                            <div class="input-field">
+                                <label>Seguro Desgravamen Anual</label>
+                                <input type="number" step="0.01" formControlName="segdegra"
+                                    [readonly]="!DatosIniIngresados()">
+                            </div>
+
+                            <div class="input-field">
+                                <label>Seguro de Inmueble Anual</label>
+                                <input type="number" step="0.01" formControlName="seginm"
+                                    [readonly]="!DatosIniIngresados()">
+                            </div>
+
+                            <div class="input-field">
+                                <label>Plazo (en meses)</label>
+                                <input type="number" formControlName="plazo" 
+                                [readonly]="!DatosIniIngresados()">
+                            </div>
+
+                            <div class="input-field">
+                                <label>Periodo de Gracia (en meses)</label>
+                                <input type="number" formControlName="periodo_gracia"
+                                    [readonly]="!DatosIniIngresados()">
+                            </div>
+
+
                         </div>
-
-                        <ul class="contenedor-2">
-
-                            <div class="input-field">
-                                <label>% de Cuota Inicial</label>
-                                <input type="text" required>
-                            </div>
-                            <div class="input-field">
-                                <label>Bono del Buen Pagador *</label>
-                                <input type="text" required>
-                            </div>
-                            <span>*El monto incluye el adicional en caso el immueble sea sostenible
-                            </span>
-                            <div class="input-field">
-                                <label>Monto a financiar</label>
-                                <input type="text" required>
-                            </div>
-                            <div class="input-field">
-                                <label>Tasa Costo Efectiva Anual</label>
-                                <input type="text" required>
-                            </div>
-                            <div class="input-field">
-                                <span class="title">Información de financiamiento<br /></span>
-                                <input type="text" required>
+                    </div>
+                    <div class="element">
+                        <div class="content">
+                            <div class="contenedor-3">
+                                <div class="input-field">
+                                    <label>Moneda</label>
+                                    <select formControlName="moneda">
+                                        <option disabled selected>Seleccionar</option>
+                                        <option>S/. PEN</option>
+                                        <option>$ US</option>
+                                    </select>
+                                </div>
+                                <span *ngIf="myForm.get('moneda')?.invalid && myForm.get('moneda')?.touched" class="advice"> Selecciona el tipo de moneda</span>
                             </div>
 
+                            <div class="contenedor-3">
+                                <div class="input-field">
+                                    <label>Entidad Financiera</label>
+                                    <select formControlName="entidad" (change)="setMinandMax()">
+                                        <option disabled selected>Seleccionar</option>
+                                        <option [ngValue]="ent" *ngFor="let ent of enti">
+                                            {{ ent.name }} </option>
+                                    </select>
+                                </div>
+
+                                <span *ngIf="myForm.get('entidad')?.invalid && myForm.get('entidad')?.touched" class="advice"> Selecciona una entidad financiera </span>
+                            </div>
+
+                            <ul class="contenedor-2">
+
+                                <div class="input-field">
+                                    <label>% de Cuota Inicial</label>
+                                    <input type="number" step="0.01" formControlName="porc_cuotaini" readonly>
+                                </div>
+                                <div class="input-field">
+                                    <label>Bono del Buen Pagador *</label>
+                                    <input type="number" step="0.01" formControlName="bbp" readonly>
+                                </div>
+                                <span>*El monto incluye el adicional en caso el immueble sea sostenible
+                                </span>
+                                <div class="input-field">
+                                    <label>Monto a financiar</label>
+                                    <input type="number" step="0.01" formControlName="monto_prestamo" readonly>
+                                </div>
+                                <div class="input-field">
+                                    <label>Tasa Costo Efectiva Anual</label>
+                                    <input type="number" step="0.01" formControlName="tcea" readonly>
+                                </div>
+                                <div class="input-field">
+                                    <span class="title">Información de financiamiento<br /></span>
+                                    <input type="text" formControlName="info" readonly>
+                                </div>
 
 
-                        </ul>
-                        <div class="botones-container">
-                            <button class="nextBtn">
-                                <span class="btnText">Ver Cronograma</span>
 
-                            </button>
-
-                            <button class="nextBtn">
-                                <span class="btnText">Guardar</span>
-                            </button>
+                            </ul>
+                            <div class="botones-container">
+                                <button [disabled]="myForm.invalid" type="button" (click)="saveForm()"
+                                    mat-raised-button>
+                                    Guardar
+                                </button>
+                                <button [disabled]="myForm.invalid" type="button" mat-raised-button>
+                                    Ver cronograma
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</body>
+</ng-container>
+
+<ng-template #loading>
+    <div class="justify-center content-center text-[20px] w-[70%] mx-auto mt-[40px]">
+        <p>Loading.......</p>
+    </div>
+</ng-template>
