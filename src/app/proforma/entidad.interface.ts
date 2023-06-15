@@ -6,5 +6,6 @@ export interface Entidad {
     mmaximo: number
     tminimo: number
     tmaximo: number
-    plazomeses: number
+    pminimo: number
+    pmaximo: number
 }

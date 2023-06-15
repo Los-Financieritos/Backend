@@ -21,13 +21,17 @@ export class RegisterFormComponent implements OnInit {
   entidades: Entidad[] = [];
 
   //Variables de min y max segun entidad
+  c_inicial!: number;
+  c_inicial_por!: number;
+
   t_min!: number;
   t_max!: number;
 
   mminimo!: number;
   mmaximo!: number;
 
-  plazomax!: number;
+  pminimo!: number;
+  pmaximo!: number;
 
   //Variables de calculo
   todollar: number = 0.27384;
@@ -64,12 +68,15 @@ export class RegisterFormComponent implements OnInit {
 
   setMinandMax() {
     const seleccionado = this.myForm.get('entidad')?.value;
+    this.c_inicial_por = seleccionado.cinicial;
+
     this.t_min = seleccionado.tminimo;
     this.t_max = seleccionado.tmaximo;
 
     this.mminimo = seleccionado.mminimo;
     this.mmaximo = seleccionado.mmaximo;
-    this.plazomax = seleccionado.plazomax;
+    this.pminimo = seleccionado.pminimo;
+    this.pmaximo = seleccionado.pmaximo;
 
     console.log(this.mmaximo);
   }
@@ -168,6 +175,8 @@ export class RegisterFormComponent implements OnInit {
       tcea: 0,
       cuota: 0,
     }
+
+    this.c_inicial = formu.price*(seleccionado.cinicial/100);
 
     //Calcular el porcentaje de cuota inicial
     formu.perInitial = formu.initial / formu.price * 100;

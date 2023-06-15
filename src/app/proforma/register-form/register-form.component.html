@@ -35,9 +35,12 @@
 
                                 <div class="input-field">
                                     <label>Cuota inicial</label>
-                                    <input type="number" formControlName="cuota_initial"
+                                    <input type="number" formControlName="cuota_initial" [min]="c_inicial"
                                         [readonly]="!DatosIniIngresados()">
                                 </div>
+                                <span *ngIf="myForm.get('cuota_initial')?.hasError('min')
+                                    && myForm.get('cuota_initial')?.touched" class="advice">
+                                    La cuota inicial es menor al {{  c_inicial_por }} %</span>
 
 
                                 <div class="input-field">
@@ -69,9 +72,15 @@
 
                                 <div class="input-field">
                                     <label>Tasa Efectiva Anual</label>
-                                    <input type="number" step="0.01" formControlName="tea"
-                                        [readonly]="!DatosIniIngresados()">
+                                    <input type="number" step="0.01" formControlName="tea" [min]="t_min" 
+                                        [max]="t_max" [readonly]="!DatosIniIngresados()">
                                 </div>
+                                <span *ngIf="myForm.get('tea')?.hasError('min')
+                                    && myForm.get('tea')?.touched" class="advice">
+                                    La tasa es menor al {{  t_min }} %</span>
+                                <span *ngIf="myForm.get('tea')?.hasError('max')
+                                    && myForm.get('tea')?.touched" class="advice">
+                                    La tasa es mayor al {{  t_max }} %</span>
 
                                 <div class="input-field">
                                     <label>Seguro Desgravamen Anual</label>
@@ -87,8 +96,15 @@
 
                                 <div class="input-field">
                                     <label>Plazo (en meses)</label>
-                                    <input type="number" formControlName="plazo" [readonly]="!DatosIniIngresados()">
+                                    <input type="number" formControlName="plazo" [min]="pminimo"
+                                        [max]="pmaximo" [readonly]="!DatosIniIngresados()">
                                 </div>
+                                <span *ngIf="myForm.get('plazo')?.hasError('min')
+                                    && myForm.get('plazo')?.touched" class="advice">
+                                    El plazo es menor a {{  pminimo }} meses</span>
+                                <span *ngIf="myForm.get('plazo')?.hasError('max')
+                                    && myForm.get('plazo')?.touched" class="advice">
+                                    El plazo es mayor a {{  pmaximo }} meses</span>
 
                                 <div class="input-field">
                                     <label>Periodo de Gracia (en meses)</label>
