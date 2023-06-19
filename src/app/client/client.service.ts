@@ -8,8 +8,10 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ClientService {
-  constructor(private http: HttpClient) {
+  client$!:Subject<Client>;
 
+  constructor(private http: HttpClient) {
+    this.client$ = new Subject<Client>();
   }
   getClients() :Observable<Client[]>{
     return this.http.get<Client[]>(`${environment.baseUrl}/api/clients`);
