@@ -156,7 +156,9 @@ caption {
     color: red;
     font-size: 13px;
 }
-
+.error-message{
+    margin-bottom: 15px;
+}
 .botones-container {
     display: flex;
     flex-direction: row;
@@ -172,7 +174,6 @@ caption {
 .advice {
     color: red;
     font-size: 13px;
-    margin: 10px 0;
 }
 
 .button-back {

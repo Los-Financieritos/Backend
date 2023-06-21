@@ -1,5 +1,5 @@
 export interface Client {
-    dni: number
+    dni: string
     name: string
     lastname: string
     birth: string

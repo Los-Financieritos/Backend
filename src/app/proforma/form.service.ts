@@ -10,16 +10,22 @@ import { Form } from './form.interface';
 })
 export class FormService {
 
-    entidades$!:Subject<Entidad[]>;
+  entidades$!: Subject<Entidad[]>;
+  proforms$!: Subject<Form[]>;
 
   constructor(private http: HttpClient) {
     this.entidades$ = new Subject<Entidad[]>();
-
-   }
+    this.proforms$ = new Subject<Form[]>();
+  }
 
   getEntidades(): Observable<Entidad[]> {
     return this.http.get<Entidad[]>(`${environment.baseUrl}/api/entidades`);
   }
+
+  getProforms(): Observable<Form[]> {
+    return this.http.get<Form[]>(`${environment.baseUrl}/api/forms`);
+  }
+
   addForm(obj: Form) {
     return this.http.post<Form>(`${environment.baseUrl}/api/forms`, obj);
   }

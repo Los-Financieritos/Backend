@@ -35,6 +35,9 @@ export class AuthService {
   getUserByEmail(ema: string, passw:string ) : Observable<User>{
     return this.http.get<User>(`${environment.baseUrl}/api/exists-user?email=${ema}&password=${passw}`);
   }
+  getUserById(id: number) : Observable<User>{
+    return this.http.get<User>(`${environment.baseUrl}/api/users/${id}`);
+  }
 
   ingresar(cred: Credentials): Observable<User> {
 
@@ -43,12 +46,12 @@ export class AuthService {
 
         this.isLoggedIn = true;
         this.usuario$.next(user);
-        console.log(user);
+        
         this.keepLogin = true;
         this.snackbar.open('Login correcto!', '', {
           duration: 2000,
         });
-        this.router.navigate(['/home']);
+        this.router.navigate(['/home/', user.id]);
       }
     }
 

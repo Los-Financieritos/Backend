@@ -10,7 +10,6 @@ import { RegisterClientComponent } from './client/register-client/register-clien
 import { RegisterFormComponent } from './proforma/register-form/register-form.component';
 import { EditFormComponent } from './proforma/edit-form/edit-form.component';
 import { ListFormComponent } from './proforma/list-form/list-form.component';
-import { CronogramComponent } from './proforma/cronogram/cronogram.component';
 import { RegisterUserComponent } from './auth/register-user/register-user.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BannerComponent } from './shared/banner/banner.component';
@@ -22,6 +21,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatPaginatorModule } from '@angular/material/paginator';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +32,6 @@ import { MatCardModule } from '@angular/material/card';
     RegisterFormComponent,
     EditFormComponent,
     ListFormComponent,
-    CronogramComponent,
     RegisterUserComponent,
     BannerComponent
   ],
@@ -48,7 +47,8 @@ import { MatCardModule } from '@angular/material/card';
     MatSelectModule,
     MatListModule,
     MatButtonModule,
-    MatCardModule
+    MatCardModule,
+    MatPaginatorModule
   ],
   providers: [
   ],

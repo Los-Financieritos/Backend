@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Form, RowCrono } from '../form.interface';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormService } from '../form.service';
 import { Entidad } from '../entidad.interface';
 import { Observable } from 'rxjs';
+import { ClientService } from 'src/app/client/client.service';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-register-form',
@@ -13,6 +17,9 @@ import { Observable } from 'rxjs';
   styleUrls: ['./register-form.component.css']
 })
 export class RegisterFormComponent implements OnInit {
+
+  asesor!: string;
+  id!: number;
 
   vercrono: boolean = false;
   myForm !: FormGroup;
@@ -47,14 +54,12 @@ export class RegisterFormComponent implements OnInit {
 
   rowscrono: RowCrono[] = [];
 
-  constructor(private fb: FormBuilder,
-    private snackBar: MatSnackBar,
-    private router: Router,
-    private serv: FormService) {
-    this.dataEntidades$ = this.serv.entidades$;
-    this.reactiveForm();
-  }
+  error: string = '';
+  exist!: boolean | undefined;
 
+  dataSource !: MatTableDataSource<RowCrono>;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngOnInit() {
     this.serv.getEntidades().subscribe(
@@ -64,6 +69,33 @@ export class RegisterFormComponent implements OnInit {
           this.serv.entidades$.next(this.entidades);
         }
       });
+
+
+    this.route.params.subscribe(
+      (params: Params) => {
+        this.id = +params['id'];
+      }
+    );
+
+    this.authserv.getUserById(this.id).subscribe({
+      next: (usuario) => {
+        this.asesor = usuario.name.split(' ')[0] + ' ' + usuario.lastname.split(' ')[0];
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    })
+  }
+
+  constructor(private fb: FormBuilder,
+    private snackBar: MatSnackBar,
+    private route: ActivatedRoute,
+    private serv: FormService,
+    private clientService: ClientService,
+    private authserv: AuthService) {
+
+    this.dataEntidades$ = this.serv.entidades$;
+    this.reactiveForm();
   }
 
   setMinandMax() {
@@ -78,7 +110,6 @@ export class RegisterFormComponent implements OnInit {
     this.pminimo = seleccionado.pminimo;
     this.pmaximo = seleccionado.pmaximo;
 
-    console.log(this.mmaximo);
   }
 
   reactiveForm() {
@@ -107,12 +138,37 @@ export class RegisterFormComponent implements OnInit {
   }
 
   DatosIniIngresados(): boolean {
+
     if ((this.myForm.get('dniclient')?.invalid)
       || (this.myForm.get('moneda')?.invalid)
       || (this.myForm.get('entidad')?.invalid)) {
+
       return false;
     }
     else return true;
+
+  }
+
+  existClient() {
+
+    const dni = this.myForm.get('dniclient')?.value;
+    this.clientService.getClientById(dni).subscribe(
+      {
+        next: (res) => {
+
+          if (res !== null && res.dni === dni) {
+            this.exist = true;
+            this.error = 'Cliente registrado.';
+          }
+          else {
+            this.exist = false;
+            this.error = 'No existe un cliente con este DNI';
+          }
+
+        }
+      });
+
+
 
   }
 
@@ -149,6 +205,8 @@ export class RegisterFormComponent implements OnInit {
     if (!this.DatosIniIngresados()) {
       return;
     }
+    this.existClient();
+
     const seleccionado = this.myForm.get('entidad')?.value;
 
     const formu: Form = {
@@ -174,9 +232,12 @@ export class RegisterFormComponent implements OnInit {
       montof: 0,
       tcea: 0,
       cuota: 0,
+      asesor: this.asesor,
+      fecha: new Date().toISOString(),
+
     }
 
-    this.c_inicial = formu.price*(seleccionado.cinicial/100);
+    this.c_inicial = formu.price * (seleccionado.cinicial / 100);
 
     //Calcular el porcentaje de cuota inicial
     formu.perInitial = formu.initial / formu.price * 100;
@@ -268,7 +329,8 @@ export class RegisterFormComponent implements OnInit {
       }
 
       this.rowscrono = datos;
-
+      this.dataSource = new MatTableDataSource<RowCrono>(this.rowscrono);
+      this.dataSource.paginator = this.paginator;
     }
   }
 

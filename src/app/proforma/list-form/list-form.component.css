@@ -1,0 +1,29 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+.back {
+    display: flex;
+    padding: 5% 20px;
+    background: whitesmoke;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    border-radius: 6px;
+    padding: 30px;
+    margin: auto 20px;
+    background-color: #fff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.container header {
+    font-size: 30px;
+    color: #333;
+    font-weight: 900;
+    text-align: center;
+    margin: 10px auto 30px auto;
+}

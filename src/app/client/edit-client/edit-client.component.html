@@ -1,233 +1,239 @@
-<app-banner [login]="false"></app-banner>
+<app-banner [login]="true"></app-banner>
 <div class="back">
     <div class="container">
-        <header>Registro de Cliente</header>
+        <header>Editar información de un cliente</header>
         <form [formGroup]="myForm" autocomplete="on">
             <div class="form-first">
                 <div class="element">
+                    <div class="search-content">
                     <span class="title">Ingrese el DNI del cliente </span>
                     <div class="contenedor-3">
-                        <div class="input-field">
-                            <label>DNI</label>
-                            <input type="text" formControlName="dni">
-                        </div>
-                        <div *ngIf="myForm.get('dni')?.invalid &&
-                    myForm.get('dni')?.touched" class="message-error">
-                            Este campo debe tener como máximo 8 caracteres y deben ser digitos </div>
-                    
-                            <div>
-                                <button (click)="searchClient()">
-                                    <i class="fa-solid fa-magnifying-glass"></i>
-                                </button>
-                            </div>
-                        </div>
-                </div>
-                <span class="title">Información personal</span>
+                        <div class="search-field">
 
-                <div class="input-field">
-                    <label>Nombres</label>
-                    <input type="text" formControlName="name">
-                </div>
-                <div *ngIf="
+                            <input type="text" formControlName="dni">
+    
+                        </div>
+                     
+                        <button (click)="searchClient()" class="searchBtn">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                    </div>
+                    <div *ngIf="myForm.get('dni')?.invalid &&
+                    myForm.get('dni')?.touched" class="message-error">
+                        Este campo debe tener como máximo 8 caracteres y deben ser digitos.
+
+                    </div>
+                    <span class="title">Información personal</span>
+
+                    <div class="input-field">
+                        <label>Nombres</label>
+                        <input type="text" formControlName="name">
+                    </div>
+                    <div *ngIf="
                     myForm.get('name')?.hasError('required') &&
                     myForm.get('name')?.touched" class="message-error">
-                    Este campo es obligatorio</div>
-                <div *ngIf="myForm.get('name')?.hasError('maxLenght') &&
+                        Este campo es obligatorio</div>
+                    <div *ngIf="myForm.get('name')?.hasError('maxLenght') &&
                 myForm.get('name')?.touched" class="message-error">
-                    Este campo debe tener como máximo 25 caracteres </div>
+                        Este campo debe tener como máximo 25 caracteres </div>
 
 
-                <div class="input-field">
-                    <label>Apellidos</label>
-                    <input type="text" formControlName="lastname">
-                </div>
-                <div *ngIf="
+                    <div class="input-field">
+                        <label>Apellidos</label>
+                        <input type="text" formControlName="lastname">
+                    </div>
+                    <div *ngIf="
                     myForm.get('lastname')?.hasError('required') &&
                     myForm.get('lastname')?.touched" class="message-error">
-                    Este campo es obligatorio</div>
-                <div *ngIf="myForm.get('lastname')?.hasError('maxLenght')  &&
+                        Este campo es obligatorio</div>
+                    <div *ngIf="myForm.get('lastname')?.hasError('maxLenght')  &&
                 myForm.get('lastname')?.touched" class="message-error">
-                    Este campo debe tener como máximo 25 caracteres </div>
+                        Este campo debe tener como máximo 25 caracteres </div>
 
 
-                <div class="input-field">
-                    <label>Fecha de Nacimiento</label>
-                    <input type="date" formControlName="birth">
-                </div>
-                <div *ngIf="
+                    <div class="input-field">
+                        <label>Fecha de Nacimiento</label>
+                        <input type="date" formControlName="birth">
+                    </div>
+                    <div *ngIf="
                     myForm.get('birth')?.invalid &&
                     myForm.get('birth')?.touched" class="message-error">
-                    Este campo es obligatorio</div>
+                        Este campo es obligatorio</div>
 
 
-                <div class="input-field">
-                    <label>Nacionalidad</label>
-                    <input type="text" formControlName="nationality">
-                </div>
-                <div *ngIf="
+                    <div class="input-field">
+                        <label>Nacionalidad</label>
+                        <input type="text" formControlName="nationality">
+                    </div>
+                    <div *ngIf="
                     myForm.get('nationality')?.hasError('required') &&
                     myForm.get('nationality')?.touched" class="message-error">
-                    Este campo es obligatorio</div>
-                <div *ngIf="myForm.get('nationality')?.hasError('maxLenght')  &&
+                        Este campo es obligatorio</div>
+                    <div *ngIf="myForm.get('nationality')?.hasError('maxLenght')  &&
                 myForm.get('nationality')?.touched" class="message-error">
-                    Este campo debe tener como máximo 25 caracteres </div>
+                        Este campo debe tener como máximo 25 caracteres </div>
 
 
-                <div class="input-field">
-                    <label>Sexo</label>
-                    <select formControlName="gender">
-                        <option disabled selected>Seleccionar</option>
-                        <option>Masculino</option>
-                        <option>Femenino</option>
-                        <option>Otros</option>
-                    </select>
-                </div>
-                <div *ngIf="myForm.get('gender')?.invalid &&
+                    <div class="input-field">
+                        <label>Sexo</label>
+                        <select formControlName="gender">
+                            <option disabled selected>Seleccionar</option>
+                            <option>Masculino</option>
+                            <option>Femenino</option>
+                            <option>Otros</option>
+                        </select>
+                    </div>
+                    <div *ngIf="myForm.get('gender')?.invalid &&
                     myForm.get('gender')?.touched" class="message-error">
-                    Seleccione una opción </div>
+                        Seleccione una opción </div>
 
 
-                <div class="input-field">
-                    <label>Teléfono Personal</label>
-                    <input type="text" formControlName="phone">
-                </div>
-                <div *ngIf="myForm.get('phone')?.invalid &&
+                    <div class="input-field">
+                        <label>Teléfono Personal</label>
+                        <input type="text" formControlName="phone">
+                    </div>
+                    <div *ngIf="myForm.get('phone')?.invalid &&
                 myForm.get('phone')?.touched" class="message-error">
-                    Este campo debe tener como máximo 9 caracteres y deben ser digitos </div>
+                        Este campo debe tener como máximo 9 caracteres y deben ser digitos </div>
 
 
-                <div class="input-field">
-                    <label>Estado Civil</label>
-                    <select formControlName="state_civil">
-                        <option disabled selected>Seleccionar</option>
-                        <option>Soltero</option>
-                        <option>Casado</option>
-                        <option>Viudo</option>
-                        <option>Divorciado</option>
-                    </select>
-                </div>
-                <div *ngIf="myForm.get('state_civil')?.invalid &&
+                    <div class="input-field">
+                        <label>Estado Civil</label>
+                        <select formControlName="state_civil">
+                            <option disabled selected>Seleccionar</option>
+                            <option>Soltero</option>
+                            <option>Casado</option>
+                            <option>Viudo</option>
+                            <option>Divorciado</option>
+                        </select>
+                    </div>
+                    <div *ngIf="myForm.get('state_civil')?.invalid &&
                     myForm.get('state_civil')?.touched" class="message-error">
-                    Seleccione una opción </div>
+                        Seleccione una opción </div>
 
 
-                <div class="input-field">
-                    <label>Domicilio</label>
-                    <input type="text" formControlName="direction">
-                </div>
-                <div *ngIf="
+                    <div class="input-field">
+                        <label>Domicilio</label>
+                        <input type="text" formControlName="direction">
+                    </div>
+                    <div *ngIf="
                     myForm.get('direction')?.hasError('required') &&
                     myForm.get('direction')?.touched" class="message-error">
-                    Este campo es obligatorio</div>
-                <div *ngIf="myForm.get('direction')?.hasError('maxLenght') &&
+                        Este campo es obligatorio</div>
+                    <div *ngIf="myForm.get('direction')?.hasError('maxLenght') &&
                 myForm.get('direction')?.touched" class="message-error">
-                    Este campo debe tener como máximo 60 caracteres </div>
+                        Este campo debe tener como máximo 60 caracteres </div>
 
-            </div>
-
-            <div class="element">
-                <span class="title">Información del cónyuge</span>
-
-                <div class="input-field">
-                    <label>Nombres</label>
-                    <input type="text" formControlName="namePartner">
                 </div>
-                <div *ngIf="
+
+                <div class="element">
+                    <span class="title">Información del cónyuge</span>
+
+                    <div class="input-field">
+                        <label>Nombres</label>
+                        <input type="text" formControlName="namePartner">
+                    </div>
+                    <div *ngIf="
                     myForm.get('namePartner')?.hasError('required') &&
                     myForm.get('namePartner')?.touched" class="message-error">
-                    Este campo es obligatorio</div>
-                <div *ngIf="myForm.get('namePartner')?.hasError('maxLenght')  &&
+                        Este campo es obligatorio</div>
+                    <div *ngIf="myForm.get('namePartner')?.hasError('maxLenght')  &&
                 myForm.get('namePartner')?.touched" class="message-error">
-                    Este campo debe tener como máximo 25 caracteres </div>
+                        Este campo debe tener como máximo 25 caracteres </div>
 
 
-                <div class="input-field">
-                    <label>Apellidos</label>
-                    <input type="text" formControlName="lastnamePartner">
-                </div>
-                <div *ngIf="
+                    <div class="input-field">
+                        <label>Apellidos</label>
+                        <input type="text" formControlName="lastnamePartner">
+                    </div>
+                    <div *ngIf="
                     myForm.get('lastnamePartner')?.hasError('required') &&
                     myForm.get('lastnamePartner')?.touched" class="message-error">
-                    Este campo es obligatorio</div>
-                <div *ngIf="myForm.get('lastnamePartner')?.hasError('maxLenght')   &&
+                        Este campo es obligatorio</div>
+                    <div *ngIf="myForm.get('lastnamePartner')?.hasError('maxLenght')   &&
                 myForm.get('lastnamePartner')?.touched" class="message-error">
-                    Este campo debe tener como máximo 25 caracteres </div>
+                        Este campo debe tener como máximo 25 caracteres </div>
 
 
-                <div class="input-field">
-                    <label>DNI</label>
-                    <input type="text" formControlName="dni_partner">
-                </div>
-                <div *ngIf="myForm.get('dni_partner')?.invalid &&
+                    <div class="input-field">
+                        <label>DNI</label>
+                        <input type="text" formControlName="dni_partner">
+                    </div>
+                    <div *ngIf="myForm.get('dni_partner')?.invalid &&
                 myForm.get('dni_partner')?.touched" class="message-error">
-                    Este campo debe tener como máximo 8 caracteres y deben ser digitos </div>
+                        Este campo debe tener como máximo 8 caracteres y deben ser digitos </div>
 
 
-                <div class="input-field">
-                    <label>Teléfono Personal</label>
-                    <input type="text" formControlName="phonePartner">
-                </div>
-                <div *ngIf="myForm.get('phonePartner')?.invalid &&
+                    <div class="input-field">
+                        <label>Teléfono Personal</label>
+                        <input type="text" formControlName="phonePartner">
+                    </div>
+                    <div *ngIf="myForm.get('phonePartner')?.invalid &&
                 myForm.get('phonePartner')?.touched" class="message-error">
-                    Este campo debe tener como máximo 9 caracteres y deben ser digitos </div>
+                        Este campo debe tener como máximo 9 caracteres y deben ser digitos </div>
 
 
-                <div class="input-field">
-                    <label>Fecha de Nacimiento</label>
-                    <input type="date" formControlName="birthPartner">
-                </div>
-                <div *ngIf="
+                    <div class="input-field">
+                        <label>Fecha de Nacimiento</label>
+                        <input type="date" formControlName="birthPartner">
+                    </div>
+                    <div *ngIf="
                     myForm.get('birthPartner')?.invalid &&
                     myForm.get('birthPartner')?.touched" class="message-error">
-                    Este campo es obligatorio</div>
+                        Este campo es obligatorio</div>
 
-                <span class="title">Información laboral</span>
+                    <span class="title">Información laboral</span>
 
-                <div class="input-field">
-                    <label>Profesión</label>
-                    <input type="text" formControlName="profession">
-                </div>
-                <div *ngIf="
+                    <div class="input-field">
+                        <label>Profesión</label>
+                        <input type="text" formControlName="profession">
+                    </div>
+                    <div *ngIf="
                     myForm.get('profession')?.hasError('required') &&
                     myForm.get('profession')?.touched" class="message-error">
-                    Este campo es obligatorio</div>
-                <div *ngIf="myForm.get('profession')?.hasError('maxLenght')  &&
+                        Este campo es obligatorio</div>
+                    <div *ngIf="myForm.get('profession')?.hasError('maxLenght')  &&
                     myForm.get('profession')?.touched" class="message-error">
-                    Este campo debe tener como máximo 40 caracteres </div>
+                        Este campo debe tener como máximo 40 caracteres </div>
 
 
-                <div class="input-field">
-                    <label>Empleador</label>
-                    <input type="text" formControlName="company">
-                </div>
-                <div *ngIf="
+                    <div class="input-field">
+                        <label>Empleador</label>
+                        <input type="text" formControlName="company">
+                    </div>
+                    <div *ngIf="
                     myForm.get('company')?.hasError('required') &&
                     myForm.get('company')?.touched" class="message-error">
-                    Este campo es obligatorio</div>
-                <div *ngIf="myForm.get('company')?.hasError('maxLenght')  &&
+                        Este campo es obligatorio</div>
+                    <div *ngIf="myForm.get('company')?.hasError('maxLenght')  &&
                 myForm.get('company')?.touched" class="message-error">
-                    Este campo debe tener como máximo 40 caracteres </div>
+                        Este campo debe tener como máximo 40 caracteres </div>
 
-                <div class="input-field">
-                    <label>Estimado de ingresos mensuales netos</label>
-                    <input type="number" formControlName="income">
-                </div>
-                <div *ngIf="
+                    <div class="input-field">
+                        <label>Estimado de ingresos mensuales netos</label>
+                        <input type="number" formControlName="income">
+                    </div>
+                    <div *ngIf="
                     myForm.get('income')?.hasError('required') &&
                     myForm.get('income')?.touched" class="message-error">
-                    Este campo es obligatorio</div>
-                <div *ngIf="
+                        Este campo es obligatorio</div>
+                    <div *ngIf="
                         myForm.get('income')?.hasError('min') &&
                         myForm.get('income')?.touched" class="message-error">
-                    El valor debe ser mayor a 0</div>
-            </div>
-    </div>
-    <div class="boton-guardar">
-        <button [disabled]="myForm.invalid" type="button" (click)="saveClient()" mat-raised-button>
-            Agregar
-        </button>
+                        El valor debe ser mayor a 0</div>
 
+                        <div class="boton-guardar">
+                            <button [disabled]="myForm.invalid" type="button" class="backBtn" (click)="saveClient()"
+                                mat-raised-button>
+                                Modificar
+                            </button>
+            
+                        </div>
+                </div>
+                
+            </div>
+          
+        </form>
     </div>
-    </form>
-</div>
 </div>

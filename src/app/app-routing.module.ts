@@ -5,15 +5,14 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterClientComponent } from './client/register-client/register-client.component';
 import { EditClientComponent } from './client/edit-client/edit-client.component';
 import { RegisterFormComponent } from './proforma/register-form/register-form.component';
-import { EditFormComponent } from './proforma/edit-form/edit-form.component';
 import { RegisterUserComponent } from './auth/register-user/register-user.component';
 import { domainGuard } from './auth/auth-guard.service'
-import { CronogramComponent } from './proforma/cronogram/cronogram.component';
+import { ListFormComponent } from './proforma/list-form/list-form.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
-    path: 'home',
+    path: 'home/:id',
     component: PrincipalComponent,
     canActivate: [domainGuard],
   },
@@ -27,9 +26,8 @@ const routes: Routes = [
   {
     path: 'proform',
     children: [
-      { path: 'register-proform', component: RegisterFormComponent },
-      { path: 'edit-proform', component: EditFormComponent },
-      { path: 'cronograma', component: CronogramComponent}
+      { path: 'register-proform/:id', component: RegisterFormComponent },
+      { path: 'list-proform', component: ListFormComponent },
     ]
   },
   { path: 'login', component: LoginComponent },

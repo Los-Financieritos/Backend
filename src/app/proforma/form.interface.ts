@@ -17,6 +17,8 @@ export interface Form {
     cuota: number
     sinmAnual: number
     sdegMensual: number
+    asesor: string
+    fecha:string
   }
   
 
@@ -30,6 +32,5 @@ export interface Form {
     seguro_inm : string
     saldofini:string
     cuota_mensual: string
-
-    
+ 
   }

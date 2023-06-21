@@ -1,4 +1,4 @@
-<app-banner [login]="false"></app-banner>
+<app-banner [login]="true"></app-banner>
 <ng-container *ngIf="dataEntidades$| async as enti">
     <div [hidden]="vercrono">
         <div class="back">
@@ -9,16 +9,23 @@
 
                         <div class="element">
                             <div class="content">
+                                <span class="title">Ingrese el DNI del cliente</span>
                                 <div class="contenedor-3">
                                     <div class="input-field">
-                                        <label>DNI del Cliente</label>
+                                        <label>DNI</label>
                                         <input type="text" formControlName="dniclient">
                                     </div>
+
+                                </div>
+                                <div class="error-message">
                                     <span *ngIf="myForm.get('dniclient')?.invalid 
                                 && myForm.get('dniclient')?.touched" class="advice">
-                                        Ingrese los datos de DNI cliente</span>
-                                </div>
+                                        El DNI no tiene un formato correcto </span>
 
+                                    <span class="advice" *ngIf="myForm.get('dniclient')?.valid"
+                                    [ngStyle]="{'color': exist ? 'green' : 'red' }">
+                                        {{ error }} </span>
+                                </div>
                                 <span class="title">Información sobre el Inmueble</span>
 
                                 <div class="input-field">
@@ -40,7 +47,7 @@
                                 </div>
                                 <span *ngIf="myForm.get('cuota_initial')?.hasError('min')
                                     && myForm.get('cuota_initial')?.touched" class="advice">
-                                    La cuota inicial es menor al {{  c_inicial_por }} %</span>
+                                    La cuota inicial es menor al {{ c_inicial_por }} %</span>
 
 
                                 <div class="input-field">
@@ -72,15 +79,15 @@
 
                                 <div class="input-field">
                                     <label>Tasa Efectiva Anual</label>
-                                    <input type="number" step="0.01" formControlName="tea" [min]="t_min" 
-                                        [max]="t_max" [readonly]="!DatosIniIngresados()">
+                                    <input type="number" step="0.01" formControlName="tea" [min]="t_min" [max]="t_max"
+                                        [readonly]="!DatosIniIngresados()">
                                 </div>
                                 <span *ngIf="myForm.get('tea')?.hasError('min')
                                     && myForm.get('tea')?.touched" class="advice">
-                                    La tasa es menor al {{  t_min }} %</span>
+                                    La tasa es menor al {{ t_min }} %</span>
                                 <span *ngIf="myForm.get('tea')?.hasError('max')
                                     && myForm.get('tea')?.touched" class="advice">
-                                    La tasa es mayor al {{  t_max }} %</span>
+                                    La tasa es mayor al {{ t_max }} %</span>
 
                                 <div class="input-field">
                                     <label>Seguro Desgravamen Anual</label>
@@ -96,15 +103,15 @@
 
                                 <div class="input-field">
                                     <label>Plazo (en meses)</label>
-                                    <input type="number" formControlName="plazo" [min]="pminimo"
-                                        [max]="pmaximo" [readonly]="!DatosIniIngresados()">
+                                    <input type="number" formControlName="plazo" [min]="pminimo" [max]="pmaximo"
+                                        [readonly]="!DatosIniIngresados()">
                                 </div>
                                 <span *ngIf="myForm.get('plazo')?.hasError('min')
                                     && myForm.get('plazo')?.touched" class="advice">
-                                    El plazo es menor a {{  pminimo }} meses</span>
+                                    El plazo es menor a {{ pminimo }} meses</span>
                                 <span *ngIf="myForm.get('plazo')?.hasError('max')
                                     && myForm.get('plazo')?.touched" class="advice">
-                                    El plazo es mayor a {{  pmaximo }} meses</span>
+                                    El plazo es mayor a {{ pmaximo }} meses</span>
 
                                 <div class="input-field">
                                     <label>Periodo de Gracia (en meses)</label>
@@ -126,6 +133,8 @@
                                             <option>$ US</option>
                                         </select>
                                     </div>
+                                </div>
+                                <div class="error-message">
                                     <span *ngIf="myForm.get('moneda')?.invalid && myForm.get('moneda')?.touched"
                                         class="advice"> Selecciona el tipo de moneda</span>
                                 </div>
@@ -140,6 +149,8 @@
                                         </select>
                                     </div>
 
+                                </div>
+                                <div class="error-message">
                                     <span *ngIf="myForm.get('entidad')?.invalid && myForm.get('entidad')?.touched"
                                         class="advice"> Selecciona una entidad financiera </span>
                                 </div>
@@ -200,53 +211,57 @@
                 <header>Cronograma</header>
 
                 <div class="col-lg-6">
-                    <table mat-table [dataSource]="rowscrono" class="mat-elevation-z8 demo-table">
-                        <caption></caption>
+                    <div class="mat-elevation-z8 demo-table">
+                        <table mat-table [dataSource]="dataSource">
+                            <caption></caption>
 
-                        <ng-container matColumnDef="period">
-                            <th mat-header-cell *matHeaderCellDef> Periodo </th>
-                            <td mat-cell *matCellDef="let element">{{element.period}}</td>
-                        </ng-container>
+                            <ng-container matColumnDef="period">
+                                <th mat-header-cell *matHeaderCellDef> Periodo </th>
+                                <td mat-cell *matCellDef="let element">{{element.period}}</td>
+                            </ng-container>
 
-                        <ng-container matColumnDef="saldoini">
-                            <th mat-header-cell *matHeaderCellDef> Saldo Inicial </th>
-                            <td mat-cell *matCellDef="let element">{{element.saldoini}}</td>
-                        </ng-container>
+                            <ng-container matColumnDef="saldoini">
+                                <th mat-header-cell *matHeaderCellDef> Saldo Inicial </th>
+                                <td mat-cell *matCellDef="let element">{{element.saldoini}}</td>
+                            </ng-container>
 
-                        <ng-container matColumnDef="amortization">
-                            <th mat-header-cell *matHeaderCellDef> Amortización </th>
-                            <td mat-cell *matCellDef="let element">{{element.amortization}}</td>
-                        </ng-container>
+                            <ng-container matColumnDef="amortization">
+                                <th mat-header-cell *matHeaderCellDef> Amortización </th>
+                                <td mat-cell *matCellDef="let element">{{element.amortization}}</td>
+                            </ng-container>
 
-                        <ng-container matColumnDef="intereses">
-                            <th mat-header-cell *matHeaderCellDef> Intereses </th>
-                            <td mat-cell *matCellDef="let element">{{element.intereses}}</td>
-                        </ng-container>
+                            <ng-container matColumnDef="intereses">
+                                <th mat-header-cell *matHeaderCellDef> Intereses </th>
+                                <td mat-cell *matCellDef="let element">{{element.intereses}}</td>
+                            </ng-container>
 
-                        <ng-container matColumnDef="seguro_degr">
-                            <th mat-header-cell *matHeaderCellDef> Seguro Degravamen </th>
-                            <td mat-cell *matCellDef="let element">{{element.seguro_degr}}</td>
-                        </ng-container>
+                            <ng-container matColumnDef="seguro_degr">
+                                <th mat-header-cell *matHeaderCellDef> Seguro Degravamen </th>
+                                <td mat-cell *matCellDef="let element">{{element.seguro_degr}}</td>
+                            </ng-container>
 
-                        <ng-container matColumnDef="seguro_inm">
-                            <th mat-header-cell *matHeaderCellDef> Seguro Inmuebl </th>
-                            <td mat-cell *matCellDef="let element">{{element.seguro_inm}}</td>
-                        </ng-container>
+                            <ng-container matColumnDef="seguro_inm">
+                                <th mat-header-cell *matHeaderCellDef> Seguro Inmueble </th>
+                                <td mat-cell *matCellDef="let element">{{element.seguro_inm}}</td>
+                            </ng-container>
 
-                        <ng-container matColumnDef="saldofini">
-                            <th mat-header-cell *matHeaderCellDef> Saldo Fina </th>
-                            <td mat-cell *matCellDef="let element">{{element.saldofini}}</td>
-                        </ng-container>
+                            <ng-container matColumnDef="saldofini">
+                                <th mat-header-cell *matHeaderCellDef> Saldo Final </th>
+                                <td mat-cell *matCellDef="let element">{{element.saldofini}}</td>
+                            </ng-container>
 
-                        <ng-container matColumnDef="cuota_mensual">
-                            <th mat-header-cell *matHeaderCellDef> Cuota Mensual </th>
-                            <td mat-cell *matCellDef="let element">{{element.cuota_mensual}}</td>
-                        </ng-container>
+                            <ng-container matColumnDef="cuota_mensual">
+                                <th mat-header-cell *matHeaderCellDef> Cuota Mensual </th>
+                                <td mat-cell *matCellDef="let element">{{element.cuota_mensual}}</td>
+                            </ng-container>
 
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                    </table>
-
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                        <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons
+                        >
+                        </mat-paginator>
+                    </div>
                 </div>
             </div>
         </div>
