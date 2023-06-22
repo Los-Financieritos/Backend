@@ -44,7 +44,7 @@ export const domainGuard = () => {
   if (service.isLogged() && service.keepLogin) {
     return true;
   }
-  return router.createUrlTree(['/login']);
+  else return router.createUrlTree(['/login']);
   
 }
 

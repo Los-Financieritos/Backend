@@ -260,18 +260,23 @@ export class RegisterFormComponent implements OnInit {
     // Calcular el valor del seguro del inmueble
     const valor_seg_inmu = formu.price * (formu.sinmAnual / 100) / 12;
 
+
+
     // Interes nominal anual
     const tasa_interes_nominal_anual = ((Math.pow((formu.tea / 100 + 1), (1 / 12)) - 1) * 12);
 
-    //Calcular tcea
+    // Calcular el valor del seguro del inmueble
+    const valor_seg_inmu = formu.price * (formu.sinmAnual / 100) / 12
+
+    // Asignar valor a saldo pendiente
+    this.saldo_inicial = formu.montof;
+    this.montofmenosbbp = formu.montof;
+
+     //Calcular tcea
     formu.tcea = formu.tea + 1.22;
 
     if (formu.tipo != 'Seleccionar' && formu.gracePeriod != 0) {
       if (formu.tipo == 'Total') {
-
-        this.montofmenosbbp = formu.montof;
-
-        this.saldo_inicial = formu.montof;
 
         for (let i = 0; i < formu.gracePeriod; i++) {
           // Se calcula el seguro_degravamen por cada periodo
@@ -309,7 +314,11 @@ export class RegisterFormComponent implements OnInit {
     if (formu.time) {
       this.myForm.get('info')?.setValue('Cuota: ' + formu.cuota);
     }
-    if (formu.tipo == 'Total') { formu.montof = this.montofmenosbbp; }
+
+    if (formu.tipo == 'Seleccionar' || formu.gracePeriod == 0) {
+      formu.montof = this.montofmenosbbp;
+    }
+
     this.frm = formu;
 
   }
