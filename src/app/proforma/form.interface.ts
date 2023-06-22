@@ -17,6 +17,7 @@ export interface Form {
     cuota: number
     sinmAnual: number
     sdegMensual: number
+    tipo: string
     asesor: string
     fecha:string
   }

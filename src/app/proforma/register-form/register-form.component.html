@@ -6,9 +6,9 @@
                 <header>Registro de Proforma</header>
                 <form [formGroup]="myForm" autocomplete="on" (change)="crearDatosForm()">
                     <div class="form-first">
-
                         <div class="element">
                             <div class="content">
+
                                 <span class="title">Ingrese el DNI del cliente</span>
                                 <div class="contenedor-3">
                                     <div class="input-field">
@@ -23,9 +23,87 @@
                                         El DNI no tiene un formato correcto </span>
 
                                     <span class="advice" *ngIf="myForm.get('dniclient')?.valid"
-                                    [ngStyle]="{'color': exist ? 'green' : 'red' }">
+                                        [ngStyle]="{'color': exist ? 'green' : 'red' }">
                                         {{ error }} </span>
                                 </div>
+
+
+
+                                <div class="contenedor-3">
+                                    <div class="input-field">
+                                        <label>Moneda</label>
+                                        <select formControlName="moneda">
+                                            <option disabled selected>Seleccionar</option>
+                                            <option>S/. PEN</option>
+                                            <option>$ US</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="error-message">
+                                    <span *ngIf="myForm.get('moneda')?.invalid && myForm.get('moneda')?.touched"
+                                        class="advice"> Selecciona el tipo de moneda</span>
+                                </div>
+
+                                <div class="contenedor-3">
+                                    <div class="input-field">
+                                        <label>Entidad Financiera</label>
+                                        <select formControlName="entidad" (change)="setMinandMax()">
+                                            <option disabled selected>Seleccionar</option>
+                                            <option [ngValue]="ent" *ngFor="let ent of enti">
+                                                {{ ent.name }} </option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="error-message">
+                                    <span *ngIf="myForm.get('entidad')?.invalid && myForm.get('entidad')?.touched"
+                                        class="advice"> Selecciona una entidad financiera </span>
+                                </div>
+
+                                <ul class="contenedor-2">
+
+                                    <div class="input-field">
+                                        <label>% de Cuota Inicial</label>
+                                        <input type="number" step="0.01" formControlName="porc_cuotaini" readonly>
+                                    </div>
+                                    <div class="input-field">
+                                        <label>Bono del Buen Pagador *</label>
+                                        <input type="number" step="0.01" formControlName="bbp" readonly>
+                                    </div>
+                                    <span>*El monto incluye el adicional en caso el immueble sea sostenible
+                                    </span>
+                                    <div class="input-field">
+                                        <label>Monto a financiar</label>
+                                        <input type="number" step="0.01" formControlName="monto_prestamo" readonly>
+                                    </div>
+                                    <div class="input-field">
+                                        <label>Tasa Costo Efectiva Anual</label>
+                                        <input type="number" step="0.01" formControlName="tcea" readonly>
+                                    </div>
+                                    <div class="input-field">
+                                        <span class="title">Información de financiamiento<br /></span>
+                                        <input type="text" formControlName="info" readonly>
+                                    </div>
+
+
+
+                                </ul>
+                                <div class="botones-container">
+                                    <button [disabled]="myForm.invalid" type="button" (click)="saveForm()"
+                                        mat-raised-button>
+                                        Guardar
+                                    </button>
+                                    <button [disabled]="myForm.invalid" type="button" (click)="verCronograma()"
+                                        mat-raised-button>
+                                        Ver cronograma
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="element">
+                            <div class="content">
+                                <span class="title">Realizado por:  <span style="font-weight: bold; margin-left: 20px">{{asesor}}</span></span>
+                                <br>
                                 <span class="title">Información sobre el Inmueble</span>
 
                                 <div class="input-field">
@@ -113,86 +191,29 @@
                                     && myForm.get('plazo')?.touched" class="advice">
                                     El plazo es mayor a {{ pmaximo }} meses</span>
 
+
+                                <div class="input-field">
+                                    <label>Tipo de periodo de gracia</label>
+                                    <select formControlName="tipo">
+                                        <option disabled selected>Seleccionar</option>
+                                        <option> Parcial </option>
+                                        <option> Total </option>
+
+                                    </select>
+                                </div>
+                                
                                 <div class="input-field">
                                     <label>Periodo de Gracia (en meses)</label>
-                                    <input type="number" formControlName="periodo_gracia"
-                                        [readonly]="!DatosIniIngresados()">
+                                    <input type="number" formControlName="periodo_gracia" [min]="0" [max]="6"
+                                        [readonly]="!DatosIniIngresados()" >
                                 </div>
+                                <span *ngIf="myForm.get('periodo_gracia')?.hasError('min')
+                                && myForm.get('periodo_gracia')?.touched" class="advice">
+                                El valor ingresado no debe ser menor que 0.</span>
+                                <span *ngIf="myForm.get('periodo_gracia')?.hasError('max')
+                                && myForm.get('periodo_gracia')?.touched" class="advice">
+                                El valor ingresado no debe ser mayor que 6.</span>
 
-
-                            </div>
-                        </div>
-                        <div class="element">
-                            <div class="content">
-                                <div class="contenedor-3">
-                                    <div class="input-field">
-                                        <label>Moneda</label>
-                                        <select formControlName="moneda">
-                                            <option disabled selected>Seleccionar</option>
-                                            <option>S/. PEN</option>
-                                            <option>$ US</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="error-message">
-                                    <span *ngIf="myForm.get('moneda')?.invalid && myForm.get('moneda')?.touched"
-                                        class="advice"> Selecciona el tipo de moneda</span>
-                                </div>
-
-                                <div class="contenedor-3">
-                                    <div class="input-field">
-                                        <label>Entidad Financiera</label>
-                                        <select formControlName="entidad" (change)="setMinandMax()">
-                                            <option disabled selected>Seleccionar</option>
-                                            <option [ngValue]="ent" *ngFor="let ent of enti">
-                                                {{ ent.name }} </option>
-                                        </select>
-                                    </div>
-
-                                </div>
-                                <div class="error-message">
-                                    <span *ngIf="myForm.get('entidad')?.invalid && myForm.get('entidad')?.touched"
-                                        class="advice"> Selecciona una entidad financiera </span>
-                                </div>
-
-                                <ul class="contenedor-2">
-
-                                    <div class="input-field">
-                                        <label>% de Cuota Inicial</label>
-                                        <input type="number" step="0.01" formControlName="porc_cuotaini" readonly>
-                                    </div>
-                                    <div class="input-field">
-                                        <label>Bono del Buen Pagador *</label>
-                                        <input type="number" step="0.01" formControlName="bbp" readonly>
-                                    </div>
-                                    <span>*El monto incluye el adicional en caso el immueble sea sostenible
-                                    </span>
-                                    <div class="input-field">
-                                        <label>Monto a financiar</label>
-                                        <input type="number" step="0.01" formControlName="monto_prestamo" readonly>
-                                    </div>
-                                    <div class="input-field">
-                                        <label>Tasa Costo Efectiva Anual</label>
-                                        <input type="number" step="0.01" formControlName="tcea" readonly>
-                                    </div>
-                                    <div class="input-field">
-                                        <span class="title">Información de financiamiento<br /></span>
-                                        <input type="text" formControlName="info" readonly>
-                                    </div>
-
-
-
-                                </ul>
-                                <div class="botones-container">
-                                    <button [disabled]="myForm.invalid" type="button" (click)="saveForm()"
-                                        mat-raised-button>
-                                        Guardar
-                                    </button>
-                                    <button [disabled]="myForm.invalid" type="button" (click)="verCronograma()"
-                                        mat-raised-button>
-                                        Ver cronograma
-                                    </button>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -208,12 +229,11 @@
                 <button mat-fab (click)="vercrono=false" aria-label="button" class="button-back">
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
-                <header>Cronograma</header>
+                <header>Cronograma de Pagos Mensuales</header>
 
                 <div class="col-lg-6">
                     <div class="mat-elevation-z8 demo-table">
                         <table mat-table [dataSource]="dataSource">
-                            <caption></caption>
 
                             <ng-container matColumnDef="period">
                                 <th mat-header-cell *matHeaderCellDef> Periodo </th>
@@ -258,8 +278,7 @@
                             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                         </table>
-                        <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons
-                        >
+                        <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons>
                         </mat-paginator>
                     </div>
                 </div>

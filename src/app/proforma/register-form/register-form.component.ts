@@ -1,8 +1,8 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Form, RowCrono } from '../form.interface';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { FormService } from '../form.service';
 import { Entidad } from '../entidad.interface';
 import { Observable } from 'rxjs';
@@ -48,7 +48,8 @@ export class RegisterFormComponent implements OnInit {
   valor_seg_degra!: number;
   amortizacion!: number;
   saldo_final!: number;
-
+  interes_plazo!: number;
+  montofmenosbbp!: number;
 
   displayedColumns: string[] = ['period', 'saldoini', 'amortization', 'intereses', 'seguro_degr', 'seguro_inm', 'saldofini', 'cuota_mensual'];
 
@@ -127,6 +128,7 @@ export class RegisterFormComponent implements OnInit {
       segdegra: ['', [Validators.required]],
       seginm: ['', [Validators.required]],
       plazo: ['', [Validators.required]],
+      tipo: ['Seleccionar', [Validators.required]],
       periodo_gracia: ['', [Validators.required]],
 
       porc_cuotaini: [''],
@@ -225,6 +227,7 @@ export class RegisterFormComponent implements OnInit {
       sinmAnual: this.myForm.get('seginm')!.value,
       sdegMensual: this.myForm.get('segdegra')!.value,
       time: this.myForm.get('plazo')!.value,
+      tipo: this.myForm.get('tipo')!.value,
       gracePeriod: this.myForm.get('periodo_gracia')!.value,
 
       perInitial: 0,
@@ -255,13 +258,42 @@ export class RegisterFormComponent implements OnInit {
     const tasa_mensual_mas_seguro = tasa_efectiva_mensual + formu.sdegMensual / 100
 
     // Calcular el valor del seguro del inmueble
-    const valor_seg_inmu = formu.price * (formu.sinmAnual / 100) / 12
+    const valor_seg_inmu = formu.price * (formu.sinmAnual / 100) / 12;
 
-    // Calcular el pago periodico
-    formu.cuota = (formu.montof * (tasa_mensual_mas_seguro * (Math.pow((1 + tasa_mensual_mas_seguro), formu.time))) / ((Math.pow((1 + tasa_mensual_mas_seguro), formu.time)) - 1)) + valor_seg_inmu;
+    // Interes nominal anual
+    const tasa_interes_nominal_anual = ((Math.pow((formu.tea / 100 + 1), (1 / 12)) - 1) * 12);
 
     //Calcular tcea
     formu.tcea = formu.tea + 1.22;
+
+    if (formu.tipo != 'Seleccionar' && formu.gracePeriod != 0) {
+      if (formu.tipo == 'Total') {
+
+        this.montofmenosbbp = formu.montof;
+
+        this.saldo_inicial = formu.montof;
+
+        for (let i = 0; i < formu.gracePeriod; i++) {
+          // Se calcula el seguro_degravamen por cada periodo
+          this.valor_seg_degra = this.saldo_inicial * this.frm.sdegMensual / 100;
+
+          // Se calcula el interes pagado por cada periodo
+          this.interes_pagado = this.saldo_inicial * tasa_interes_nominal_anual / 12;
+
+          this.interes_plazo = this.interes_pagado + this.valor_seg_degra + valor_seg_inmu;
+
+          this.saldo_inicial = this.saldo_inicial + this.interes_plazo;
+
+        }
+        formu.montof = this.saldo_inicial;
+      }
+      else if (formu.tipo == 'Parcial') {
+        console.log('Es parcial');
+      }
+    }
+
+    // Calcular el pago periodico
+    formu.cuota = (formu.montof * (tasa_mensual_mas_seguro * (Math.pow((1 + tasa_mensual_mas_seguro), formu.time))) / ((Math.pow((1 + tasa_mensual_mas_seguro), formu.time)) - 1)) + valor_seg_inmu;
 
     if (formu.initial !== null && formu.price !== null) { this.myForm.get('porc_cuotaini')?.setValue(formu.perInitial); }
 
@@ -277,55 +309,130 @@ export class RegisterFormComponent implements OnInit {
     if (formu.time) {
       this.myForm.get('info')?.setValue('Cuota: ' + formu.cuota);
     }
+    if (formu.tipo == 'Total') { formu.montof = this.montofmenosbbp; }
     this.frm = formu;
 
   }
 
   arrayCronograma() {
     if (!this.myForm.invalid) {
-
       // Interes nominal anual
       const tasa_interes_nominal_anual = ((Math.pow((this.frm.tea / 100 + 1), (1 / 12)) - 1) * 12);
 
       // Calcular el valor del seguro del inmueble
       const valor_seg_inmu = this.frm.price * (this.frm.sinmAnual / 100) / 12
+
       // Asignar valor a saldo pendiente
       this.saldo_inicial = this.frm.montof;
 
       //Calcular interes pagado por periodo
-      this.interes_pagado = this.frm.montof * tasa_interes_nominal_anual / 12
+      this.interes_pagado = this.frm.montof * tasa_interes_nominal_anual / 12;
+
 
       const datos: RowCrono[] = [];
 
-      for (let i = 0; i < this.frm.time; i++) {
+      if (this.frm.tipo != 'Seleccionar' && this.frm.gracePeriod != 0) {
+        if (this.frm.tipo == 'Total') {
 
-        // Se calcula el seguro_degravamen por cada periodo
-        this.valor_seg_degra = this.saldo_inicial * this.frm.sdegMensual / 100;
+          //Meses de plazo de gracia
+          for (let i = 0; i < this.frm.gracePeriod; i++) {
 
-        // Se calcula el interes pagado por cada periodo
-        this.interes_pagado = this.saldo_inicial * tasa_interes_nominal_anual / 12;
+            // Se calcula el seguro_degravamen por cada periodo
+            this.valor_seg_degra = this.saldo_inicial * this.frm.sdegMensual / 100;
 
-        // Se calcula la amortizacion
-        this.amortizacion = this.frm.cuota - this.interes_pagado - this.valor_seg_degra - valor_seg_inmu;
+            // Se calcula el interes pagado por cada periodo
+            this.interes_pagado = this.saldo_inicial * tasa_interes_nominal_anual / 12;
 
-        //Saldo final
-        this.saldo_final = this.saldo_inicial - this.amortizacion;
+            this.interes_plazo = this.interes_pagado + this.valor_seg_degra + valor_seg_inmu;
+
+            //Saldo final
+            this.saldo_final = this.saldo_inicial;
 
 
-        const row: RowCrono = {
-          position: i,
-          period: i + 1,
-          saldoini: this.saldo_inicial.toFixed(2),
-          amortization: this.amortizacion.toFixed(2),
-          intereses: this.interes_pagado.toFixed(3),
-          seguro_degr: this.valor_seg_degra.toFixed(3),
-          seguro_inm: valor_seg_inmu.toFixed(3),
-          saldofini: this.saldo_final.toFixed(2),
-          cuota_mensual: this.frm.cuota.toFixed(3)
+            const row: RowCrono = {
+              position: i,
+              period: i + 1,
+              saldoini: this.saldo_inicial.toFixed(2),
+              amortization: '0',
+              intereses: this.interes_plazo.toFixed(3),
+              seguro_degr: this.valor_seg_degra.toFixed(3),
+              seguro_inm: valor_seg_inmu.toFixed(3),
+              saldofini: this.saldo_final.toFixed(2),
+              cuota_mensual: '0'
+            }
+
+            datos.push(row);
+
+            this.saldo_inicial = this.saldo_inicial + this.interes_plazo;
+          }
+          //Meses de plazo normal
+          for (let i = this.frm.gracePeriod; i < this.frm.time; i++) {
+
+            // Se calcula el seguro_degravamen por cada periodo
+            this.valor_seg_degra = this.saldo_inicial * this.frm.sdegMensual / 100;
+
+            // Se calcula el interes pagado por cada periodo
+            this.interes_pagado = this.saldo_inicial * tasa_interes_nominal_anual / 12;
+
+            // Se calcula la amortizacion
+            this.amortizacion = this.frm.cuota - this.interes_pagado - this.valor_seg_degra - valor_seg_inmu;
+
+            //Saldo final
+            this.saldo_final = this.saldo_inicial - this.amortizacion;
+
+
+            const row: RowCrono = {
+              position: i,
+              period: i + 1,
+              saldoini: this.saldo_inicial.toFixed(2),
+              amortization: this.amortizacion.toFixed(2),
+              intereses: this.interes_pagado.toFixed(3),
+              seguro_degr: this.valor_seg_degra.toFixed(3),
+              seguro_inm: valor_seg_inmu.toFixed(3),
+              saldofini: this.saldo_final.toFixed(2),
+              cuota_mensual: this.frm.cuota.toFixed(3)
+            }
+
+            datos.push(row);
+            this.saldo_inicial = this.saldo_inicial - this.amortizacion;
+          }
         }
+        else {
 
-        datos.push(row);
-        this.saldo_inicial = this.saldo_inicial - this.amortizacion;
+
+        }
+      }
+      else {
+        for (let i = 0; i < this.frm.time; i++) {
+
+          // Se calcula el seguro_degravamen por cada periodo
+          this.valor_seg_degra = this.saldo_inicial * this.frm.sdegMensual / 100;
+
+          // Se calcula el interes pagado por cada periodo
+          this.interes_pagado = this.saldo_inicial * tasa_interes_nominal_anual / 12;
+
+          // Se calcula la amortizacion
+          this.amortizacion = this.frm.cuota - this.interes_pagado - this.valor_seg_degra - valor_seg_inmu;
+
+          //Saldo final
+          this.saldo_final = this.saldo_inicial - this.amortizacion;
+
+
+          const row: RowCrono = {
+            position: i,
+            period: i + 1,
+            saldoini: this.saldo_inicial.toFixed(2),
+            amortization: this.amortizacion.toFixed(2),
+            intereses: this.interes_pagado.toFixed(3),
+            seguro_degr: this.valor_seg_degra.toFixed(3),
+            seguro_inm: valor_seg_inmu.toFixed(3),
+            saldofini: this.saldo_final.toFixed(2),
+            cuota_mensual: this.frm.cuota.toFixed(3)
+          }
+
+          datos.push(row);
+          this.saldo_inicial = this.saldo_inicial - this.amortizacion;
+        }
       }
 
       this.rowscrono = datos;

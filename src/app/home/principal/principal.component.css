@@ -17,7 +17,8 @@ p {
 }
 .header-container {
     display: flex;
-    background-color: #E0EE74;
+
+    background: linear-gradient(#E0EE74,70%, white);
     justify-content: center;
     align-items: center;
     width: 100%;

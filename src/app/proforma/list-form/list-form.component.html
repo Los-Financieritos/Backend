@@ -4,36 +4,29 @@
             <div class="container">
                 <header>Lista de Proformas</header>
                 <div class="cards-container">
-                    <div *ngFor="let pro of prof">
-                        <mat-card class="proyect-card">
-        
-                            <mat-card-header>
+                    <table>
+                        <tr>
+                            <th>Código</th>
+                            <th>DNI Cliente</th>
+                            <th>Asesor</th>
+                            <th>Fecha</th>
+                            <th>Precio del inmueble</th>
+                            <th>Editar</th>
+                        </tr>
+                        <tr *ngFor="let pro of prof">
+                          <td>{{ pro.form_id }}</td>
+                          <td>{{ pro.client_id }}</td>
+                          <td>{{ pro.asesor }}</td>
+                          <td>{{ pro.fecha | date:'shortDate' }}</td>
+                          <td>{{ pro.currency.split(' ')[0]}} {{ pro.price }}</td>
+                          <td><button mat-fab color="none" class="custom-fab">
+                            <i class="fa-solid fa-circle-chevron-right"></i>
+                        </button>
+                    </td>
+                        </tr>
+                    
+                    </table>
 
-                                <mat-card-title> {{ pro.client_id }}</mat-card-title>
-                                <mat-card-subtitle> 
-                                    <i class="fa-solid fa-magnifying-glass"></i> 
-                                    {{ pro.price }}</mat-card-subtitle>
-                                <mat-card-subtitle>
-                                    <i class="fa-solid fa-magnifying-glass"></i>
-                                    {{pro.tea}} -
-                                    {{pro.cuota}}
-                                </mat-card-subtitle>
-                            </mat-card-header>
-
-                            <mat-card-content>
-                                
-                            </mat-card-content>
-        
-                            <mat-card-actions>
-        
-                                <button mat-fab color="none" class="custom-fab">
-                                    <i class="fa-solid fa-magnifying-glass"></i>
-                                </button>
-        
-
-                            </mat-card-actions>
-                        </mat-card>
-                    </div>
                 </div>
 
             </div>

@@ -12,14 +12,15 @@ export class BannerComponent implements OnInit {
   username !: string;
 
   ngOnInit() {
-    this.serv.getUserById(this.id).subscribe({
+    if(this.id)
+   {this.serv.getUserById(this.id).subscribe({
       next: (usuario) => {
         this.username = usuario.username;
       },
       error: (error) => {
         console.log(error);
       }
-    })
+    })}
   }
 
   constructor(private serv: AuthService) {
