@@ -38,7 +38,9 @@ export class AuthService {
   getUserById(id: number) : Observable<User>{
     return this.http.get<User>(`${environment.baseUrl}/api/users/${id}`);
   }
-
+  setLogin(login:boolean){
+    this.isLoggedIn = login;
+  }
   ingresar(cred: Credentials): Observable<User> {
 
     for (let user of this.arrayUsers) {

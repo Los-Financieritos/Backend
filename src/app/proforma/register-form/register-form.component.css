@@ -231,6 +231,10 @@ td {
 
 @media screen and (max-width: 900px) {
 
+    .element{
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
     .form-first {
         display: grid;
         grid-template-columns: repeat(1, 1fr);
