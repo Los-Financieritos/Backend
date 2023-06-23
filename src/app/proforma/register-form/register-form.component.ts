@@ -314,13 +314,13 @@ export class RegisterFormComponent implements OnInit {
       this.myForm.get('bbp')?.setValue(formu.bbp.toFixed(3));
     }
 
-    this.myForm.get('monto_prestamo')?.setValue(formu.currency.split(' ')[0] + ' ' + formu.montof);
+    this.myForm.get('monto_prestamo')?.setValue(formu.montof.toFixed(2));
 
     if (formu.tea) {
-      this.myForm.get('tcea')?.setValue(formu.tcea);
+      this.myForm.get('tcea')?.setValue(formu.tcea.toFixed(2));
     }
     if (formu.time) {
-      this.myForm.get('info')?.setValue('Cuota: ' + formu.currency.split(' ')[0] + ' ' + formu.cuota);
+      this.myForm.get('info')?.setValue('Cuota: ' + formu.currency.split(' ')[0] + ' ' + formu.cuota.toFixed(3));
     }
 
     this.frm = formu;

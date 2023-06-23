@@ -60,7 +60,6 @@ form {
     display: flex;
     flex-direction: column;
     padding: 25px;
-    text-transform: capitalize;
     border-radius: 20px;
 
 }
@@ -71,8 +70,6 @@ form {
     background-color: #d5f08b;
     padding: 0 20px;
     margin: 10px 0 20px 0;
-
-    text-transform: capitalize;
     border-radius: 20px;
 
 }

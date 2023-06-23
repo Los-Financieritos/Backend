@@ -28,7 +28,7 @@ export class EditClientComponent {
       dni: ['', [Validators.required, Validators.pattern('^[0-9]{8}$')]],
       name: ['', [Validators.required, Validators.maxLength(25)]],
       lastname: ['', [Validators.required, Validators.maxLength(25)]],
-      birth: [null, [Validators.required]],
+      birth: ['dd/mm/yyyy', [Validators.required]],
       nationality: ['', [Validators.required, Validators.maxLength(25)]],
       gender: ['Seleccionar', [this.comboValidator]],
       phone: ['', [Validators.required, Validators.pattern('^[0-9]{9}$')]],
@@ -38,7 +38,7 @@ export class EditClientComponent {
       lastnamePartner: ['', [Validators.maxLength(25)]],
       dni_partner: ['', [Validators.pattern('^[0-9]{8}$')]],
       phonePartner: ['', [Validators.pattern('^[0-9]{9}$')]],
-      birthPartner: [null],
+      birthPartner: ['dd/mm/yyyy'],
       profession: ['', [Validators.required, Validators.maxLength(40)]],
       company: ['', [Validators.required, Validators.maxLength(40)]],
       income: ['', [Validators.required, Validators.min(0)]]
@@ -58,7 +58,7 @@ export class EditClientComponent {
     if (this.myForm.get('dni')?.valid) {
 
       this.dni = this.myForm.get('dni')?.value;
-     
+
       this.clientService.getClientById(this.dni).subscribe({
         next: (res) => {
           if (res) {
@@ -75,10 +75,13 @@ export class EditClientComponent {
             this.myForm.get('lastnamePartner')?.setValue(res.lastnamePartner);
             this.myForm.get('dni_partner')?.setValue(res.dni_partner);
             this.myForm.get('phonePartner')?.setValue(res.phonePartner);
-            this.myForm.get('birthPartner')?.setValue(new Date(res.birthPartner).toISOString().substring(0, 10));
+            if(res.birthPartner){
+              this.myForm.get('birthPartner')?.setValue(new Date(res.birthPartner).toISOString().substring(0, 10))}
+              else  this.myForm.get('birthPartner')?.setValue('dd/mm/yyyy');
             this.myForm.get('profession')?.setValue(res.profession);
             this.myForm.get('company')?.setValue(res.company);
             this.myForm.get('income')?.setValue(res.income);
+          
 
           }
           else{

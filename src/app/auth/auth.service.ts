@@ -10,7 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   usuario$!: Subject<User>;
-
+  id!:number;
   isLoggedIn: boolean = false;
   dataUsers$!: Subject<User[]>;
   arrayUsers: User[] = [];
@@ -48,7 +48,7 @@ export class AuthService {
 
         this.isLoggedIn = true;
         this.usuario$.next(user);
-        
+        this.id = user.id;
         this.keepLogin = true;
         this.snackbar.open('Login correcto!', '', {
           duration: 2000,
