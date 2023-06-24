@@ -22,6 +22,8 @@ export class RegisterFormComponent implements OnInit {
   id!: number;
 
   vercrono: boolean = false;
+  ningun_plazo: boolean = true;
+
   myForm !: FormGroup;
   frm!: Form;
   dataEntidades$!: Observable<Entidad[]>;
@@ -30,6 +32,7 @@ export class RegisterFormComponent implements OnInit {
   //Variables de min y max segun entidad
   c_inicial!: number;
   c_inicial_por!: number;
+  c_initialmax!: number;
 
   t_min!: number;
   t_max!: number;
@@ -56,7 +59,8 @@ export class RegisterFormComponent implements OnInit {
 
   error: string = '';
   exist!: boolean | undefined;
-  simbo:string ='';
+  simbo: string = '';
+  selectTipo: string = '';
   dataSource !: MatTableDataSource<RowCrono>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -119,16 +123,16 @@ export class RegisterFormComponent implements OnInit {
       moneda: ['Seleccionar', [Validators.required, this.comboValidator]],
       entidad: ['Seleccionar', [Validators.required, this.comboValidator]],
 
-      price: ['', [Validators.required]],
+      price: ['', [Validators.required, Validators.pattern('^[0-9]+([.])?([0-9]+)?$')]],
       cuota_initial: ['', [Validators.required]],
       apoyo: ['Seleccionar', [Validators.required, this.comboValidator]],
       sostenible: ['Seleccionar', [Validators.required, this.comboValidator]],
       tea: ['', [Validators.required]],
       segdegra: ['', [Validators.required]],
       seginm: ['', [Validators.required]],
-      plazo: ['', [Validators.required]],
-      tipo: ['Seleccionar', [Validators.required]],
-      periodo_gracia: ['', [Validators.required]],
+      plazo: ['', [Validators.required, Validators.pattern('^[0-9]+')]],
+      tipo: ['Seleccionar', [Validators.required, this.comboValidator]],
+      periodo_gracia: ['', [Validators.required, Validators.pattern('^[0-9]+')]],
 
       porc_cuotaini: [''],
       bbp: [''],
@@ -242,7 +246,7 @@ export class RegisterFormComponent implements OnInit {
     this.simbo = this.myForm.get('moneda')!.value.split(' ')[0];
 
     this.c_inicial = formu.price * (seleccionado.cinicial / 100);
-
+    this.c_initialmax = formu.price * (0.3);
     //Calcular el porcentaje de cuota inicial
     formu.perInitial = formu.initial / formu.price * 100;
 
@@ -270,11 +274,11 @@ export class RegisterFormComponent implements OnInit {
     this.saldo_inicial = formu.montof;
 
     //Calcular tcea
-    formu.tcea = formu.tea + 1.22;
+    formu.tcea = formu.tea + 13*formu.sdegMensual + 22*formu.sinmAnual;
 
-    if (formu.tipo != 'Seleccionar' && formu.gracePeriod != 0) {
+    if (formu.tipo != 'Seleccionar') {
       if (formu.tipo == 'Total') {
-
+        this.ningun_plazo = false;
         for (let i = 0; i < formu.gracePeriod; i++) {
           // Se calcula el seguro_degravamen por cada periodo
           this.valor_seg_degra = this.saldo_inicial * this.frm.sdegMensual / 100;
@@ -290,20 +294,25 @@ export class RegisterFormComponent implements OnInit {
         const new_time = formu.time - formu.gracePeriod;
 
         // Calcular el pago periodico
-        formu.cuota = (this.saldo_inicial * (tasa_mensual_mas_seguro * (Math.pow((1 + tasa_mensual_mas_seguro), new_time ))) / ((Math.pow((1 + tasa_mensual_mas_seguro), new_time )) - 1)) + valor_seg_inmu;
+        formu.cuota = (this.saldo_inicial * (tasa_mensual_mas_seguro * (Math.pow((1 + tasa_mensual_mas_seguro), new_time))) / ((Math.pow((1 + tasa_mensual_mas_seguro), new_time)) - 1)) + valor_seg_inmu;
 
       }
       else if (formu.tipo == 'Parcial') {
-        
+        this.ningun_plazo = false;
         const new_time = formu.time - formu.gracePeriod;
 
-         // Calcular el pago periodico
-        formu.cuota = (this.saldo_inicial * (tasa_mensual_mas_seguro * (Math.pow((1 + tasa_mensual_mas_seguro), new_time ))) / ((Math.pow((1 + tasa_mensual_mas_seguro), new_time )) - 1)) + valor_seg_inmu;
+        // Calcular el pago periodico
+        formu.cuota = (this.saldo_inicial * (tasa_mensual_mas_seguro * (Math.pow((1 + tasa_mensual_mas_seguro), new_time))) / ((Math.pow((1 + tasa_mensual_mas_seguro), new_time)) - 1)) + valor_seg_inmu;
       }
-    }
-    else {
-      // Calcular el pago periodico
-      formu.cuota = (formu.montof * (tasa_mensual_mas_seguro * (Math.pow((1 + tasa_mensual_mas_seguro), formu.time))) / ((Math.pow((1 + tasa_mensual_mas_seguro), formu.time)) - 1)) + valor_seg_inmu;
+      else if (formu.tipo == 'Ninguno') {
+
+        if(formu.gracePeriod != 0 ) formu.gracePeriod = 0;
+        this.ningun_plazo = true;
+        this.myForm.get('periodo_gracia')?.setValue(0);
+
+        // Calcular el pago periodico
+        formu.cuota = (formu.montof * (tasa_mensual_mas_seguro * (Math.pow((1 + tasa_mensual_mas_seguro), formu.time))) / ((Math.pow((1 + tasa_mensual_mas_seguro), formu.time)) - 1)) + valor_seg_inmu;
+      }
     }
 
     //Publicar los datos en el formulario
@@ -326,7 +335,7 @@ export class RegisterFormComponent implements OnInit {
     this.frm = formu;
 
   }
-  arrayFlujoNormal(tasa_interes_nominal_anual:number, valor_seg_inmu:number): RowCrono[] {
+  arrayFlujoNormal(tasa_interes_nominal_anual: number, valor_seg_inmu: number): RowCrono[] {
     const datos: RowCrono[] = [];
 
     for (let i = 0; i < this.frm.time; i++) {
@@ -361,11 +370,11 @@ export class RegisterFormComponent implements OnInit {
     }
     return datos;
   }
-  arrayWithTotalGracia(tasa_interes_nominal_anual:number, valor_seg_inmu:number) : RowCrono[]{
+  arrayWithTotalGracia(tasa_interes_nominal_anual: number, valor_seg_inmu: number): RowCrono[] {
 
     const datos: RowCrono[] = [];
-     //Meses de plazo de gracia
-     for (let i = 0; i < this.frm.gracePeriod; i++) {
+    //Meses de plazo de gracia
+    for (let i = 0; i < this.frm.gracePeriod; i++) {
 
       // Se calcula el seguro_degravamen por cada periodo
       this.valor_seg_degra = this.saldo_inicial * this.frm.sdegMensual / 100;
@@ -383,7 +392,7 @@ export class RegisterFormComponent implements OnInit {
         period: i + 1,
         saldoini: this.saldo_inicial.toFixed(2),
         amortization: '0.00',
-        intereses: this.interes_plazo.toFixed(2),
+        intereses: this.interes_pagado.toFixed(3),
         seguro_degr: this.valor_seg_degra.toFixed(2),
         seguro_inm: valor_seg_inmu.toFixed(3),
         saldofini: this.saldo_final.toFixed(2),
@@ -428,67 +437,67 @@ export class RegisterFormComponent implements OnInit {
 
     return datos;
   }
-  arrayWithParcialGracia(tasa_interes_nominal_anual:number, valor_seg_inmu:number): RowCrono[]{
+  arrayWithParcialGracia(tasa_interes_nominal_anual: number, valor_seg_inmu: number): RowCrono[] {
     const datos: RowCrono[] = [];
     //Meses de plazo de gracia
     for (let i = 0; i < this.frm.gracePeriod; i++) {
 
-     // Se calcula el seguro_degravamen por cada periodo
-     this.valor_seg_degra = this.saldo_inicial * this.frm.sdegMensual / 100;
+      // Se calcula el seguro_degravamen por cada periodo
+      this.valor_seg_degra = this.saldo_inicial * this.frm.sdegMensual / 100;
 
-     // Se calcula el interes pagado por cada periodo
-     this.interes_pagado = this.saldo_inicial * tasa_interes_nominal_anual / 12;
+      // Se calcula el interes pagado por cada periodo
+      this.interes_pagado = this.saldo_inicial * tasa_interes_nominal_anual / 12;
 
-     this.interes_plazo = this.interes_pagado + this.valor_seg_degra + valor_seg_inmu;
+      this.interes_plazo = this.interes_pagado + this.valor_seg_degra + valor_seg_inmu;
 
-     const row: RowCrono = {
-       position: i,
-       period: i + 1,
-       saldoini: this.saldo_inicial.toFixed(2),
-       amortization: '0.00',
-       intereses: this.interes_plazo.toFixed(3),
-       seguro_degr: this.valor_seg_degra.toFixed(2),
-       seguro_inm: valor_seg_inmu.toFixed(2),
-       saldofini: this.saldo_inicial.toFixed(2),
-       cuota_mensual: this.interes_plazo.toFixed(3)
-     }
+      const row: RowCrono = {
+        position: i,
+        period: i + 1,
+        saldoini: this.saldo_inicial.toFixed(2),
+        amortization: '0.00',
+        intereses: this.interes_pagado.toFixed(3),
+        seguro_degr: this.valor_seg_degra.toFixed(2),
+        seguro_inm: valor_seg_inmu.toFixed(2),
+        saldofini: this.saldo_inicial.toFixed(2),
+        cuota_mensual: this.interes_plazo.toFixed(3)
+      }
 
-     datos.push(row);
+      datos.push(row);
 
-   }
-   //Meses de plazo normal
-   for (let i = this.frm.gracePeriod; i < this.frm.time; i++) {
+    }
+    //Meses de plazo normal
+    for (let i = this.frm.gracePeriod; i < this.frm.time; i++) {
 
-     // Se calcula el seguro_degravamen por cada periodo
-     this.valor_seg_degra = this.saldo_inicial * this.frm.sdegMensual / 100;
+      // Se calcula el seguro_degravamen por cada periodo
+      this.valor_seg_degra = this.saldo_inicial * this.frm.sdegMensual / 100;
 
-     // Se calcula el interes pagado por cada periodo
-     this.interes_pagado = this.saldo_inicial * tasa_interes_nominal_anual / 12;
+      // Se calcula el interes pagado por cada periodo
+      this.interes_pagado = this.saldo_inicial * tasa_interes_nominal_anual / 12;
 
-     // Se calcula la amortizacion
-     this.amortizacion = this.frm.cuota - this.interes_pagado - this.valor_seg_degra - valor_seg_inmu;
+      // Se calcula la amortizacion
+      this.amortizacion = this.frm.cuota - this.interes_pagado - this.valor_seg_degra - valor_seg_inmu;
 
-     //Saldo final
-     this.saldo_final = this.saldo_inicial - this.amortizacion;
+      //Saldo final
+      this.saldo_final = this.saldo_inicial - this.amortizacion;
 
 
-     const row: RowCrono = {
-       position: i,
-       period: i + 1,
-       saldoini: this.saldo_inicial.toFixed(2),
-       amortization: this.amortizacion.toFixed(2),
-       intereses: this.interes_pagado.toFixed(3),
-       seguro_degr: this.valor_seg_degra.toFixed(2),
-       seguro_inm: valor_seg_inmu.toFixed(2),
-       saldofini: this.saldo_final.toFixed(2),
-       cuota_mensual: this.frm.cuota.toFixed(3)
-     }
+      const row: RowCrono = {
+        position: i,
+        period: i + 1,
+        saldoini: this.saldo_inicial.toFixed(2),
+        amortization: this.amortizacion.toFixed(2),
+        intereses: this.interes_pagado.toFixed(3),
+        seguro_degr: this.valor_seg_degra.toFixed(2),
+        seguro_inm: valor_seg_inmu.toFixed(2),
+        saldofini: this.saldo_final.toFixed(2),
+        cuota_mensual: this.frm.cuota.toFixed(3)
+      }
 
-     datos.push(row);
-     this.saldo_inicial = this.saldo_final;
-   }
+      datos.push(row);
+      this.saldo_inicial = this.saldo_final;
+    }
 
-   return datos;
+    return datos;
   }
   arrayCronograma() {
     if (!this.myForm.invalid) {
@@ -505,17 +514,21 @@ export class RegisterFormComponent implements OnInit {
       this.interes_pagado = this.frm.montof * tasa_interes_nominal_anual / 12;
 
 
-      if (this.frm.tipo != 'Seleccionar' && this.frm.gracePeriod != 0) {
+      if (this.frm.tipo != 'Seleccionar') {
+        this.selectTipo = '';
         if (this.frm.tipo == 'Total') {
 
-         this.rowscrono = this.arrayWithTotalGracia(tasa_interes_nominal_anual, valor_seg_inmu);
+          this.rowscrono = this.arrayWithTotalGracia(tasa_interes_nominal_anual, valor_seg_inmu);
         }
-        else {
+        else if (this.frm.tipo == 'Parcial'){
           this.rowscrono = this.arrayWithParcialGracia(tasa_interes_nominal_anual, valor_seg_inmu);
+        }
+        else if(this.frm.tipo == 'Ninguno'){
+          this.rowscrono = this.arrayFlujoNormal(tasa_interes_nominal_anual, valor_seg_inmu);
         }
       }
       else {
-        this.rowscrono = this.arrayFlujoNormal(tasa_interes_nominal_anual, valor_seg_inmu);
+        this.selectTipo = 'Es obligatorio que seleccione una opción';
       }
 
       this.dataSource = new MatTableDataSource<RowCrono>(this.rowscrono);

@@ -1,1 +1,213 @@
-<p>edit-form works!</p>
+<app-banner [login]="true"></app-banner>
+
+<div [hidden]="vercrono">
+    <div class="back">
+        <div class="container">
+            <header>Proforma # {{ id }}</header>
+            <form [formGroup]="myForm" autocomplete="on">
+                <div class="form-first">
+                    <div class="element">
+                        <div class="content">
+
+                            <span class="title">Ingrese el DNI del cliente</span>
+                            <div class="contenedor-3">
+                                <div class="input-field">
+                                    <label>DNI</label>
+                                    <input type="text" formControlName="dniclient"  readonly>
+                                </div>
+
+                            </div>
+                    
+                            <div class="contenedor-3">
+                                <div class="input-field">
+                                    <label>Moneda</label>
+                                    <input type="text" formControlName="moneda" readonly>
+                                </div>
+                            </div>
+            
+
+                            <div class="contenedor-3">
+                                <div class="input-field">
+                                    <label>Entidad Financiera</label>
+                                    <input type="text" formControlName="entidad" readonly>
+                                </div>
+
+                            </div>
+          
+
+                            <ul class="contenedor-2">
+
+                                <div class="input-field">
+                                    <label>% de Cuota Inicial</label>
+                                    <input type="number" step="0.01" formControlName="porc_cuotaini" readonly>
+                                </div>
+                                <div class="input-field">
+                                    <label>* Bono del Buen Pagador ({{ simbo }}) </label>
+                                    <input type="number" step="0.01" formControlName="bbp" readonly>
+                                </div>
+                                <span>*El monto incluye el adicional en caso el immueble sea sostenible
+                                </span>
+                                <div class="input-field">
+                                    <label>Monto a financiar ({{ simbo }}) </label>
+                                    <input type="number" step="0.01" formControlName="monto_prestamo" readonly>
+                                </div>
+                                <div class="input-field">
+                                    <label>Tasa Costo Efectiva Anual en % </label>
+                                    <input type="number" step="0.01" formControlName="tcea" readonly>
+                                </div>
+                                <div class="input-field">
+                                    <span class="title">Información de financiamiento <br /></span>
+                                    <input type="text" formControlName="info" readonly>
+                                </div>
+
+
+
+                            </ul>
+                            <div class="botones-container">
+                                <button type="button" (click)="verCronograma()"
+                                    mat-raised-button>
+                                    Ver cronograma
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="element">
+                        <div class="content">
+                            <span class="title">Realizado por: <span
+                                    style="font-weight: bold; margin-left: 20px"> {{ asesor }}</span></span>
+                            <br>
+                            <span class="title" >Fecha: <span
+                                style="font-weight: bold; margin-left: 20px; font-size: 14px;"> {{ fecha | date:'dd/MM/y' }}</span></span>
+                        <br>
+                            <span class="title">Información sobre el Inmueble</span>
+
+                            <div class="input-field">
+                                <label>Precio del inmueble ({{ simbo }}) </label>
+                                <input type="number" step="0.01" formControlName="price"
+                                readonly>
+                            </div>
+                            
+
+                            <div class="input-field">
+                                <label>Cuota inicial ({{ simbo }}) </label>
+                                <input type="number" formControlName="cuota_initial" readonly>
+                            </div>
+                     
+
+                            <div class="input-field">
+                                <label>¿Ha recibido apoyo <br /> habitacional anteriormente?</label>
+                                <input type="text" formControlName="apoyo"  readonly>
+                            </div>
+                         
+                            <div class="input-field">
+                                <label>¿Es una vivienda sostenible?</label>
+                                <input type="text" formControlName="sostenible"  readonly>
+
+                            </div>
+                           
+                            <span class="title">Información de financiamiento</span>
+
+                            <div class="input-field">
+                                <label>Tasa Efectiva Anual % </label>
+                                <input type="number" step="0.01" formControlName="tea" readonly>
+                            </div>
+                            
+
+                            <div class="input-field">
+                                <label>Seguro Desgravamen Anual % </label>
+                                <input type="number" step="0.01" formControlName="segdegra" readonly>
+                            </div>
+
+                            <div class="input-field">
+                                <label>Seguro de Inmueble Anual % </label>
+                                <input type="number" step="0.01" formControlName="seginm" readonly>
+                            </div>
+
+                            <div class="input-field">
+                                <label>Plazo (en meses)</label>
+                                <input type="number" formControlName="plazo" readonly>
+                            </div>
+
+
+                            <div class="input-field">
+                                <label>Tipo de periodo de gracia </label>
+                                <input type="text" formControlName="tipo" readonly>
+                            </div>
+
+                            <div class="input-field">
+                                <label>Periodo de Gracia (en meses) </label>
+                                <input type="number" formControlName="periodo_gracia" readonly>
+                            </div>
+                 
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div [hidden]="!vercrono">
+    <div class="back">
+        <div class="container">
+
+            <button mat-fab (click)="vercrono=false" aria-label="button" class="button-back">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <header>Cronograma de Pagos Mensuales</header>
+
+            <div class="col-lg-6">
+                <div class="mat-elevation-z8 demo-table">
+                    <table mat-table [dataSource]="dataSource">
+
+                        <ng-container matColumnDef="period">
+                            <th mat-header-cell *matHeaderCellDef> Periodo </th>
+                            <td mat-cell *matCellDef="let element">{{element.period}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="saldoini">
+                            <th mat-header-cell *matHeaderCellDef> Saldo Inicial </th>
+                            <td mat-cell *matCellDef="let element">{{element.saldoini}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="amortization">
+                            <th mat-header-cell *matHeaderCellDef> Amortización </th>
+                            <td mat-cell *matCellDef="let element">{{element.amortization}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="intereses">
+                            <th mat-header-cell *matHeaderCellDef> Intereses </th>
+                            <td mat-cell *matCellDef="let element">{{element.intereses}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="seguro_degr">
+                            <th mat-header-cell *matHeaderCellDef> Seguro Degravamen </th>
+                            <td mat-cell *matCellDef="let element">{{element.seguro_degr}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="seguro_inm">
+                            <th mat-header-cell *matHeaderCellDef> Seguro Inmueble </th>
+                            <td mat-cell *matCellDef="let element">{{element.seguro_inm}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="saldofini">
+                            <th mat-header-cell *matHeaderCellDef> Saldo Final </th>
+                            <td mat-cell *matCellDef="let element">{{element.saldofini}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="cuota_mensual">
+                            <th mat-header-cell *matHeaderCellDef> Cuota Mensual </th>
+                            <td mat-cell *matCellDef="let element">{{element.cuota_mensual}}</td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                    <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons>
+                    </mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

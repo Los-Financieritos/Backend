@@ -12,10 +12,13 @@ export class FormService {
 
   entidades$!: Subject<Entidad[]>;
   proforms$!: Subject<Form[]>;
-
+  proform$!: Subject<Form>;
+  proform!: Form;
+  
   constructor(private http: HttpClient) {
     this.entidades$ = new Subject<Entidad[]>();
     this.proforms$ = new Subject<Form[]>();
+    this.proform$ = new Subject<Form>();
   }
 
   getEntidades(): Observable<Entidad[]> {
@@ -25,6 +28,9 @@ export class FormService {
   getProforms(): Observable<Form[]> {
     return this.http.get<Form[]>(`${environment.baseUrl}/api/forms`);
   }
+  getProformById(id: number):Observable<Form>{
+    return this.http.get<Form>(`${environment.baseUrl}/api/forms/${id}`);
+  }
 
   addForm(obj: Form) {
     return this.http.post<Form>(`${environment.baseUrl}/api/forms`, obj);
@@ -33,5 +39,6 @@ export class FormService {
   getEntidadById(id: number): Observable<Entidad> {
     return this.http.get<Entidad>(`${environment.baseUrl}/api/entidades/${id}`);
   }
+  
 }
 

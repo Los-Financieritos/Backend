@@ -1,0 +1,275 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+.back {
+    display: flex;
+    padding: 4% 20px;
+    background: whitesmoke;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    border-radius: 6px;
+    padding: 30px;
+    margin: auto 20px;
+    background-color: #fff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    margin: 0 auto;
+    display: flex;
+}
+
+.element {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 90%;
+}
+
+.content {
+    margin: 0 auto;
+    width: 80%;
+}
+
+.container header {
+    font-size: 30px;
+    color: #333;
+    font-weight: 900;
+    text-align: center;
+    margin: 10px auto 30px auto;
+}
+
+.container form {
+    width: 100%;
+    background-color: white;
+    margin: 20px auto;
+}
+
+.contenedor-2 {
+    width: 100%;
+    border: 2px solid #bbb9b9;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    border-radius: 20px;
+
+}
+
+.contenedor-3 {
+    width: 100%;
+    height: 45px;
+    background-color: #d5f08b;
+    padding: 0 20px;
+    margin: 10px 0 20px 0;
+    border-radius: 20px;
+
+}
+
+.form-first {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 20px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+
+.title {
+    display: flex;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 6px 0;
+    color: #333;
+    align-items: center;
+}
+
+.input-field label {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #2e2e2e;
+    margin-right: 15px;
+}
+
+.input-field input,
+select {
+    outline: none;
+    font-size: 14px;
+    font-weight: 400;
+    color: #333;
+    border-radius: 5px;
+    padding: 0 15px;
+    height: 30px;
+    margin: 8px 0;
+    background-color: #f7fde0;
+    border: none;
+    width: 60%;
+}
+
+.input-field input :focus,
+.input-field select:focus {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.13);
+}
+
+.input-field select,
+.input-field input[type="date"] {
+    color: #707070;
+}
+
+.input-field input[type="date"]:valid {
+    color: #333;
+}
+
+button {
+    border-radius: 15px;
+    height: 45px;
+    width: 200px;
+    border: 1px solid #dfdfdf;
+    margin-left: 15px;
+    background-color: #bdce42;
+    cursor: pointer;
+    margin-top: 25px;
+}
+
+button:disabled {
+    background-color: #fcf8f8;
+    cursor: default;
+}
+table {
+    width: 100%;
+  }
+caption {
+    font-size: 23px;
+    margin: 15px 0 30px 0;
+}
+
+.message-error {
+    color: red;
+    font-size: 13px;
+}
+.error-message{
+    margin-bottom: 15px;
+}
+.botones-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.contenedor-2 label {
+    font-size: 14px;
+    margin: 10px;
+}
+
+.advice {
+    color: red;
+    font-size: 13px;
+}
+
+.button-back {
+    width: 40px;
+    height: 40px;
+    background-color: #d5f08b;
+    color: black;
+    margin: 0;
+    position: absolute;
+}
+.mat-mdc-table .mdc-data-table__header-row {
+    height: 56px;
+    background-color: #DEEB8F ;
+
+}
+th,
+td {
+    text-align: center;
+}
+
+@media screen and (max-width: 1500px) {
+    .element {
+        width: 95%;
+        margin: 0 auto;
+    }
+
+    .content {
+        margin: 0 auto;
+        width: 85%;
+    }
+
+    .input-field {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .input-field label {
+        text-align: start;
+    }
+
+    .input-field input {
+        width: 100%;
+    }
+
+    .contenedor-3 .input-field {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        min-width: 100%;
+    }
+}
+
+@media screen and (max-width: 900px) {
+
+    .element{
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .form-first {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        column-gap: 20px;
+        width: 80%;
+        margin: 0 auto;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .content {
+
+        margin: 0 auto;
+        width: 85%;
+    }
+
+    .contenedor-3 {
+        display: flex;
+        flex-direction: row;
+
+    }
+
+    .input-field {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        width: 100%;
+    }
+
+    .input-field label {
+        text-align: start;
+    }
+
+    .contenedor-3 .input-field {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        max-width: 100%;
+    }
+}

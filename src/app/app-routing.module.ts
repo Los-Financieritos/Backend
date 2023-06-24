@@ -8,6 +8,7 @@ import { RegisterFormComponent } from './proforma/register-form/register-form.co
 import { RegisterUserComponent } from './auth/register-user/register-user.component';
 import { domainGuard } from './auth/auth-guard.service'
 import { ListFormComponent } from './proforma/list-form/list-form.component';
+import { EditFormComponent } from './proforma/edit-form/edit-form.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -27,6 +28,7 @@ const routes: Routes = [
     path: 'proform',
     children: [
       { path: 'register-proform/:id', component: RegisterFormComponent },
+      { path: 'detail/:id', component: EditFormComponent },
       { path: 'list-proform', component: ListFormComponent },
     ]
   },

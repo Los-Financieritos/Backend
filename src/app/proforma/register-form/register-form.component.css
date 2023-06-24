@@ -82,13 +82,13 @@ form {
     margin: 0 auto;
 }
 
-
 .title {
-    display: block;
+    display: flex;
     font-size: 16px;
     font-weight: 500;
     margin: 6px 0;
     color: #333;
+    align-items: center;
 }
 
 .input-field label {

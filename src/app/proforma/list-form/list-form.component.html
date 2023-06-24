@@ -17,9 +17,9 @@
                           <td>{{ pro.form_id }}</td>
                           <td>{{ pro.client_id }}</td>
                           <td>{{ pro.asesor }}</td>
-                          <td>{{ pro.fecha | date:'shortDate' }}</td>
+                          <td>{{ pro.fecha | date:'dd/MM/y'}}</td>
                           <td>{{ pro.currency.split(' ')[0]}} {{ pro.price }}</td>
-                          <td><button mat-fab color="none" class="custom-fab">
+                          <td><button mat-fab color="none" class="custom-fab" [routerLink]="['/proform/detail/', pro.form_id]">
                             <i class="fa-solid fa-circle-chevron-right"></i>
                         </button>
                     </td>
