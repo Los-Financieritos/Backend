@@ -1,37 +1,56 @@
 <app-banner [login]="true"></app-banner>
 <ng-container *ngIf="dataProform$| async as prof">
-        <div class="back">
-            <div class="container">
-                <header>Lista de Proformas</header>
-                <div class="cards-container">
-                    <table>
-                        <tr>
-                            <th>Código</th>
-                            <th>DNI Cliente</th>
-                            <th>Asesor</th>
-                            <th>Fecha</th>
-                            <th>Precio del inmueble</th>
-                            <th>Detalle</th>
-                        </tr>
-                        <tr *ngFor="let pro of prof">
-                          <td>{{ pro.form_id }}</td>
-                          <td>{{ pro.client_id }}</td>
-                          <td>{{ pro.asesor }}</td>
-                          <td>{{ pro.fecha | date:'dd/MM/y'}}</td>
-                          <td>{{ pro.currency.split(' ')[0]}} {{ pro.price }}</td>
-                          <td><button mat-fab color="none" class="custom-fab" [routerLink]="['/proform/detail/', pro.form_id]">
-                            <i class="fa-solid fa-circle-chevron-right"></i>
-                        </button>
-                    </td>
-                        </tr>
-                    
+    <div class="back">
+        <div class="container">
+            <header>Lista de Proformas</header>
+            <div class="col-lg-6">
+                <div class="mat-elevation-z8 demo-table">
+                    <table mat-table [dataSource]="dataSource">
+
+                        <ng-container matColumnDef="cod">
+                            <th mat-header-cell *matHeaderCellDef> Código </th>
+                            <td mat-cell *matCellDef="let element">{{element.form_id}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="dni">
+                            <th mat-header-cell *matHeaderCellDef> DNI Cliente </th>
+                            <td mat-cell *matCellDef="let element">{{element.client_id}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="ase">
+                            <th mat-header-cell *matHeaderCellDef> Asesor </th>
+                            <td mat-cell *matCellDef="let element">{{element.asesor }}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="fec">
+                            <th mat-header-cell *matHeaderCellDef> Fecha </th>
+                            <td mat-cell *matCellDef="let element">{{element.fecha | date:'dd/MM/y'}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="prec">
+                            <th mat-header-cell *matHeaderCellDef> Precio del inmueble </th>
+                            <td mat-cell *matCellDef="let element">{{ element.currency.split(' ')[0]}} {{ element.price
+                                }}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="deta">
+                            <th mat-header-cell *matHeaderCellDef> Detalle </th>
+                            <td mat-cell *matCellDef="let element"><button mat-fab color="none" class="custom-fab"
+                                    [routerLink]="['/proform/detail/', element.form_id]">
+                                    <i class="fa-solid fa-circle-chevron-right"></i>
+                                </button></td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     </table>
-
+                    <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons>
+                    </mat-paginator>
                 </div>
-
             </div>
+
         </div>
-¿
+    </div>
+    ¿
 </ng-container>
 
 <ng-template #loading>

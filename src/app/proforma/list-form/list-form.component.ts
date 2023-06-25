@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { FormService } from '../form.service';
 import { Form } from '../form.interface';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-list-form',
@@ -14,8 +16,13 @@ import { Form } from '../form.interface';
 export class ListFormComponent implements OnInit {
   
   dataProform$!: Observable<Form[]>;
+  dataSource !: MatTableDataSource<Form>;
+  datos: Form[] = [];
 
- 
+  displayedColumns: string[] = ['cod', 'dni', 'ase', 'fec', 'prec', 'deta'];
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  
   ngOnInit() {
     this.serv.getProforms().subscribe(
       {
@@ -32,6 +39,13 @@ export class ListFormComponent implements OnInit {
     private serv: FormService) {
 
     this.dataProform$ = this.serv.proforms$;
-
+    
+    this.dataProform$.subscribe(res =>{
+      this.datos = res;
+      this.dataSource = new MatTableDataSource<Form>(this.datos);
+      this.dataSource.paginator = this.paginator;
+    });
+    
+   
   }
 }

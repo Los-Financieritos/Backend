@@ -114,10 +114,10 @@
                                 </div>
                                 <span *ngIf="myForm.get('price')?.hasError('max')
                                 && myForm.get('price')?.touched" class="advice">
-                                    El precio es mayor al máximo de {{ simbo }} {{ mmaximo }} </span>
+                                    El precio es mayor al máximo de {{ simbo }} {{ mmaximo.toFixed(2) }} </span>
                                 <span *ngIf="myForm.get('price')?.hasError('min')
                                     && myForm.get('price')?.touched" class="advice">
-                                    El precio es menor al mínimo de {{ simbo }} {{ mminimo }}</span>
+                                    El precio es menor al mínimo de {{ simbo }} {{ mminimo.toFixed(2) }}</span>
                                 <span *ngIf="myForm.get('price')?.hasError('pattern')
                                     && myForm.get('price')?.touched" class="advice">
                                     Ingrese un numero positivo entero o decimal.</span>
@@ -175,13 +175,13 @@
                                     La tasa es mayor al {{ t_max }} %</span>
 
                                 <div class="input-field">
-                                    <label>Seguro Desgravamen Anual % </label>
+                                    <label>Seguro Desgravamen Anual % (*)</label>
                                     <input type="number" step="0.01" formControlName="segdegra"
                                         [readonly]="!DatosIniIngresados()">
                                 </div>
 
                                 <div class="input-field">
-                                    <label>Seguro de Inmueble Anual % </label>
+                                    <label>Seguro de Inmueble Anual % (**)</label>
                                     <input type="number" step="0.01" formControlName="seginm"
                                         [readonly]="!DatosIniIngresados()">
                                 </div>
@@ -234,6 +234,9 @@
                                 && myForm.get('periodo_gracia')?.touched" class="advice">
                                         Solo puede ingresar números enteros positivos</span>
                                 </div>
+
+                                <span class="title" style="font-size: 13px;">* Valor referencial para seguro degravamen 0.035%</span>
+                                <span class="title" style="font-size: 13px;"s>** Valor referencial para seguro del inmueble 0.3%</span>
                             </div>
                         </div>
                     </div>
@@ -250,7 +253,10 @@
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
                 <header>Cronograma de Pagos Mensuales</header>
-
+                <div class="vanytir">
+                    <span class="title"> <strong>TIR: </strong> {{tir}}</span>
+                    <span class="title"> <strong>VAN: </strong> {{van}}</span>
+                </div>
                 <div class="col-lg-6">
                     <div class="mat-elevation-z8 demo-table">
                         <table mat-table [dataSource]="dataSource">

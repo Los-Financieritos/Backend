@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { RowCrono, Form } from '../form.interface';
@@ -6,21 +6,22 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FormService } from '../form.service';
-import { Observable, Subject} from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { Finance } from 'financejs'
 
 @Component({
   selector: 'app-edit-form',
   templateUrl: './edit-form.component.html',
   styleUrls: ['./edit-form.component.css']
 })
-export class EditFormComponent implements OnInit {
+export class EditFormComponent implements OnInit, OnDestroy {
   vercrono: boolean = false;
 
   myForm !: FormGroup;
   id!: number;
   formu$!: Observable<Form>;
-  frmAux!:Form;
-  frm!:Form;
+  frmAux!: Form;
+  frm!: Form;
 
   saldo_inicial!: number;
   interes_pagado!: number;
@@ -32,6 +33,9 @@ export class EditFormComponent implements OnInit {
   displayedColumns: string[] = ['period', 'saldoini', 'amortization', 'intereses', 'seguro_degr', 'seguro_inm', 'saldofini', 'cuota_mensual'];
 
   rowscrono: RowCrono[] = [];
+  flujos: number[] = []
+  van!: number;
+  tir!: number;
 
   asesor: string = '';
   simbo: string = '';
@@ -49,7 +53,7 @@ export class EditFormComponent implements OnInit {
     this.serv.getProformById(this.id).subscribe({
       next: (res) => {
         if (res) {
-          this.frm =res;
+          this.frm = res;
           this.serv.proform$.next(this.frmAux);
           this.serv.proform = this.frmAux;
         }
@@ -61,13 +65,17 @@ export class EditFormComponent implements OnInit {
       }
     });
   }
+  ngOnDestroy(): void {
 
+    this.rowscrono = [];
+
+  }
   constructor(private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private serv: FormService) {
-      this.formu$ =  new Subject<Form>();
-      this.formu$ = this.serv.proform$;
+    this.formu$ = new Subject<Form>();
+    this.formu$ = this.serv.proform$;
     this.reactiveForm();
     this.cargaDatos();
   }
@@ -171,6 +179,7 @@ export class EditFormComponent implements OnInit {
       }
 
       datos.push(row);
+      this.flujos.push(this.frm.cuota);
       this.saldo_inicial = this.saldo_inicial - this.amortizacion;
     }
     return datos;
@@ -205,7 +214,7 @@ export class EditFormComponent implements OnInit {
       }
 
       datos.push(row);
-
+      this.flujos.push(this.frm.cuota);
       this.saldo_inicial = this.saldo_final;
     }
     //Meses de plazo normal
@@ -237,6 +246,7 @@ export class EditFormComponent implements OnInit {
       }
 
       datos.push(row);
+      this.flujos.push(this.frm.cuota);
       this.saldo_inicial = this.saldo_final;
     }
 
@@ -268,7 +278,7 @@ export class EditFormComponent implements OnInit {
       }
 
       datos.push(row);
-
+      this.flujos.push(this.frm.cuota);
     }
     //Meses de plazo normal
     for (let i = this.frm.gracePeriod; i < this.frm.time; i++) {
@@ -299,6 +309,7 @@ export class EditFormComponent implements OnInit {
       }
 
       datos.push(row);
+      this.flujos.push(this.frm.cuota);
       this.saldo_inicial = this.saldo_final;
     }
 
@@ -307,8 +318,8 @@ export class EditFormComponent implements OnInit {
 
   verCronograma() {
     this.formu$.subscribe(res => {
-        this.frm = res;
-      }
+      this.frm = res;
+    }
     );
     console.log("form: " + this.frm.asesor);
     // Interes nominal anual
@@ -323,6 +334,7 @@ export class EditFormComponent implements OnInit {
     //Calcular interes pagado por periodo
     this.interes_pagado = this.frm.montof * tasa_interes_nominal_anual / 12;
 
+    let finance = new Finance();
 
     if (this.frm.tipo != 'Seleccionar' && this.frm.gracePeriod != 0) {
       if (this.frm.tipo == 'Total') {
@@ -336,7 +348,11 @@ export class EditFormComponent implements OnInit {
     else {
       this.rowscrono = this.arrayFlujoNormal(tasa_interes_nominal_anual, valor_seg_inmu);
     }
+    // e.g., If initial investment is -$500,000 and the cash flows are $200,000, $300,000, and $200,000, IRR is 18.82%.
+    this.tir = finance.IRR(-this.frm.montof, ...this.flujos);
+    this.van = finance.NPV(this.tir, -this.frm.montof, ...this.flujos);
 
+    //=> 18.82
     this.dataSource = new MatTableDataSource<RowCrono>(this.rowscrono);
     this.dataSource.paginator = this.paginator;
     this.vercrono = true;

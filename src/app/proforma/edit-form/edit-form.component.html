@@ -13,18 +13,18 @@
                             <div class="contenedor-3">
                                 <div class="input-field">
                                     <label>DNI</label>
-                                    <input type="text" formControlName="dniclient"  readonly>
+                                    <input type="text" formControlName="dniclient" readonly>
                                 </div>
 
                             </div>
-                    
+
                             <div class="contenedor-3">
                                 <div class="input-field">
                                     <label>Moneda</label>
                                     <input type="text" formControlName="moneda" readonly>
                                 </div>
                             </div>
-            
+
 
                             <div class="contenedor-3">
                                 <div class="input-field">
@@ -33,7 +33,7 @@
                                 </div>
 
                             </div>
-          
+
 
                             <ul class="contenedor-2">
 
@@ -64,8 +64,7 @@
 
                             </ul>
                             <div class="botones-container">
-                                <button type="button" (click)="verCronograma()"
-                                    mat-raised-button>
+                                <button type="button" (click)="verCronograma()" mat-raised-button>
                                     Ver cronograma
                                 </button>
                             </div>
@@ -73,45 +72,45 @@
                     </div>
                     <div class="element">
                         <div class="content">
-                            <span class="title">Realizado por: <span
-                                    style="font-weight: bold; margin-left: 20px"> {{ asesor }}</span></span>
+                            <span class="title">Realizado por: <span style="font-weight: bold; margin-left: 20px"> {{
+                                    asesor }}</span></span>
                             <br>
-                            <span class="title" >Fecha: <span
-                                style="font-weight: bold; margin-left: 20px; font-size: 14px;"> {{ fecha | date:'dd/MM/y' }}</span></span>
-                        <br>
+                            <span class="title">Fecha: <span
+                                    style="font-weight: bold; margin-left: 20px; font-size: 14px;"> {{ fecha |
+                                    date:'dd/MM/y' }}</span></span>
+                            <br>
                             <span class="title">Información sobre el Inmueble</span>
 
                             <div class="input-field">
                                 <label>Precio del inmueble ({{ simbo }}) </label>
-                                <input type="number" step="0.01" formControlName="price"
-                                readonly>
+                                <input type="number" step="0.01" formControlName="price" readonly>
                             </div>
-                            
+
 
                             <div class="input-field">
                                 <label>Cuota inicial ({{ simbo }}) </label>
                                 <input type="number" formControlName="cuota_initial" readonly>
                             </div>
-                     
+
 
                             <div class="input-field">
                                 <label>¿Ha recibido apoyo <br /> habitacional anteriormente?</label>
-                                <input type="text" formControlName="apoyo"  readonly>
+                                <input type="text" formControlName="apoyo" readonly>
                             </div>
-                         
+
                             <div class="input-field">
                                 <label>¿Es una vivienda sostenible?</label>
-                                <input type="text" formControlName="sostenible"  readonly>
+                                <input type="text" formControlName="sostenible" readonly>
 
                             </div>
-                           
+
                             <span class="title">Información de financiamiento</span>
 
                             <div class="input-field">
                                 <label>Tasa Efectiva Anual % </label>
                                 <input type="number" step="0.01" formControlName="tea" readonly>
                             </div>
-                            
+
 
                             <div class="input-field">
                                 <label>Seguro Desgravamen Anual % </label>
@@ -138,7 +137,7 @@
                                 <label>Periodo de Gracia (en meses) </label>
                                 <input type="number" formControlName="periodo_gracia" readonly>
                             </div>
-                 
+
 
                         </div>
                     </div>
@@ -156,7 +155,10 @@
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
             <header>Cronograma de Pagos Mensuales</header>
-
+            <div class="vanytir">
+                <span class="title"> <strong>TIR: </strong> {{tir}}</span>
+                <span class="title"> <strong>VAN: </strong> {{van}}</span>
+            </div>
             <div class="col-lg-6">
                 <div class="mat-elevation-z8 demo-table">
                     <table mat-table [dataSource]="dataSource">

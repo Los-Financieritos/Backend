@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Form, RowCrono } from '../form.interface';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -10,13 +10,14 @@ import { ClientService } from 'src/app/client/client.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from 'src/app/auth/auth.service';
+import { Finance } from 'financejs'
 
 @Component({
   selector: 'app-register-form',
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.css']
 })
-export class RegisterFormComponent implements OnInit {
+export class RegisterFormComponent implements OnInit, OnDestroy {
 
   asesor!: string;
   id!: number;
@@ -56,6 +57,9 @@ export class RegisterFormComponent implements OnInit {
   displayedColumns: string[] = ['period', 'saldoini', 'amortization', 'intereses', 'seguro_degr', 'seguro_inm', 'saldofini', 'cuota_mensual'];
 
   rowscrono: RowCrono[] = [];
+  flujos: number[] = []
+  van!: number;
+  tir!: number;
 
   error: string = '';
   exist!: boolean | undefined;
@@ -101,9 +105,15 @@ export class RegisterFormComponent implements OnInit {
     this.dataEntidades$ = this.serv.entidades$;
     this.reactiveForm();
   }
+  ngOnDestroy(): void {
+
+    this.rowscrono = [];
+
+  }
 
   setMinandMax() {
     const seleccionado = this.myForm.get('entidad')?.value;
+
     this.c_inicial_por = seleccionado.cinicial;
 
     this.t_min = seleccionado.tminimo;
@@ -182,24 +192,25 @@ export class RegisterFormComponent implements OnInit {
   }
 
   calcularBBP(sostenible: boolean, help: boolean, valor_vivienda: number): number {
+    const moneda = (this.myForm.get('moneda')!.value.split(' ')[0] == '$' ? this.todollar : 1);
     if (help) {
       return 0;
     }
 
-    if (valor_vivienda >= 65200 && valor_vivienda <= 93100) {
-      return sostenible ? 31100 : 25700;
+    if (valor_vivienda >= 65200*moneda && valor_vivienda <= 93100*moneda) {
+      return sostenible ? 31100*moneda : 25700*moneda;
     }
 
-    if (valor_vivienda > 93100 && valor_vivienda <= 139400) {
-      return sostenible ? 26800 : 21400;
+    if (valor_vivienda > 93100*moneda && valor_vivienda <= 139400*moneda) {
+      return sostenible ? 26800*moneda : 21400*moneda;
     }
 
-    if (valor_vivienda > 139400 && valor_vivienda <= 232200) {
-      return sostenible ? 25000 : 19600;
+    if (valor_vivienda > 139400*moneda && valor_vivienda <= 232200*moneda) {
+      return sostenible ? 25000*moneda : 19600*moneda;
     }
 
-    if (valor_vivienda > 232200 && valor_vivienda <= 343900) {
-      return sostenible ? 16200 : 10800;
+    if (valor_vivienda > 232200*moneda && valor_vivienda <= 343900*moneda) {
+      return sostenible ? 16200*moneda : 10800*moneda;
     }
 
     return 0;
@@ -213,6 +224,9 @@ export class RegisterFormComponent implements OnInit {
     this.existClient();
 
     const seleccionado = this.myForm.get('entidad')?.value;
+    const moneda = (this.myForm.get('moneda')!.value.split(' ')[0] == '$' ? this.todollar : 1);
+    this.mminimo = seleccionado.mminimo * moneda;
+    this.mmaximo = seleccionado.mmaximo * moneda;
 
     const formu: Form = {
 
@@ -247,6 +261,7 @@ export class RegisterFormComponent implements OnInit {
 
     this.c_inicial = formu.price * (seleccionado.cinicial / 100);
     this.c_initialmax = formu.price * (0.3);
+
     //Calcular el porcentaje de cuota inicial
     formu.perInitial = formu.initial / formu.price * 100;
 
@@ -270,11 +285,12 @@ export class RegisterFormComponent implements OnInit {
     // Interes nominal anual
     const tasa_interes_nominal_anual = ((Math.pow((formu.tea / 100 + 1), (1 / 12)) - 1) * 12);
 
+
     // Asignar valor a saldo pendiente
     this.saldo_inicial = formu.montof;
 
     //Calcular tcea
-    formu.tcea = formu.tea + 13*formu.sdegMensual + 22*formu.sinmAnual;
+    formu.tcea = formu.tea + 13.18 * formu.sdegMensual + 2.15 * formu.sinmAnual;
 
     if (formu.tipo != 'Seleccionar') {
       if (formu.tipo == 'Total') {
@@ -306,7 +322,7 @@ export class RegisterFormComponent implements OnInit {
       }
       else if (formu.tipo == 'Ninguno') {
 
-        if(formu.gracePeriod != 0 ) formu.gracePeriod = 0;
+        if (formu.gracePeriod != 0) formu.gracePeriod = 0;
         this.ningun_plazo = true;
         this.myForm.get('periodo_gracia')?.setValue(0);
 
@@ -366,6 +382,7 @@ export class RegisterFormComponent implements OnInit {
       }
 
       datos.push(row);
+      this.flujos.push(this.frm.cuota);
       this.saldo_inicial = this.saldo_inicial - this.amortizacion;
     }
     return datos;
@@ -400,7 +417,7 @@ export class RegisterFormComponent implements OnInit {
       }
 
       datos.push(row);
-
+      this.flujos.push(this.frm.cuota);
       this.saldo_inicial = this.saldo_final;
     }
     //Meses de plazo normal
@@ -432,6 +449,7 @@ export class RegisterFormComponent implements OnInit {
       }
 
       datos.push(row);
+      this.flujos.push(this.frm.cuota);
       this.saldo_inicial = this.saldo_final;
     }
 
@@ -463,7 +481,7 @@ export class RegisterFormComponent implements OnInit {
       }
 
       datos.push(row);
-
+      this.flujos.push(this.frm.cuota);
     }
     //Meses de plazo normal
     for (let i = this.frm.gracePeriod; i < this.frm.time; i++) {
@@ -494,6 +512,7 @@ export class RegisterFormComponent implements OnInit {
       }
 
       datos.push(row);
+      this.flujos.push(this.frm.cuota);
       this.saldo_inicial = this.saldo_final;
     }
 
@@ -514,16 +533,18 @@ export class RegisterFormComponent implements OnInit {
       this.interes_pagado = this.frm.montof * tasa_interes_nominal_anual / 12;
 
 
+      let finance = new Finance();
+
       if (this.frm.tipo != 'Seleccionar') {
         this.selectTipo = '';
         if (this.frm.tipo == 'Total') {
 
           this.rowscrono = this.arrayWithTotalGracia(tasa_interes_nominal_anual, valor_seg_inmu);
         }
-        else if (this.frm.tipo == 'Parcial'){
+        else if (this.frm.tipo == 'Parcial') {
           this.rowscrono = this.arrayWithParcialGracia(tasa_interes_nominal_anual, valor_seg_inmu);
         }
-        else if(this.frm.tipo == 'Ninguno'){
+        else if (this.frm.tipo == 'Ninguno') {
           this.rowscrono = this.arrayFlujoNormal(tasa_interes_nominal_anual, valor_seg_inmu);
         }
       }
@@ -531,6 +552,10 @@ export class RegisterFormComponent implements OnInit {
         this.selectTipo = 'Es obligatorio que seleccione una opción';
       }
 
+      // e.g., If initial investment is -$500,000 and the cash flows are $200,000, $300,000, and $200,000, IRR is 18.82%.
+      this.tir = finance.IRR(-this.frm.montof, ...this.flujos);
+      this.van = finance.NPV(this.tir, -this.frm.montof, ...this.flujos);
+      //=> 18.82
       this.dataSource = new MatTableDataSource<RowCrono>(this.rowscrono);
       this.dataSource.paginator = this.paginator;
     }
@@ -562,6 +587,5 @@ export class RegisterFormComponent implements OnInit {
       },
     });
 
-    this.rowscrono = []
   }
 }

@@ -51,8 +51,7 @@ button {
 
 table {
     width: 100%;
-    border-collapse: collapse;
-}
+  }
 
 th,
 td {
@@ -61,6 +60,12 @@ td {
     border-bottom: 1px solid #ddd;
 }
 
-th {
-    background-color: #DEEB8F;
+.mat-mdc-table .mdc-data-table__header-row {
+    height: 56px;
+    background-color: #DEEB8F ;
+
+}
+th,
+td {
+    text-align: center;
 }
