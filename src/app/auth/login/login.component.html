@@ -58,13 +58,7 @@
               <span> Este campo es obligatorio </span>
             </div>
 
-            <div class="forget-content">
-              <a class="forget-password" href="">
-                <span>¿Olvidó su contraseña?</span>
-                <i class="icon-see delete" [ngClass]="viewPsw ? 'fa-solid fa-eye chico': 'fa-solid fa-eye-slash grande'"
-                  (click)="changeViewPassword()"></i>
-              </a>
-            </div>
+        
             <div class="btn-send">
               <button type="submit" [ngClass]="formInfo.invalid ? 'disabled' :''" [disabled]="formInfo.invalid">
                 <span>Ingresar</span>
