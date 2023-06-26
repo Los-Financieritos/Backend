@@ -36,7 +36,7 @@ export class RegisterClientComponent {
       birthPartner: [''],
       profession: ['', [Validators.required, Validators.maxLength(40)]],
       company: ['', [Validators.required, Validators.maxLength(40)]],
-      income: ['', [Validators.required, Validators.min(0)]]
+      income: ['', [Validators.required, Validators.min(0), Validators.max(5000)]]
     })
   }
   comboValidator(control: { value: string; }) {

@@ -222,6 +222,10 @@
                         myForm.get('income')?.hasError('min') &&
                         myForm.get('income')?.touched" class="message-error">
                         El valor debe ser mayor a 0</div>
+                        <div *ngIf="
+                        myForm.get('income')?.hasError('max') &&
+                        myForm.get('income')?.touched" class="message-error">
+                        El valor debe ser menor a S/.5000.</div>
 
                         <div class="boton-guardar">
                             <button [disabled]="myForm.invalid" type="button" class="backBtn" (click)="saveClient()"
