@@ -15,7 +15,6 @@ const routes: Routes = [
   {
     path: 'home/:id',
     component: PrincipalComponent,
-    canActivate: [domainGuard],
   },
   {
     path: 'client',
